@@ -1,0 +1,17 @@
+:root {
+    --mint: #3FC380;
+    --dark-scale-grey: #2F2F31;
+  }
+  
+  html, body {
+    box-sizing: border-box;
+    margin: 0 auto; /* for body */
+    height: 100%;
+    width: 100%;
+    background-color: var(--dark-scale-grey);
+  }
+  
+  *, *:before, *:after {
+    box-sizing: inherit;
+    font-family: inherit;
+  }

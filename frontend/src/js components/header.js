@@ -1,5 +1,5 @@
 import React from 'react';
-import '../scss-components/navbar/global.scss';
+import '../scss-components/global.scss';
 
 function Header() {
     return (

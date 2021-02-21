@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import './index.css';
-import './scss-components/navbar/header.scss';
+import './scss-components/header.scss';
 import Header from './js components/header';
 // import App from './App';
 import reportWebVitals from './reportWebVitals';

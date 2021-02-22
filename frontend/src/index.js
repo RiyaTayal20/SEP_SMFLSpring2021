@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import './index.css';
-import './scss-components/header.scss';
-import Header from './js components/header';
-// import App from './App';
+import Header from './components/Header/Header';
+import './components/Header/Header.scss';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(

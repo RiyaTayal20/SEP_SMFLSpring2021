@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-shadow */
 const bcrypt = require('bcryptjs');
 const LocalStrategy = require('passport-local').Strategy;
 

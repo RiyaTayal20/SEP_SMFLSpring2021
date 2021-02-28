@@ -1,8 +1,5 @@
-/* eslint-disable consistent-return */
 const { check, validationResult } = require('express-validator');
-const passport = require('passport');
 const User = require('../models/userModel');
-require('../config/passportConfig')(passport);
 
 exports.signup = [
     check('username')

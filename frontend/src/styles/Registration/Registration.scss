@@ -1,0 +1,8 @@
+@import '../../ScssComponents/root.scss';
+
+.registration-form{
+    @extend %flex-center;
+    .form-group{
+        @extend %flex-center;
+    }
+}

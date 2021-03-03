@@ -1,7 +1,7 @@
 @import '../../ScssComponents/root.scss';
 @import '../Button.scss';
 
-.registration-form{ 
+.login-form{ 
     @extend %flex-center;
     .form-group {
         @extend %flex-center;
@@ -9,7 +9,7 @@
         align-items: flex-start;
     }
 
-    .text-login {
+    .text-register {
         &:hover {
             text-decoration: underline;
         }

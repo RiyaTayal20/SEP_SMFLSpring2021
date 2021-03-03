@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+import { RegistrationPage, LoginPage, HomePage } from './components/Pages';
 import Header from './components/Header/Header';
 import './ScssComponents/global.scss';
-import RegistrationPage from './components/Registration';
 
 function App() {
     return (
@@ -10,8 +11,18 @@ function App() {
             <div className="App">
                 <Header />
                 <Switch>
-                    <Route path="/register">
-                        <RegistrationPage />
+                    <Route path="/user/register">
+                        <Container>
+                            <RegistrationPage />
+                        </Container>
+                    </Route>
+                    <Route path="/user/login">
+                        <Container>
+                            <LoginPage />
+                        </Container>
+                    </Route>
+                    <Route path="/home">
+                        <HomePage />
                     </Route>
                 </Switch>
             </div>

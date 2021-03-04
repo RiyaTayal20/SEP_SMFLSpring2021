@@ -1,0 +1,22 @@
+@import '../../ScssComponents/root.scss';
+@import '../Button.scss';
+
+.registration-form{ 
+    @extend %flex-center;
+    .form-group {
+        @extend %flex-center;
+        color: white;
+        align-items: flex-start;
+    }
+
+    .text-login {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .btn {
+        @include btn;
+    }
+
+}

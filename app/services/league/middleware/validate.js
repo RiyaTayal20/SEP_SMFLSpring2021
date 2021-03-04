@@ -20,6 +20,7 @@ exports.signup = [
     check('email')
         .trim()
         .isEmail()
+        .withMessage('Not a valid email')
         .not()
         .isEmpty()
         .withMessage('Email is required')

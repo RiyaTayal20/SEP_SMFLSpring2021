@@ -22,13 +22,13 @@ exports.register = async (req, res) => {
 exports.login = async (req, res, next) => {
     passport.authenticate('local', (err, user) => {
         if (err) return next(err);
-        if (!user) return next(err);
+        if (!user) return res.status(401).send('Invalid username or password.');
         req.logIn(user, { session: false }, (err) => {
             if (err) return next(err);
             const body = { _id: user._id, email: user.email };
             const token = jwt.sign({ user: body }, `${process.env.JWT_KEY}`);
 
-            return res.json({ token });
+            return res.send(token);
         });
     })(req, res, next);
 };

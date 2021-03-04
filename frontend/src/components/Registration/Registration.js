@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import '../../styles/Registration/Registration.scss';
 import { useHistory } from 'react-router-dom';
 
@@ -11,13 +12,15 @@ function Register() {
     const [registerUsername, setRegisterUsername] = useState('');
     const [registerEmail, setRegisterEmail] = useState('');
     const [registerPassword, setRegisterPassword] = useState('');
+    const [showError, setShowError] = useState(false);
+    const [errors, setErrors] = useState([]);
 
     const loginAccount = () => {
         history.push('/user/login');
     };
 
     const register = () => {
-        fetch(`${process.env.HOST}/user/register`, {
+        fetch(`${process.env.REACT_APP_API_URL}/user/register`, {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -28,12 +31,29 @@ function Register() {
                 email: registerEmail,
                 password: registerPassword,
             }),
-        }).then((res) => res.json()).catch((err) => console.log(err));
-        history.push('/user/login');
+        }).then((res) => {
+            if (res.ok) {
+                res.json();
+                history.push('/user/login');
+            } else {
+                setShowError(true);
+                res.json().then((data) => {
+                    console.log(data.errors);
+                    setErrors(data.errors);
+                });
+            }
+        }).catch((err) => console.log(err));
     };
 
     return (
         <Form className="registration-form">
+            {showError
+            && (
+                <Alert variant="danger" onClose={() => setShowError(false)} dismissible>
+                    <Alert.Heading>Alert</Alert.Heading>
+                    <ol>{errors.map((error) => <li>{error.msg}</li>)}</ol>
+                </Alert>
+            )}
             <Form.Group controlId="formBasicUsername">
                 <Form.Label>Username</Form.Label>
                 <Form.Control type="username" placeholder="Enter username" onChange={(e) => setRegisterUsername(e.target.value)} />

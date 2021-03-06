@@ -15,3 +15,16 @@
     box-sizing: inherit;
     font-family: inherit;
   }
+
+  %flex-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+  }

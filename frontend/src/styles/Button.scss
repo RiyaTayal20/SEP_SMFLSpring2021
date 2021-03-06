@@ -1,0 +1,10 @@
+@mixin btn {
+    margin-top: 5px;
+    size: 10px;
+    background-color: #3FC380;
+    border-color:#3FC380;
+    &:hover, &:focus {
+        background-color: #2c8f5d;
+        border-color:#2c8f5d;
+    }
+}

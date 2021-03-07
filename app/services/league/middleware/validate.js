@@ -1,5 +1,6 @@
 const { check, validationResult } = require('express-validator');
 const User = require('../models/userModel');
+const League = require('../models/leagueModel');
 
 exports.signup = [
     check('username')
@@ -42,4 +43,22 @@ exports.signup = [
         if (!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
         next();
     },
+];
+
+exports.leagueCreation = [
+    check('leagueName')
+        .trim()
+        .escape()
+        .not()
+        .isEmpty()
+        .withMessage('League name is required')
+        .isLength({ min: 3, max: 255 })
+        .withMessage('League name must be minimum 3 characters')
+        .custom((value) => League.findOne({
+            leagueName: value,
+        }).then((league) => {
+            if (league) {
+                return Promise.reject(new Error('League name already in use'));
+            }
+        })),
 ];

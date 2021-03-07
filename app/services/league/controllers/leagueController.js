@@ -1,17 +1,27 @@
 const League = require('../models/leagueModel');
 
-exports.createLeague = async(req, res) => {
+exports.createLeague = async (req, res) => {
     const league = new League({
         leagueName: req.body.leagueName,
-        leagueID: req.body.leagueID,
-        leagueManager: req.body.username,
+        leagueCode: req.body.leagueCode,
         settings: req.body.settings,
-        //other stuff??
     });
     try {
         const savedLeague = await league.save();
-        res.send(savedUser);
+        res.send(savedLeague);
     } catch (err) {
         res.status(400).send(err);
     }
-}
+};
+
+exports.joinLeague = async (req, res) => {
+    await League.findByIdAndUpdate(
+        req.body.id,
+        { $addToSet: { playerList: req.body.user } },
+        { upsert: true, new: true },
+        (err, succ) => {
+            if (err) throw err;
+            res.send(succ);
+        },
+    );
+};

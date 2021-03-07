@@ -11,6 +11,8 @@ router.post('/register', userValidation.signup, userController.register);
 
 router.post('/login', userController.login);
 
+router.get('/find', userController.findUserById);
+
 router.get('/', passport.authenticate('jwt', { session: false }), userController.profile);
 
 module.exports = router;

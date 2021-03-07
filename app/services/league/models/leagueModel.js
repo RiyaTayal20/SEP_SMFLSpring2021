@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-//https://mongoosejs.com/docs/schematypes.html#dates
-
 const leagueSchema = new mongoose.Schema({
     leagueName: {
         type: String,
@@ -9,18 +7,14 @@ const leagueSchema = new mongoose.Schema({
         max: 255,
         min: 3,
     },
-    leagueID: {
-        type: Number,
-        required: true,
-    },
-    leagueManager: {
-        type: String,
-        required: true,
+    playerList: {
+        type: Array,
+        default: [],
     },
     settings: [{
         aiPlayer: {
             type: Number,
-            required: true
+            default: 0,
         },
         startDate: {
             type: Date,
@@ -28,11 +22,11 @@ const leagueSchema = new mongoose.Schema({
         },
         endDate: {
             type: Date,
-            required: true
+            required: true,
         },
         maxPlayers: {
             type: Number,
-            required: true
+            required: true,
         },
         public: {
             type: Boolean,
@@ -58,3 +52,5 @@ const leagueSchema = new mongoose.Schema({
         }],
     }],
 });
+
+module.exports = mongoose.model('League', leagueSchema);

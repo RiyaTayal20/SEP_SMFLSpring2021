@@ -40,3 +40,10 @@ exports.profile = async (req, res) => {
         token: req.query.secret_token,
     });
 };
+
+exports.findUserById = async (req, res) => {
+    await User.findById(req.body._id, (err, user) => {
+        if (err) throw err;
+        res.send(user);
+    });
+};

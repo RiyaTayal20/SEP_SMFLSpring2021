@@ -9,8 +9,15 @@ h1{
     margin: 0px;
     padding: 0px;
     width: 100%;
+    display: flex;
+}
+
+.icon{
+    margin: 10px 10px 20px 20px;
+    height: 100px;
+    width: 100px; 
 }
 
 .application-title{
-    padding: 30px 40px;
+    padding: 40px 40px 30px 10px;
 }

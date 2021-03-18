@@ -1,8 +1,24 @@
-@import '../../ScssComponents/root.scss';
+@import '../root.scss';
 @import '../Button.scss';
+
+.container{
+    height: auto; 
+}
+
+.registration-form-title{
+    padding-top: 30px;
+    color: white;
+    text-align: center;
+    height: 0px;
+    font-size: 35px;
+}
 
 .registration-form{ 
     @extend %flex-center;
+    border-style: solid;
+    border-color: white;
+    margin: 80px; 
+    padding: 0px 130px;
     .form-group {
         @extend %flex-center;
         color: white;
@@ -18,5 +34,12 @@
     .btn {
         @include btn;
     }
+}
 
+.text-login{
+    padding: 10px 0px 0px 10px;
+}
+
+.form-group{
+    font-weight: bold;
 }

@@ -2,16 +2,22 @@ h1{
     margin: 0px;
 }
 .application-header{
-    font-family: 'Rajdhani', sans-serif;
     font-weight: 800;
     background-color: var(--mint);
     color: white;
-    height: 100px;
+    height: auto;
     margin: 0px;
     padding: 0px;
     width: 100%;
+    display: flex;
+}
+
+.icon{
+    margin: 20px 10px 20px 20px;
+    height: 100px;
+    width: 100px; 
 }
 
 .application-title{
-    padding: 30px 40px;
+    padding: 40px 40px 30px 10px;
 }

@@ -3,7 +3,11 @@ const fetch = require('node-fetch');
 const Equity = require('../models/equityModel');
 
 // Number of minutes that a stock is considered recent - won't update price unless longer than this
-const CACHE_TIME = 10;
+const CACHE_TIME = 1;
+
+// Format intraday price data into an object of <minute>:<average_price>
+// eslint-disable-next-line no-return-assign, max-len, no-param-reassign, no-sequences
+const extractIntraday = (priceArray) => priceArray.reduce((obj, { minute, average }) => (obj[minute] = average, obj), {});
 
 const getIntraday = async (equityTicker) => {
     try {
@@ -39,5 +43,7 @@ const getIntraday = async (equityTicker) => {
 exports.equity = async (req, res) => {
     const ticker = req.params.equityTicker;
     console.log(`${ticker} intraday prices requested`);
-    getIntraday(ticker).then(res.send.bind(res));
+    // eslint-disable-next-line max-len
+    const ex = await getIntraday(ticker).then((stockData) => extractIntraday(stockData.intraday.prices));
+    res.send(ex);
 };

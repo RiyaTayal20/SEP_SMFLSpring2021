@@ -1,13 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
+
+const stockRoute = require('./routes/stockRoutes');
 
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-app.use(bodyParser.json());
 
 const connectDB = async () => {
     try {
@@ -22,5 +23,10 @@ const connectDB = async () => {
 };
 
 connectDB();
+
+app.use(cors());
+app.use(bodyParser.json());
+
+app.use('/equity', stockRoute);
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

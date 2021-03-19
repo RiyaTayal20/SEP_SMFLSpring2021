@@ -1,19 +1,18 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const stockRoute = require('./routes/routes.js');
 
-app.use(bodyParser.json());
 
 const connectDB = async () => {
     try {
         await mongoose.connect(process.env.DB_URL, {
             useUnifiedTopology: true,
             useNewUrlParser: true,
+            useFindAndModify: false,
         });
         console.log('Successfully connected to database');
     } catch (err) {
@@ -22,5 +21,8 @@ const connectDB = async () => {
 };
 
 connectDB();
+
+
+app.use('/equity', stockRoute);
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

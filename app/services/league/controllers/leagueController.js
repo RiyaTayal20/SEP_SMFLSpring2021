@@ -20,9 +20,7 @@ const addPlayerToLeague = async (user, leagueID) => {
                 if (err) throw err;
             },
         ),
-    ]).then((succ) => succ).catch((err) => {
-        throw err;
-    });
+    ]).then((succ) => succ).catch((err) => err);
 };
 
 exports.createLeague = async (req, res) => {
@@ -47,9 +45,8 @@ exports.createLeague = async (req, res) => {
 
 exports.joinLeague = async (req, res) => {
     const decodedToken = jwtDecode(req.headers.authorization.slice(7));
-    console.log(decodedToken);
 
-    addPlayerToLeague(req.body.id, req.body.username).then((succ) => {
-        res.send(succ);
-    }).catch((err) => res.send(err));
+    const test = await addPlayerToLeague(decodedToken.user.username, req.body.leagueID);
+    console.log(test);
+    res.send(test);
 };

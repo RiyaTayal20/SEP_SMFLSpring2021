@@ -7,6 +7,13 @@ const leagueSchema = new mongoose.Schema({
         max: 255,
         min: 3,
     },
+    leagueManager: {
+        type: String,
+    },
+    leagueKey: {
+        type: String,
+        default: '',
+    },
     playerList: {
         type: Array,
         default: [],

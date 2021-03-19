@@ -11,31 +11,27 @@ const EquitySchema = new Schema({
         lastUpdated: Date,
         prices: Object,
     },
-    oneday: {
+    '5d': {
         lastUpdated: Date,
         prices: Object,
     },
-    fiveday: {
+    '1m': {
         lastUpdated: Date,
         prices: Object,
     },
-    onemonth: {
+    '6m': {
         lastUpdated: Date,
         prices: Object,
     },
-    sixmonth: {
+    ytd: {
         lastUpdated: Date,
         prices: Object,
     },
-    yeartodate: {
+    '1y': {
         lastUpdated: Date,
         prices: Object,
     },
-    oneyear: {
-        lastUpdated: Date,
-        prices: Object,
-    },
-    fiveyear: {
+    '5y': {
         lastUpdated: Date,
         prices: Object,
     },

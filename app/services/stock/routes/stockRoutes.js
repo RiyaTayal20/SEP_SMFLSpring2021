@@ -4,11 +4,8 @@ const router = express.Router();
 
 const stockController = require('../controllers/stockController');
 
-router.get('/:equityTicker', stockController.equity);
+router.get('/intraday/:equityTicker/', stockController.equityIntraday);
 
-router.get('/', (req, res) => {
-    console.log('Got this');
-    res.send('Hey');
-});
+router.get('/historical/:equityTicker', stockController.equityHistorical);
 
 module.exports = router;

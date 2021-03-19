@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 const Equity = require("../models/equityModel.js");
 require('dotenv').config();
 
-const CACHE_TIME = 10;
+const CACHE_TIME = 1;
 
 const getStatistics = async (ticker) => {
     const equity = await Equity.findOne({tickerSymbol: ticker});

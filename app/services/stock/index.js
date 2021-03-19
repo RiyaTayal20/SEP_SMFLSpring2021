@@ -4,7 +4,7 @@ require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const stockRoute = require('./routes/routes.js');
+const stockRoute = require('./routes/equityRoutes.js');
 
 
 const connectDB = async () => {

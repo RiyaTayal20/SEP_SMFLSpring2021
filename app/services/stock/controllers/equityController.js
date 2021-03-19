@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const Equity = require("../models/models.js");
+const Equity = require("../models/equityModel.js");
 require('dotenv').config();
 
 const CACHE_TIME = 10;

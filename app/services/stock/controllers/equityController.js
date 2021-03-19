@@ -4,21 +4,26 @@ require('dotenv').config();
 
 const CACHE_TIME = 10;
 
-const display = async (ticker) => {
+const getStatistics = async (ticker) => {
     const equity = await Equity.findOne({tickerSymbol: ticker});
     if (equity){
+        //check if equity was recently cached
         const currentTime = new Date();
         const timeDifference = (currentTime - equity.time) / 60000;
         if (timeDifference < CACHE_TIME)
             return equity; 
     }
+
+    //get equity statistics data from API
     const statsReponse = await fetch('https://cloud.iexapis.com/stable/stock/' + ticker + '/stats?token=' + process.env.API_KEY);
     const key_Stats = await statsReponse.json();
     const quoteReponse = await fetch('https://cloud.iexapis.com/stable/stock/' + ticker + '/quote?token=' + process.env.API_KEY);
     const equity_Quote = await quoteReponse.json();
     try {
+        //if not recently cached OR does not exist, add to database
         const savedEquity = await Equity.findOneAndUpdate( {tickerSymbol: ticker}, 
             { $set: { 
+                // only save values we need
                 tickerSymbol: ticker,
                 equityName: key_Stats.companyName,
                 currentPrice: equity_Quote.latestPrice,
@@ -48,11 +53,11 @@ const display = async (ticker) => {
             },
         );
         return savedEquity; 
-        } catch (err) {
-            console.log(err);
-        }
+    } catch (err) {
+        console.log(err);
+    }
 };
 
 exports.equity = async (request, response) => {
-    display(request.params.ticker).then(response.send.bind(response));
+    getStatistics(request.params.ticker).then(response.send.bind(response));
 };

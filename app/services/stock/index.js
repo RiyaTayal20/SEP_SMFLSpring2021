@@ -1,11 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const stockRoute = require('./routes/equityRoutes.js');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const stockRoute = require('./routes/equityRoutes.js');
-
 
 const connectDB = async () => {
     try {
@@ -21,7 +20,6 @@ const connectDB = async () => {
 };
 
 connectDB();
-
 
 app.use('/equity', stockRoute);
 

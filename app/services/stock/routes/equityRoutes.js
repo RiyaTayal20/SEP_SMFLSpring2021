@@ -3,10 +3,6 @@ const router = express.Router();
 
 const equityController = require('../controllers/equityController.js');
 
-router.get('', (req, res, next) => {
-    res.send('Welcome to stocks page');
-});
-
 router.get('/:ticker', equityController.equity);
 
 module.exports = router;

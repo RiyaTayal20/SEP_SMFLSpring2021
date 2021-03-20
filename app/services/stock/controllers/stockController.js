@@ -10,9 +10,12 @@ const AVAILABLE_TIME_FRAMES = ['5d', '1m', '6m', 'ytd', '1y', '5y'];
 // eslint-disable-next-line no-return-assign, max-len, no-param-reassign, no-sequences
 const extractIntraday = (priceArray) => priceArray.reduce((obj, { minute, average }) => (obj[minute] = average, obj), {});
 
-// Format historica price data into an object of <date>:<close_price>
+// Format historical price data into an object of <date>:<close_price>
 // eslint-disable-next-line no-return-assign, max-len, no-param-reassign, no-sequences
 const extractHistorical = (priceArray) => priceArray.reduce((obj, { date, close }) => (obj[date] = close, obj), {});
+
+// Get just the last available intraday price
+const extractCurrent = (priceArray) => priceArray.slice(-1)[0].close;
 
 const getIntraday = async (equityTicker) => {
     try {
@@ -83,8 +86,8 @@ exports.equityIntraday = async (req, res) => {
     const { equityTicker } = req.params;
     console.log(`${equityTicker} intraday prices requested`);
     // eslint-disable-next-line max-len
-    const ex = await getIntraday(equityTicker).then((intradayStockData) => extractIntraday(intradayStockData.prices));
-    res.send(ex);
+    const intraday = await getIntraday(equityTicker).then((intradayStockData) => extractIntraday(intradayStockData.prices));
+    res.send(intraday);
 };
 
 exports.equityHistorical = async (req, res) => {
@@ -96,6 +99,14 @@ exports.equityHistorical = async (req, res) => {
     }
     console.log(`${equityTicker} ${timeframe} historical prices requested`);
     // eslint-disable-next-line max-len
-    const ex = await getHistorical(equityTicker, timeframe).then((historicalStockData) => extractHistorical(historicalStockData.prices));
-    res.send(ex);
+    const historical = await getHistorical(equityTicker, timeframe).then((historicalStockData) => extractHistorical(historicalStockData.prices));
+    res.send(historical);
+};
+
+exports.equityCurrent = async (req, res) => {
+    const { equityTicker } = req.params;
+    console.log(`${equityTicker} current prices requested`);
+    // eslint-disable-next-line max-len
+    const current = await getIntraday(equityTicker).then((intradayStockData) => extractCurrent(intradayStockData.prices));
+    res.send({ price: current });
 };

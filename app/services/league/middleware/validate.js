@@ -1,7 +1,7 @@
 const { check, validationResult } = require('express-validator');
+const jwtDecode = require('jwt-decode');
 const User = require('../models/userModel');
 const League = require('../models/leagueModel');
-const jwtDecode = require('jwt-decode');
 
 exports.signup = [
     check('username')
@@ -85,9 +85,21 @@ exports.joinLeague = [
                 return Promise.reject(new Error('League not found'));
             }
         })),
-    (req, res, next) => {
+    async (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
+
+        const league = await League
+            .findOne({
+                leagueName: req.body.leagueName,
+            })
+            .then((result) => result)
+            .catch(() => null);
+        if (!league) return res.status(422).json('Error: League not found');
+        if (league.playerList.includes(res.locals.username)) {
+            return res.status(422).json('User is already in this league!');
+        }
+        res.locals.league = league;
         next();
     },
 ];
@@ -99,7 +111,7 @@ exports.authValidation = [
         .withMessage('Authorization is required for this action')
         .isString()
         .withMessage('Authorization must be a string'),
-    (req, res, next) => {
+    async (req, res, next) => {
         const errors = validationResult(req);
         const spaceSplit = req.headers.authorization.split(' ');
         if (spaceSplit.length !== 2 || spaceSplit[0] !== 'Bearer') {
@@ -116,6 +128,11 @@ exports.authValidation = [
         } catch (err) {
             return res.status(401).json('Bad Authorization. Cannot decode token');
         }
+        const userCheck = await User.findOne({
+            username: res.locals.username,
+        }).then((user) => user).catch(() => null);
+
+        if (!userCheck) return res.status(401).json('Bad Authorization. Cannot find decrypted user');
         next();
     },
 ];

@@ -72,9 +72,19 @@ exports.authValidation = [
     check('Authorization')
         .not()
         .isEmpty()
-        .withMessage('Authorization is required for this action'),
+        .withMessage('Authorization is required for this action')
+        .isString()
+        .withMessage('Authorization must be a string'),
     (req, res, next) => {
         const errors = validationResult(req);
+        const spaceSplit = req.headers.authorization.split(' ');
+        if (spaceSplit.length !== 2 || spaceSplit[0] !== 'Bearer') {
+            return res.status(401).json('Bad Authorization ("Bearer <token>")');
+        }
+        const dotSplit = spaceSplit[1].split('.');
+        if (dotSplit.length !== 3) {
+            return res.status(401).json('Bad Authorization. Token should have 3 periods');
+        }
         if (!errors.isEmpty()) return res.status(401).json({ errors: errors.array() });
         next();
     },

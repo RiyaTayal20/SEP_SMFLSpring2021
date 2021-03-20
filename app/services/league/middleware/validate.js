@@ -1,6 +1,7 @@
 const { check, validationResult } = require('express-validator');
 const User = require('../models/userModel');
 const League = require('../models/leagueModel');
+const jwtDecode = require('jwt-decode');
 
 exports.signup = [
     check('username')
@@ -68,6 +69,29 @@ exports.leagueCreation = [
     },
 ];
 
+exports.joinLeague = [
+    check('leagueName')
+        .trim()
+        .escape()
+        .not()
+        .isEmpty()
+        .withMessage('League name is required')
+        .isLength({ min: 3, max: 255 })
+        .withMessage('League name must be minimum 3 characters')
+        .custom((value) => League.findOne({
+            leagueName: value,
+        }).then((league) => {
+            if (!league) {
+                return Promise.reject(new Error('League not found'));
+            }
+        })),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
+        next();
+    },
+];
+
 exports.authValidation = [
     check('Authorization')
         .not()
@@ -86,6 +110,12 @@ exports.authValidation = [
             return res.status(401).json('Bad Authorization. Token should have 3 periods');
         }
         if (!errors.isEmpty()) return res.status(401).json({ errors: errors.array() });
+        try {
+            const decodedToken = jwtDecode(req.headers.authorization.slice(7));
+            res.locals.username = decodedToken.user.username;
+        } catch (err) {
+            return res.status(401).json('Bad Authorization. Cannot decode token');
+        }
         next();
     },
 ];

@@ -1,4 +1,3 @@
-const jwtDecode = require('jwt-decode');
 const League = require('../models/leagueModel');
 const User = require('../models/userModel');
 
@@ -22,18 +21,17 @@ const addPlayerToLeague = async (user, leagueID) => Promise.all([
 ]);
 
 exports.createLeague = async (req, res) => {
-    const decodedToken = jwtDecode(req.headers.authorization.slice(7));
-
+    const user = res.locals.username;
     const league = new League({
         leagueName: req.body.leagueName,
-        leagueManager: decodedToken.user.username,
+        leagueManager: user,
         leagueKey: req.body.leagueKey,
         settings: req.body.settings,
     });
 
     try {
         const savedLeague = await league.save();
-        addPlayerToLeague(decodedToken.user.username, savedLeague.id).then(() => {
+        addPlayerToLeague(user, savedLeague.id).then(() => {
             res.send(savedLeague);
         });
     } catch (err) {
@@ -42,13 +40,17 @@ exports.createLeague = async (req, res) => {
 };
 
 exports.joinLeague = async (req, res) => {
-    const decodedToken = jwtDecode(req.headers.authorization.slice(7));
+    const { leagueName } = req.body;
+    try {
+        const leagueID = await League.findOne({ leagueName })
+            .then((league) => league._id)
+            .catch(() => { throw new Error(`Cannot find league named ${leagueName}`); });
 
-    const test = addPlayerToLeague(decodedToken.user.username, req.body.leagueID);
-    console.log(`This is test: ${test}`);
-    test.then((succ) => {
-        res.send(succ);
-    }).catch((err) => {
-        res.err(err);
-    });
+        const test = addPlayerToLeague(res.locals.username, leagueID);
+        test.then((succ) => {
+            res.send(succ);
+        });
+    } catch (err) {
+        return res.status(422).send(`{${err}}`);
+    }
 };

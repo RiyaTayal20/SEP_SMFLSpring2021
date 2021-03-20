@@ -1,3 +1,4 @@
+const { response } = require('express');
 const fetch = require('node-fetch');
 const Equity = require("../models/equityModel.js");
 require('dotenv').config();
@@ -5,21 +6,22 @@ require('dotenv').config();
 const CACHE_TIME = 1;
 
 const getStatistics = async (ticker) => {
-    const equity = await Equity.findOne({tickerSymbol: ticker});
-    if (equity){
-        //check if equity was recently cached
-        const currentTime = new Date();
-        const timeDifference = (currentTime - equity.time) / 60000;
-        if (timeDifference < CACHE_TIME)
-            return equity; 
-    }
-
-    //get equity statistics data from API
-    const statsReponse = await fetch('https://cloud.iexapis.com/stable/stock/' + ticker + '/stats?token=' + process.env.API_KEY);
-    const key_Stats = await statsReponse.json();
-    const quoteReponse = await fetch('https://cloud.iexapis.com/stable/stock/' + ticker + '/quote?token=' + process.env.API_KEY);
-    const equity_Quote = await quoteReponse.json();
     try {
+        const equity = await Equity.findOne({tickerSymbol: ticker});
+        if (equity){
+            //check if equity was recently cached
+            const currentTime = new Date();
+            const timeDifference = (currentTime - equity.time) / 60000;
+            if (timeDifference < CACHE_TIME)
+                return equity;
+        }
+
+        //get equity statistics data from API
+        const statsReponse = await fetch('https://cloud.iexapis.com/stable/stock/' + ticker + '/stats?token=' + process.env.API_KEY);
+        const key_Stats = await statsReponse.json();
+        const quoteReponse = await fetch('https://cloud.iexapis.com/stable/stock/' + ticker + '/quote?token=' + process.env.API_KEY);
+        const equity_Quote = await quoteReponse.json();
+        
         //if not recently cached OR does not exist, add to database
         const savedEquity = await Equity.findOneAndUpdate( {tickerSymbol: ticker}, 
             { $set: { 
@@ -52,9 +54,10 @@ const getStatistics = async (ticker) => {
                 upsert: true,
             },
         );
+        console.log(savedEquity);
         return savedEquity; 
     } catch (err) {
-        console.log(err);
+        response.status(400).send(err);
     }
 };
 

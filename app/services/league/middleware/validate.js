@@ -67,3 +67,15 @@ exports.leagueCreation = [
         next();
     },
 ];
+
+exports.authValidation = [
+    check('Authorization')
+        .not()
+        .isEmpty()
+        .withMessage('Authorization is required for this action'),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) return res.status(401).json({ errors: errors.array() });
+        next();
+    },
+];

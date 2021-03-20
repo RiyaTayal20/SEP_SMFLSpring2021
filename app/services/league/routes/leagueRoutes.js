@@ -5,8 +5,8 @@ const router = express.Router();
 const leagueController = require('../controllers/leagueController');
 const leagueValidation = require('../middleware/validate');
 
-router.post('/create', leagueValidation.leagueCreation, leagueController.createLeague);
+router.post('/create', leagueValidation.authValidation, leagueValidation.leagueCreation, leagueController.createLeague);
 
-router.post('/join', leagueController.joinLeague);
+router.post('/join', leagueValidation.authValidation, leagueController.joinLeague);
 
 module.exports = router;

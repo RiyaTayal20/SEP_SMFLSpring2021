@@ -43,3 +43,13 @@ exports.signup = [
         next();
     },
 ];
+
+exports.ticker = [
+    check('tickerSymbol')
+        .trim()
+        .toLowerCase()
+        .not()
+        .isEmpty()
+        .withMessage('Ticker is required')
+        .custom((value) => )
+];

@@ -5,7 +5,7 @@ const addPlayerToLeague = async (user, leagueID) => Promise.all([
     await League.findByIdAndUpdate(
         leagueID,
         { $addToSet: { playerList: user } },
-        { new: true },
+        {},
         (err) => {
             if (err) throw err;
         },
@@ -13,7 +13,7 @@ const addPlayerToLeague = async (user, leagueID) => Promise.all([
     await User.findOneAndUpdate(
         { username: user },
         { $addToSet: { leagues: leagueID } },
-        { new: true },
+        {},
         (err) => {
             if (err) throw err;
         },
@@ -44,6 +44,43 @@ exports.joinLeague = async (req, res) => {
     const { username } = res.locals;
 
     addPlayerToLeague(username, _id)
-        .then((succ) => res.send(succ))
+        .then((succ) => {
+            if (!res.locals.league.playerList.includes(username)) {
+                return res.send(`Sucessfully joined league! (${req.body.leagueName}) \n ${succ}`);
+            }
+            throw new Error(`Cannot join league that you are already a part of! (${req.body.leagueName}) \n`);
+        })
+        .catch((err) => res.status(422).send(`{${err}}`));
+};
+
+exports.leaveLeague = async (req, res) => {
+    const { _id } = res.locals.league;
+    const { username } = res.locals;
+
+    const request = Promise.all([
+        await League.findByIdAndUpdate(
+            _id,
+            { $pull: { playerList: username } },
+            { new: true },
+            (err) => {
+                if (err) throw err;
+            },
+        ),
+        await User.findOneAndUpdate(
+            { username },
+            { $pull: { leagues: _id } },
+            { new: true },
+            (err) => {
+                if (err) throw err;
+            },
+        ),
+    ]);
+    request
+        .then((succ) => {
+            if (res.locals.league.playerList.includes(username)) {
+                return res.send(`Successfully left league (${req.body.leagueName})\n ${succ}`);
+            }
+            throw new Error(`Cannot leave league! Please make sure that you are a part of the league, (${req.body.leagueName}) before attempting to leave`);
+        })
         .catch((err) => res.status(422).send(`{${err}}`));
 };

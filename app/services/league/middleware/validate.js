@@ -69,7 +69,7 @@ exports.leagueCreation = [
     },
 ];
 
-exports.joinLeague = [
+exports.findValidLeague = [
     check('leagueName')
         .trim()
         .escape()
@@ -77,14 +77,7 @@ exports.joinLeague = [
         .isEmpty()
         .withMessage('League name is required')
         .isLength({ min: 3, max: 255 })
-        .withMessage('League name must be minimum 3 characters')
-        .custom((value) => League.findOne({
-            leagueName: value,
-        }).then((league) => {
-            if (!league) {
-                return Promise.reject(new Error('League not found'));
-            }
-        })),
+        .withMessage('League name must be minimum 3 characters'),
     async (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
@@ -96,13 +89,17 @@ exports.joinLeague = [
             .then((result) => result)
             .catch(() => null);
         if (!league) return res.status(422).json('Error: League not found');
-        if (league.playerList.includes(res.locals.username)) {
-            return res.status(422).json('User is already in this league!');
-        }
         res.locals.league = league;
         next();
     },
 ];
+
+exports.userJoinLeague = async (req, res, next) => {
+    if (res.locals.league.playerList.includes(res.locals.username)) {
+        return res.status(422).json('User is already in this league!');
+    }
+    next();
+};
 
 exports.authValidation = [
     check('Authorization')

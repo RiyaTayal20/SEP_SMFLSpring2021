@@ -5,7 +5,7 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    equityName: {
+    portfolioId: {
         type: String,
         required: true,
     },
@@ -16,6 +16,7 @@ const orderSchema = new mongoose.Schema({
     timePlaced: {
         type: Date,
         required: true,
+        default: Date.now,
     },
     quantity: {
         type: Number,
@@ -25,10 +26,17 @@ const orderSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    expiryDate: {
+        type: Date,
+    },
     executed: {
         type: Boolean,
         required: true,
-    }
+    },
+    activeLimitOrder: {
+        type: Boolean,
+        required: true,
+    },
 });
 
 module.exports = mongoose.model('Order', orderSchema);

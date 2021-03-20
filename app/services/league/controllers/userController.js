@@ -25,7 +25,7 @@ exports.login = async (req, res, next) => {
         if (!user) return res.status(401).send('Invalid username or password.');
         req.logIn(user, { session: false }, (err) => {
             if (err) return next(err);
-            const body = { _id: user._id, email: user.email };
+            const body = { _id: user._id, username: user.username };
             const token = jwt.sign({ user: body }, `${process.env.JWT_KEY}`);
 
             return res.send(token);
@@ -38,5 +38,12 @@ exports.profile = async (req, res) => {
         message: 'You accessed a secure route',
         user: req.user,
         token: req.query.secret_token,
+    });
+};
+
+exports.findUserById = async (req, res) => {
+    await User.findById(req.body._id, (err, user) => {
+        if (err) throw err;
+        res.send(user);
     });
 };

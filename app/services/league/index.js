@@ -6,6 +6,7 @@ const app = express();
 const mongoose = require('mongoose');
 
 const userRoute = require('./routes/userRoutes');
+const tradeRoute = require('./routes/tradeRoutes');
 
 require('dotenv').config();
 
@@ -18,5 +19,6 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use('/user', userRoute);
+app.user('/trade', tradeRoute)
 
 app.listen(process.env.PORT, () => console.log(`Running on port ${process.env.PORT}`));

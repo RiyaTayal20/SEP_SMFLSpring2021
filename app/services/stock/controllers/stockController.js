@@ -44,7 +44,7 @@ const getIntraday = async (equityTicker) => {
         );
         return updatedEquity.intraday;
     } catch (err) {
-        console.error(err);
+        return Promise.reject(new Error('Unable to gather prices from IEX Cloud'));
     }
 };
 
@@ -78,7 +78,7 @@ const getHistorical = async (equityTicker, timeFrame) => {
         );
         return updatedEquity[timeFrame];
     } catch (err) {
-        console.error(err);
+        return Promise.reject(new Error('Unable to gather prices from IEX Cloud'));
     }
 };
 
@@ -86,7 +86,12 @@ exports.equityIntraday = async (req, res) => {
     const { equityTicker } = req.params;
     console.log(`${equityTicker} intraday prices requested`);
     // eslint-disable-next-line max-len
-    const intraday = await getIntraday(equityTicker).then((intradayStockData) => extractIntraday(intradayStockData.prices));
+    const intraday = await getIntraday(equityTicker)
+        .then((intradayStockData) => extractIntraday(intradayStockData.prices))
+        .catch((err) => {
+            console.error(err);
+            res.status(400).json({ error: err.message });
+        });
     res.send(intraday);
 };
 
@@ -99,7 +104,12 @@ exports.equityHistorical = async (req, res) => {
     }
     console.log(`${equityTicker} ${timeframe} historical prices requested`);
     // eslint-disable-next-line max-len
-    const historical = await getHistorical(equityTicker, timeframe).then((historicalStockData) => extractHistorical(historicalStockData.prices));
+    const historical = await getHistorical(equityTicker, timeframe).
+        then((historicalStockData) => extractHistorical(historicalStockData.prices))
+        .catch((err) => {
+            console.error(err);
+            res.status(400).json({ error: err.message });
+        });
     res.send(historical);
 };
 
@@ -107,6 +117,11 @@ exports.equityCurrent = async (req, res) => {
     const { equityTicker } = req.params;
     console.log(`${equityTicker} current prices requested`);
     // eslint-disable-next-line max-len
-    const current = await getIntraday(equityTicker).then((intradayStockData) => extractCurrent(intradayStockData.prices));
+    const current = await getIntraday(equityTicker)
+        .then((intradayStockData) => extractCurrent(intradayStockData.prices))
+        .catch((err) => {
+            console.error(err);
+            res.status(400).json({ error: err.message });
+        });
     res.send({ price: current });
 };

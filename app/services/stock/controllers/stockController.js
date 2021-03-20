@@ -104,8 +104,8 @@ exports.equityHistorical = async (req, res) => {
     }
     console.log(`${equityTicker} ${timeframe} historical prices requested`);
     // eslint-disable-next-line max-len
-    const historical = await getHistorical(equityTicker, timeframe).
-        then((historicalStockData) => extractHistorical(historicalStockData.prices))
+    const historical = await getHistorical(equityTicker, timeframe)
+        .then((historicalStockData) => extractHistorical(historicalStockData.prices))
         .catch((err) => {
             console.error(err);
             res.status(400).json({ error: err.message });

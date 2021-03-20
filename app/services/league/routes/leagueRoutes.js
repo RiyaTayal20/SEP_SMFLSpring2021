@@ -11,4 +11,6 @@ router.post('/join', leagueValidation.authValidation, leagueValidation.findValid
 
 router.post('/leave', leagueValidation.authValidation, leagueValidation.findValidLeague, leagueController.leaveLeague);
 
+router.post('/disband', leagueValidation.authValidation, leagueValidation.findValidLeague, leagueController.disbandLeague);
+
 module.exports = router;

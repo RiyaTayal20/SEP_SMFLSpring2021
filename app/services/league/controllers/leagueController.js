@@ -31,7 +31,7 @@ exports.createLeague = async (req, res) => {
 
     try {
         const savedLeague = await league.save();
-        addPlayerToLeague(user, savedLeague.id).then(() => {
+        addPlayerToLeague(user, savedLeague._id).then(() => {
             res.send(savedLeague);
         });
     } catch (err) {
@@ -83,4 +83,34 @@ exports.leaveLeague = async (req, res) => {
             throw new Error(`Cannot leave league! Please make sure that you are a part of the league, (${req.body.leagueName}) before attempting to leave`);
         })
         .catch((err) => res.status(422).send(`{${err}}`));
+};
+
+exports.disbandLeague = async (req, res) => {
+    const { _id, leagueManager: manager } = res.locals.league;
+    const { username } = res.locals;
+
+    if (manager !== username) {
+        return res.status(401).send('Cannot disband league. User is not the league manager');
+    }
+
+    const delReq = Promise.all([
+        await League.deleteOne(
+            { _id },
+            {},
+            (err) => {
+                if (err) throw err;
+            },
+        ),
+        await User.updateMany(
+            { leagues: { $in: _id } },
+            { $pull: { leagues: _id } },
+            {},
+            (err) => {
+                if (err) throw err;
+            },
+        ),
+    ]);
+
+    delReq.then(() => res.send(`Successfully disbanded league! (${res.locals.league.leagueName})`))
+        .catch((err) => res.status(422).send(`Cannot disband league cleanly. Unknown Error occurred. \n ${err}`));
 };

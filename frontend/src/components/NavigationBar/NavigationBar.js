@@ -17,40 +17,24 @@ function NavigationBar() {
             <Card.Header class="card-header" style={{ backgroundColor: 'white' }}>
                 <Card.Link href="#" style={{ color: '#2F2F31' }}>Trade</Card.Link>
             </Card.Header>
-            <Card.Header class="card-header" style={{ backgroundColor: 'white' }}>
-                <Accordion.Toggle
-                    as={Card.Header}
-                    eventKey=""
-                    className="leagues-card"
-                    style={{
-                        backgroundColor: 'white',
-                        border: 'none',
-                        padding: '0rem',
-                        color: 'black',
-                    }}
-                >
-                    Leagues
-                </Accordion.Toggle>
-                <div className="arrow">
-                    <img src={Icon} alt="dropdown-arrow" className="dropdown-icon" style={{ height: '10px', width: '10px' }} />
-                </div>
-            </Card.Header>
-            <Accordion.Collapse eventKey="0">
-                <ListGroup>
-                    <ListGroup.Item className="leagues-item">
-                        <Card.Link href="#" style={{ marginLeft: '20px', color: '#2F2F31' }}>Current Leagues</Card.Link>
-                    </ListGroup.Item>
-                    <ListGroup.Item className="leagues-item">
-                        <Card.Link href="#" style={{ marginLeft: '20px', color: '#2F2F31' }}>Join Leagues</Card.Link>
-                    </ListGroup.Item>
-                    <ListGroup.Item className="leagues-item">
-                        <Card.Link href="#" style={{ marginLeft: '20px', color: '#2F2F31' }}>Create Leagues</Card.Link>
-                    </ListGroup.Item>
-                    <ListGroup.Item className="leagues-item">
-                        <Card.Link href="#" style={{ marginLeft: '20px', color: '#2F2F31' }}>Transaction History</Card.Link>
-                    </ListGroup.Item>
-                </ListGroup>
-            </Accordion.Collapse>
+            <Accordion>
+                <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey="0" style={{ color: '#2F2F31', backgroundColor: 'white' }}>
+                        Leagues
+                        <div className="arrow">
+                            <img src={Icon} alt="dropdown-arrow" className="dropdown-icon" style={{ height: '10px', width: '10px' }} />
+                        </div>
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="0">
+                        <ListGroup style={{ marginLeft: '20px', borderRadius: '0rem' }}>
+                            <ListGroup.Item>Current Leagues</ListGroup.Item>
+                            <ListGroup.Item>Join Leaguee</ListGroup.Item>
+                            <ListGroup.Item>Create League</ListGroup.Item>
+                            <ListGroup.Item>Transaction History</ListGroup.Item>
+                        </ListGroup>
+                    </Accordion.Collapse>
+                </Card>
+            </Accordion>
             <Card.Header class="card-header" style={{ backgroundColor: 'white' }}>
                 <Card.Link href="#" style={{ color: '#2F2F31' }}>Symbol Lookup</Card.Link>
             </Card.Header>

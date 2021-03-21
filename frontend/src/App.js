@@ -8,6 +8,7 @@ import {
     TradePage,
 } from './components/Pages';
 import Header from './components/Header/Header';
+import NavigationBar from './components/NavigationBar/NavigationBar';
 import './styles/global.scss';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
                     <Route path="/user/login">
                         <LoginPage />
                     </Route>
+                    <NavigationBar />
                     <Route path="/home">
                         <HomePage />
                     </Route>

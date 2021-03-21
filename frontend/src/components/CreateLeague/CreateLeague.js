@@ -69,7 +69,7 @@ function CreateLeague() {
                                  </InputGroup.Prepend>
                             <Form.Control type="number" min= "0" step="0.01" placeholder="Enter starting balance.." required />
                             <Form.Control.Feedback type="invalid">
-                                 Please provide a starting value.
+                                 Please provide a valid starting value.
                             </Form.Control.Feedback>
                             </InputGroup>
                         </Col>
@@ -87,7 +87,7 @@ function CreateLeague() {
                             <InputGroup.Text>%</InputGroup.Text>
                               </InputGroup.Append>
                                 <Form.Control.Feedback type="invalid">
-                                 Please provide a comm percentage to 2 decimal places.
+                                 Please provide a valid comm percentage to 2 decimal places.
                             </Form.Control.Feedback>        
                            </InputGroup>
                         </Col>

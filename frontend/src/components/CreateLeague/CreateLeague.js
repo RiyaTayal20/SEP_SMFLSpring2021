@@ -79,14 +79,20 @@ function CreateLeague() {
                     </Row>
                 </Form.Group>
 
-                <Form.Group controlId="formAI">
-                    <Row>
-                        <Form.Label column> # of AI Players </Form.Label>
-                        <Col>
-                            <Form.Control type="balance" placeholder="Default is 0" />
-                        </Col>
-                    </Row>
-                </Form.Group>
+                <Form.Group as={Row} controlId="NumofAIBots">
+                  <Form.Label column sm={2}>
+                            # of AI bots: 
+                  </Form.Label>
+              <Col sm={10}>
+                <Form.Control as="select" custom>
+                     <option value="0">Zero</option>
+                     <option value="1">One</option>
+                     <option value="2">Two</option>
+                     <option value="3">Three</option>
+              </Form.Control>
+          </Col>
+         </Form.Group>
+
 
                 <Form.Group as={Row} controlId="formStart">
     <Form.Label column sm={2}>

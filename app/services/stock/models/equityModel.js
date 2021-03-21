@@ -37,4 +37,15 @@ const EquitySchema = new Schema({
     },
 });
 
-module.exports = mongoose.model('Equity', EquitySchema);
+const TickerSchema = new Schema({
+    ticker: {
+        type: String,
+        unique: true,
+        required: true,
+    },
+});
+
+module.exports = {
+    Equity: mongoose.model('Equity', EquitySchema),
+    Ticker: mongoose.model('Ticker', TickerSchema),
+};

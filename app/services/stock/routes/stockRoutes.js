@@ -10,6 +10,8 @@ router.get('/historical/:equityTicker', stockController.equityHistorical);
 
 router.get('/current/:equityTicker', stockController.equityCurrent);
 
+router.get('/tickers/:equityTicker', stockController.equityTickers);
+
 router.get('*', (req, res) => {
     res.send('Endpoint does not exist');
 });

@@ -54,13 +54,18 @@ const getStatistics = async (ticker) => {
                 upsert: true,
             },
         );
-        console.log(savedEquity);
         return savedEquity; 
     } catch (err) {
-        response.status(400).send(err);
+        console.error(err);
+        return err;
     }
 };
 
 exports.equity = async (request, response) => {
-    getStatistics(request.params.ticker).then(response.send.bind(response));
+    const statistics = await getStatistics(request.params.ticker)
+    .catch((err) => {
+        console.error(err);
+        response.status(400).send(err);
+    });
+    response.send(statistics);
 };

@@ -20,7 +20,7 @@ function NavigationBar() {
             <Accordion>
                 <Card>
                     <Accordion.Toggle as={Card.Header} eventKey="0" style={{ color: '#2F2F31', backgroundColor: 'white' }}>
-                        <Card.Link href="#" style={{ color: '#2F2F31' }}>Leagues</Card.Link>
+                        Leagues
                         <div className="arrow">
                             <img src={Icon} alt="dropdown-arrow" className="dropdown-icon" style={{ height: '10px', width: '10px' }} />
                         </div>

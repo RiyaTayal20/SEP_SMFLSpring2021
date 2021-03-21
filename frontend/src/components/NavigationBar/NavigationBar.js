@@ -9,7 +9,7 @@ function NavigationBar() {
     return (
         <Accordion className="sidebar" style={{ border: '4px' }}>
             <Card.Header class="card-header" style={{ backgroundColor: 'white' }}>
-                <Card.Link className="card-link" href="#" style={{ color: '#2F2F31' }}>Home</Card.Link>
+                <Card.Link className="card-link" href="/home" style={{ color: '#2F2F31' }}>Home</Card.Link>
             </Card.Header>
             <Card.Header class="card-header" style={{ backgroundColor: 'white' }}>
                 <Card.Link href="#" style={{ color: '#2F2F31' }}>Portfolio</Card.Link>

@@ -63,10 +63,15 @@ function CreateLeague() {
                     <Row>
                         <Form.Label column> Starting Balance </Form.Label>
                         <Col>
+                             <InputGroup hasValidation>
+                                  <InputGroup.Prepend>
+                                    <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+                                 </InputGroup.Prepend>
                             <Form.Control type="number" min= "0" step="0.01" placeholder="Enter starting balance.." required />
                             <Form.Control.Feedback type="invalid">
                                  Please provide a starting value.
                             </Form.Control.Feedback>
+                            </InputGroup>
                         </Col>
                     </Row>
                 </Form.Group>

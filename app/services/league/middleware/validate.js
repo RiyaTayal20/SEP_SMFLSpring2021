@@ -94,13 +94,6 @@ exports.findValidLeague = [
     },
 ];
 
-exports.userJoinLeague = async (req, res, next) => {
-    if (res.locals.league.playerList.includes(res.locals.username)) {
-        return res.status(422).json('User is already in this league!');
-    }
-    next();
-};
-
 exports.authValidation = [
     check('Authorization')
         .not()

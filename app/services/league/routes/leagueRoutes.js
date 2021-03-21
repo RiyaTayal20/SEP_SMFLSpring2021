@@ -7,7 +7,7 @@ const leagueValidation = require('../middleware/validate');
 
 router.post('/create', leagueValidation.authValidation, leagueValidation.leagueCreation, leagueController.createLeague);
 
-router.post('/join', leagueValidation.authValidation, leagueValidation.findValidLeague, leagueController.joinLeague);
+router.post('/join', leagueValidation.authValidation, leagueValidation.findValidLeague, leagueController.authorizeLeague, leagueController.joinLeague);
 
 router.post('/leave', leagueValidation.authValidation, leagueValidation.findValidLeague, leagueController.leaveLeague);
 

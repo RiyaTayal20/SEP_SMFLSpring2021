@@ -1,6 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { RegistrationPage, LoginPage, HomePage } from './components/Pages';
+import Container from 'react-bootstrap/Container';
+import {
+    RegistrationPage,
+    LoginPage,
+    HomePage,
+    TradePage,
+} from './components/Pages';
 import Header from './components/Header/Header';
 import './styles/global.scss';
 
@@ -18,6 +24,11 @@ function App() {
                     </Route>
                     <Route path="/home">
                         <HomePage />
+                    </Route>
+                    <Route path="/trade">
+                        <Container>
+                            <TradePage />
+                        </Container>
                     </Route>
                 </Switch>
             </div>

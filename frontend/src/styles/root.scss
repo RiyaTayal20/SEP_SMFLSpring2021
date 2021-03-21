@@ -1,6 +1,7 @@
 :root {
     --mint: #3FC380;
     --dark-scale-grey: #2F2F31;
+    --white: #FFFFFF;
   }
   
   html, body {
@@ -18,14 +19,14 @@
     font-family: inherit;
   }
 
-  %flex-center {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+   %flex-center {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+   }
 
   .container {
     height: 80vh;
     display: flex;
-    justify-content: center;
+    // justify-content: center;
   }

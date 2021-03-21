@@ -47,7 +47,7 @@ function Register() {
     };
 
     return (
-        <div>
+        <div className="testing">
             <div>
                 <div className="registration-form-title">Create your free account here!</div>
             </div>

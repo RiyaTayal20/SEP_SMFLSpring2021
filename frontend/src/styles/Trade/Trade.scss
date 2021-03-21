@@ -1,0 +1,136 @@
+@import '../Button.scss';
+
+
+.trade-page{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.order-stock-titles{
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    justify-content: space-around;
+    
+}
+
+.league-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.league-title{
+    margin-top: 5px;
+}
+
+.league-dropdown{
+    margin: 0px 0px 20px 20px;
+    .btn{
+        @include btn;
+        background-color: #EEEEEE;
+        border-color: #EEEEEE;
+        color: #495057;
+    }
+   
+}
+
+.stock-symbol-section{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.stock-symbol{
+    display: flex;
+    flex-direction: row;
+}
+
+.transaction-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.transaction-title{
+    margin: 0px 0px 20px 20px;
+}
+
+.transaction-dropdown{
+    margin-bottom: 20px;
+    .btn{
+        @include btn;
+        background-color: #EEEEEE;
+        border-color: #EEEEEE;
+        color: #495057;
+    }
+}
+
+.quantity-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.quantity{
+    display: flex;
+    flex-direction: row;
+}
+
+.price-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.order-stock-boxes{
+    margin-bottom: 20px;
+    color: var(--white);
+    align-self: flex-end;
+    justify-content: space-around;  
+    flex-wrap: wrap;  
+}
+
+.account-details-titles{
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+
+.account-details{
+    text-decoration:underline;
+}
+
+
+// .order-stock-boxes{
+//     display: flex;
+//     //justify-content: center;
+//     align-items: flex-start;
+//     // flex-wrap: wrap;
+//     flex-direction: column;
+// }
+
+.order-title{
+    text-decoration:underline;
+}
+
+.duration-dropdown{
+    margin-bottom: 20px;
+    .btn{
+        @include btn;
+        background-color: #EEEEEE;
+        border-color: #EEEEEE;
+        color: #495057;
+    }
+    
+}
+
+.previewOrder{
+    btn{
+        background-color: #EEEEEE;
+        border-color: #EEEEEE;
+    }
+        
+}
+

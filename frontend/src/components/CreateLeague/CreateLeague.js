@@ -80,10 +80,16 @@ function CreateLeague() {
                     <Row>
                         <Form.Label column> Commission Percentage(%) </Form.Label>
                         <Col>
-                            <Form.Control type="number" min="0" max="100" step="0.01" placeholder="Enter percentage to 2 decimal places" required />
+                       <InputGroup hasValidation>
+                            <Form.Control type="number" min="0" max="100" step="0.01" placeholder="Enter percentage to 2 decimal places" required  />
+                             
+                          <InputGroup.Append>  
+                            <InputGroup.Text>%</InputGroup.Text>
+                              </InputGroup.Append>
                                 <Form.Control.Feedback type="invalid">
                                  Please provide a comm percentage to 2 decimal places.
-                            </Form.Control.Feedback>
+                            </Form.Control.Feedback>        
+                           </InputGroup>
                         </Col>
                     </Row>
                 </Form.Group>

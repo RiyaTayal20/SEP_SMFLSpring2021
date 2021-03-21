@@ -13,4 +13,8 @@ router.post('/leave', leagueValidation.authValidation, leagueValidation.findVali
 
 router.post('/disband', leagueValidation.authValidation, leagueValidation.findValidLeague, leagueController.disbandLeague);
 
+router.get('/find', leagueController.getLeagues);
+
+router.get('/names', leagueController.getLeagueNames);
+
 module.exports = router;

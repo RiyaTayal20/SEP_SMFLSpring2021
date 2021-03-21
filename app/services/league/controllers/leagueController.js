@@ -102,6 +102,20 @@ exports.leaveLeague = async (req, res) => {
         .catch((err) => res.status(422).send(`{${err}}`));
 };
 
+exports.getLeagues = async (req, res) => {
+    await League.find({}, (err, result) => {
+        if (err) throw err;
+        else res.send(result);
+    });
+};
+
+exports.getLeagueNames = async (req, res) => {
+    await League.find({}, 'leagueName', (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+};
+
 exports.disbandLeague = async (req, res) => {
     const { _id, leagueManager: manager } = res.locals.league;
     const { username } = res.locals;

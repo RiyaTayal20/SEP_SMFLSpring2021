@@ -134,80 +134,31 @@ function CreateLeague() {
           </Col>
          </Form.Group>
 
-
-                <Form.Group as={Row} controlId="formStart">
-    <Form.Label column sm={2}>
-      Start Date:
-    </Form.Label>
-
-    <Form.Group as={Col} controlId="startMonth">
-      <Form.Label>Month</Form.Label>
-      <Form.Control as="select" defaultValue="Choose...">
-        <option>January</option>
-        <option>February</option>
-        <option>March</option>
-        <option>April</option>
-      </Form.Control>
-    </Form.Group>
-
-    <Form.Group as={Col} controlId="startDay">
-      <Form.Label>Day</Form.Label>
-      <Form.Control as="select" defaultValue="Choose...">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-      </Form.Control>
-    </Form.Group>
-
-<Form.Group as={Col} controlId="startYear">
-      <Form.Label>Year</Form.Label>
-      <Form.Control as="select" defaultValue="Choose...">
-        <option>2021</option>
-        <option>2022</option>
-        <option>2023</option>
-        <option>2024</option>
-      </Form.Control>
-    </Form.Group>
-  </Form.Group>
-
-
-                <Form.Group as={Row} controlId="EndDate">
-    <Form.Label column sm={2}>
-      End Date:
-    </Form.Label>
-
-    <Form.Group as={Col} controlId="endMonth">
-      <Form.Label>Month</Form.Label>
-      <Form.Control as="select" defaultValue="Choose...">
-        <option>January</option>
-        <option>February</option>
-        <option>March</option>
-        <option>April</option>
-      </Form.Control>
-    </Form.Group>
-
-    <Form.Group as={Col} controlId="endDay">
-      <Form.Label>Day</Form.Label>
-      <Form.Control as="select" defaultValue="Choose...">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-      </Form.Control>
-    </Form.Group>
-
-<Form.Group as={Col} controlId="endYear">
-      <Form.Label>Year</Form.Label>
-      <Form.Control as="select" defaultValue="Choose...">
-        <option>2021</option>
-        <option>2022</option>
-        <option>2023</option>
-        <option>2024</option>
-      </Form.Control>
-    </Form.Group>
-
-  </Form.Group>
+        <Form.Group controlId="formStart">
+                    <Row>
+                        <Form.Label column> Start Date </Form.Label>
+                        <Col>
+                      
+                            <Form.Control type="date" min="2021-03-21" max="2050-03-21" placeholder="Enter a start date" required  />
+                                <Form.Control.Feedback type="invalid">
+                                 Please provide a valid start date.
+                            </Form.Control.Feedback>        
+                        </Col>
+                    </Row>
+                </Form.Group>
+    
+    <Form.Group controlId="formEnd">
+                    <Row>
+                        <Form.Label column> End Date </Form.Label>
+                        <Col>
+                      
+                            <Form.Control type="date" min="2021-03-22" max="2050-03-21" placeholder="Enter an end date" required  />
+                                <Form.Control.Feedback type="invalid">
+                                 Please provide a valid end date.
+                            </Form.Control.Feedback>        
+                        </Col>
+                    </Row>
+                </Form.Group>
 
 
                 <Button type="submit">Submit form</Button>

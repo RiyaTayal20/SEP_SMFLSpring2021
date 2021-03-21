@@ -21,7 +21,7 @@ const connectDB = async () => {
 const gatherTickers = async () => {
     const response = await fetch(`https://cloud.iexapis.com/stable/ref-data/iex/symbols?token=${process.env.IEX_TOKEN}`);
     const tickerList = await response.json();
-    tickerList.forEach((element) => {
+    await tickerList.forEach((element) => {
         const insertTicker = new Ticker({ ticker: element.symbol });
         insertTicker.save();
     });

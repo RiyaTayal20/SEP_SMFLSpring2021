@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-const Equity = require('../models/equityModel');
+const { Equity, Ticker } = require('../models/equityModel');
 
 // Number of minutes that a stock is considered recent - won't update price unless longer than this
 const CACHE_TIME = 1;
@@ -124,4 +124,18 @@ exports.equityCurrent = async (req, res) => {
             res.status(400).json({ error: err.message });
         });
     res.send({ price: current });
+};
+
+exports.equityTickers = async (req, res) => {
+    const { equityTicker } = req.params;
+    console.log(`Checking if ${equityTicker.toUpperCase()} is a valid ticker`);
+    await Ticker.countDocuments({ ticker: equityTicker.toUpperCase() }, (err, count) => {
+        if (err) {
+            res.status(503).json({ error: 'Unable to access database' });
+        } else if (count !== 0) {
+            res.json({ exists: true });
+        } else {
+            res.json({ exists: false });
+        }
+    });
 };

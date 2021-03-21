@@ -18,12 +18,24 @@ function CreateLeague() {
     // const [showError, setShowError] = useState(false);
     // const [error, setError] = useState('');
 
+    const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    setValidated(true);
+  };
+    
     return (
         <div>
             <div>
                 <div className="create-league-form-title">Create your fantasy league</div>
             </div>
-            <Form className="create-league-form">
+            <Form className="create-league-form" noValidate validated={validated} onSubmit={handleSubmit}>
                 {/* {showError
                     && (
                         <Alert variant="danger" onClose={() => setShowError(false)} dismissible>
@@ -35,16 +47,26 @@ function CreateLeague() {
                     <Row>
                         <Form.Label column>League Name</Form.Label>
                         <Col>
-                            <Form.Control type="username" placeholder="Enter name" />
+                            <Form.Control 
+                                required
+                                type="text" 
+                                placeholder="Enter League Name..." />
+                            <Form.Control.Feedback type="invalid">
+                                 Please provide a League Name.
+                            </Form.Control.Feedback>
                         </Col>
                     </Row>
+                
                 </Form.Group>
 
                 <Form.Group controlId="formBalance">
                     <Row>
                         <Form.Label column> Starting Balance </Form.Label>
                         <Col>
-                            <Form.Control type="balance" placeholder="Enter number" />
+                            <Form.Control type="number" min= "0" step="0.01" placeholder="Enter starting balance.." required />
+                            <Form.Control.Feedback type="invalid">
+                                 Please provide a starting value.
+                            </Form.Control.Feedback>
                         </Col>
                     </Row>
                 </Form.Group>
@@ -53,7 +75,10 @@ function CreateLeague() {
                     <Row>
                         <Form.Label column> Commission Percentage(%) </Form.Label>
                         <Col>
-                            <Form.Control type="balance" placeholder="Enter number" />
+                            <Form.Control type="number" min="0" max="100" step="0.01" placeholder="Enter percentage to 2 decimal places" required />
+                                <Form.Control.Feedback type="invalid">
+                                 Please provide a comm percentage to 2 decimal places.
+                            </Form.Control.Feedback>
                         </Col>
                     </Row>
                 </Form.Group>
@@ -62,7 +87,10 @@ function CreateLeague() {
                     <Row>
                         <Form.Label column> Trade Limit </Form.Label>
                         <Col>
-                            <Form.Control type="balance" placeholder="Default is 0" />
+                            <Form.Control type="balance" placeholder="Default is 0" required/>
+                                <Form.Control.Feedback type="invalid">
+                                 Please provide a Trade/Day Limit.
+                            </Form.Control.Feedback>
                         </Col>
                     </Row>
                 </Form.Group>
@@ -71,10 +99,11 @@ function CreateLeague() {
                     <Row>
                         <Form.Label column> Visibility </Form.Label>
                         <Col>
-                            <Form.Control as="select" defaultValue="Choose...">
+                            <Form.Control as="select" defaultValue="Choose..." >
                                 <option>Public</option>
                                 <option>Private</option>
                             </Form.Control>
+
                         </Col>
                     </Row>
                 </Form.Group>
@@ -84,12 +113,13 @@ function CreateLeague() {
                             # of AI bots: 
                   </Form.Label>
               <Col sm={10}>
-                <Form.Control as="select" custom>
+                <Form.Control as="select" custom >
                      <option value="0">Zero</option>
                      <option value="1">One</option>
                      <option value="2">Two</option>
                      <option value="3">Three</option>
-              </Form.Control>
+              </Form.Control>  
+
           </Col>
          </Form.Group>
 
@@ -169,9 +199,7 @@ function CreateLeague() {
   </Form.Group>
 
 
-                <Button>
-                    Submit
-                </Button>
+                <Button type="submit">Submit form</Button>
             </Form>
         </div>
     );

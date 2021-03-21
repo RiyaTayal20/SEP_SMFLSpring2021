@@ -11,6 +11,10 @@
     background-color: white;
     display: flex;
     flex-direction: row;
+
+    &:hover{
+        text-decoration: underline;
+    }
     
     .arrow{
         padding-left: 140px;
@@ -23,6 +27,8 @@
         height: 10px;
         width: 10px;
     }
+
+    
 }
 
 .leagues-item{

@@ -20,17 +20,25 @@ function NavigationBar() {
             <Accordion>
                 <Card>
                     <Accordion.Toggle as={Card.Header} eventKey="0" style={{ color: '#2F2F31', backgroundColor: 'white' }}>
-                        Leagues
+                        <Card.Link href="#" style={{ color: '#2F2F31' }}>Leagues</Card.Link>
                         <div className="arrow">
                             <img src={Icon} alt="dropdown-arrow" className="dropdown-icon" style={{ height: '10px', width: '10px' }} />
                         </div>
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="0">
                         <ListGroup style={{ marginLeft: '20px', borderRadius: '0rem' }}>
-                            <ListGroup.Item>Current Leagues</ListGroup.Item>
-                            <ListGroup.Item>Join Leaguee</ListGroup.Item>
-                            <ListGroup.Item>Create League</ListGroup.Item>
-                            <ListGroup.Item>Transaction History</ListGroup.Item>
+                            <ListGroup.Item className="leagues-item">
+                                <Card.Link href="#" style={{ color: '#2F2F31' }}>Current Leagues</Card.Link>
+                            </ListGroup.Item>
+                            <ListGroup.Item className="leagues-item">
+                                <Card.Link href="#" style={{ color: '#2F2F31' }}>Join League</Card.Link>
+                            </ListGroup.Item>
+                            <ListGroup.Item className="leagues-item">
+                                <Card.Link href="#" style={{ color: '#2F2F31' }}>Create League</Card.Link>
+                            </ListGroup.Item>
+                            <ListGroup.Item className="leagues-item">
+                                <Card.Link href="#" style={{ color: '#2F2F31' }}>Transaction History</Card.Link>
+                            </ListGroup.Item>
                         </ListGroup>
                     </Accordion.Collapse>
                 </Card>

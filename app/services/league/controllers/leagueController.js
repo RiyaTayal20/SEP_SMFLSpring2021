@@ -22,6 +22,14 @@ const addPlayerToLeague = async (user, leagueID) => Promise.all([
 
 exports.createLeague = async (req, res) => {
     const user = res.locals.username;
+
+    if (req.body.settings.maxPlayers < 1) {
+        return res.status(400).send('The maximum number of players must be positive');
+    }
+
+    // TO-DO:
+    // Add more checks to validate create League info
+
     const league = new League({
         leagueName: req.body.leagueName,
         leagueManager: user,
@@ -43,19 +51,25 @@ exports.joinLeague = async (req, res) => {
     const { _id } = res.locals.league;
     const { username } = res.locals;
 
+    if (res.locals.league.playerList.includes(username)) {
+        return res.status(422).send(`Cannot join league that you are already a part of! (${req.body.leagueName}) \n`);
+    }
+    if (res.locals.league.playerList.length >= res.locals.league.settings.maxPlayers) {
+        return res.status(400).send(`Cannot join league since it is full! (${req.body.leagueName}) \n`);
+    }
+
     addPlayerToLeague(username, _id)
-        .then((succ) => {
-            if (!res.locals.league.playerList.includes(username)) {
-                return res.send(`Sucessfully joined league! (${req.body.leagueName}) \n ${succ}`);
-            }
-            throw new Error(`Cannot join league that you are already a part of! (${req.body.leagueName}) \n`);
-        })
+        .then((succ) => res.status(422).send(`Sucessfully joined league! (${req.body.leagueName}) \n ${succ}`))
         .catch((err) => res.status(422).send(`{${err}}`));
 };
 
 exports.leaveLeague = async (req, res) => {
     const { _id } = res.locals.league;
     const { username } = res.locals;
+
+    if (!res.locals.league.playerList.includes(username)) {
+        return res.status(422).send(`Cannot leave league! Please make sure that you are a part of the league, (${req.body.leagueName}) before attempting to leave`);
+    }
 
     const request = Promise.all([
         await League.findByIdAndUpdate(
@@ -76,12 +90,7 @@ exports.leaveLeague = async (req, res) => {
         ),
     ]);
     request
-        .then((succ) => {
-            if (res.locals.league.playerList.includes(username)) {
-                return res.send(`Successfully left league (${req.body.leagueName})\n ${succ}`);
-            }
-            throw new Error(`Cannot leave league! Please make sure that you are a part of the league, (${req.body.leagueName}) before attempting to leave`);
-        })
+        .then((succ) => res.send(`Successfully left league (${req.body.leagueName})\n ${succ}`))
         .catch((err) => res.status(422).send(`{${err}}`));
 };
 

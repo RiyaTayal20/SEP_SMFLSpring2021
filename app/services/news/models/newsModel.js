@@ -7,12 +7,16 @@ const newsSchema = new Schema({
         type: String,
         requird: true,
     },
+    image: {
+        type: String
+    },
     url: {
         type: String,
         required: true,
     },
     date: {
         type: date,
+        required: true
     },
 });
 

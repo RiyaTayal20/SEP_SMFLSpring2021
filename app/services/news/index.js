@@ -24,6 +24,8 @@ const connectDB = async () => {
 
 connectDB();
 
+app.use(cors());
+
 app.use('/news', newsRoute);
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

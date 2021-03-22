@@ -35,7 +35,7 @@
 
 .form-label{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: flex-start;
     min-width: 200px;
 }
@@ -45,8 +45,10 @@
 }
 
 .form-control{
+    min-width: 300px;
+}
+
+.form-content{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    min-width: 300px;
 }

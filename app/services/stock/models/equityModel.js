@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 
-const equitySchema = new mongoose.Schema({
+const { Schema } = mongoose;
+
+const EquitySchema = new Schema({
     tickerSymbol: {
         type: String,
         required: true,
-        min: 1,
-        max: 5,
+        unique: true,
     },
     equityName: {
         type: String,
@@ -97,5 +98,45 @@ const equitySchema = new mongoose.Schema({
         }
     }]
     */
+    intraday: {
+        lastUpdated: Date,
+        prices: Object,
+    },
+    '5d': {
+        lastUpdated: Date,
+        prices: Object,
+    },
+    '1m': {
+        lastUpdated: Date,
+        prices: Object,
+    },
+    '6m': {
+        lastUpdated: Date,
+        prices: Object,
+    },
+    ytd: {
+        lastUpdated: Date,
+        prices: Object,
+    },
+    '1y': {
+        lastUpdated: Date,
+        prices: Object,
+    },
+    '5y': {
+        lastUpdated: Date,
+        prices: Object,
+    },
 });
-module.exports = mongoose.model('Equity', equitySchema);
+
+const TickerSchema = new Schema({
+    ticker: {
+        type: String,
+        unique: true,
+        required: true,
+    },
+});
+
+module.exports = {
+    Equity: mongoose.model('Equity', EquitySchema),
+    Ticker: mongoose.model('Ticker', TickerSchema),
+};

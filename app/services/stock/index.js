@@ -1,6 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+
 const stockRoute = require('./routes/equityRoutes.js');
+
 require('dotenv').config();
 
 const app = express();
@@ -20,6 +24,9 @@ const connectDB = async () => {
 };
 
 connectDB();
+
+app.use(cors());
+app.use(bodyParser.json());
 
 app.use('/equity', stockRoute);
 

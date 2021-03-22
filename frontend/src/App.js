@@ -11,7 +11,6 @@ function App() {
             <div className="App">
                 <Header />
                 <div className="site-container">
-                    <NavigationBar />
                     <div className="site-content">
                         <Switch>
                             <Route path="/user/register">
@@ -20,6 +19,7 @@ function App() {
                             <Route path="/user/login">
                                 <LoginPage />
                             </Route>
+                            <NavigationBar />
                             <Route path="/home">
                                 <HomePage />
                             </Route>

@@ -20,23 +20,6 @@ const addPlayerToLeague = async (user, leagueID) => Promise.all([
     ),
 ]);
 
-exports.authorizeLeague = async (req, res, next) => {
-    const { _id: leagueID, leagueKey } = res.locals.league;
-
-    await League.findById(
-        leagueID,
-        (err) => {
-            if (err) throw err;
-        },
-    ).then((result) => {
-        if (result.settings[0].endDate.getTime() < Date.now()) return res.status(400).send('Error: You tried to join an already expired league');
-        if (!result.settings.public) {
-            if (!(leagueKey === req.body.leagueKey)) return res.status(400).send('Error: You tried to join a private league with an invalid key');
-        }
-        next();
-    });
-};
-
 exports.createLeague = async (req, res) => {
     const user = res.locals.username;
     const league = new League({
@@ -113,6 +96,14 @@ exports.getLeagueNames = async (req, res) => {
     await League.find({}, 'leagueName', (err, result) => {
         if (err) throw err;
         res.send(result);
+    });
+};
+
+exports.getLeagueByName = async (req, res) => {
+    await League.findOne({ leagueName: req.body.leagueName }, (err, result) => {
+        if (err) throw err;
+        if (!result) res.status(404).send('League not found');
+        else res.send(result);
     });
 };
 

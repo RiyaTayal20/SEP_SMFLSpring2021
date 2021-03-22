@@ -18,7 +18,7 @@ const leagueSchema = new mongoose.Schema({
         type: Array,
         default: [],
     },
-    settings: [{
+    settings: {
         balance: {
             type: Number,
         },
@@ -50,7 +50,7 @@ const leagueSchema = new mongoose.Schema({
             type: Number,
             default: 0,
         },
-        tradeHours: [{
+        tradeHours: {
             start: {
                 type: Number,
                 default: -1,
@@ -59,8 +59,8 @@ const leagueSchema = new mongoose.Schema({
                 type: Number,
                 default: -1,
             },
-        }],
-    }],
+        },
+    },
 });
 
 module.exports = mongoose.model('League', leagueSchema);

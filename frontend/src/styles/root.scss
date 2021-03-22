@@ -12,7 +12,17 @@
     font-family: 'Rajdhani', sans-serif;
 
   }
-  
+
+  .site-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .site-content {
+    width: 100%;
+    margin-right: 250px;
+  }
+
   *, *:before, *:after {
     box-sizing: inherit;
     font-family: inherit;

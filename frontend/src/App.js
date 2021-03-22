@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
 import {
     RegistrationPage,
     LoginPage,
@@ -28,9 +27,7 @@ function App() {
                         <HomePage />
                     </Route>
                     <Route path="/trade">
-                        <Container>
-                            <TradePage />
-                        </Container>
+                        <TradePage />
                     </Route>
                 </Switch>
             </div>

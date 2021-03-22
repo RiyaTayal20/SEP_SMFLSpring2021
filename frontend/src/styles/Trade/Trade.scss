@@ -1,20 +1,20 @@
 @import '../Button.scss';
 
-
 .trade-page{
+    color: var(--white);
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    align-items: center;
+    margin-top: 30px;
 }
 
-.order-stock-titles{
-    color: var(--white);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    justify-content: space-around;
-    
+.order-stock-component{
+    width: 450px;
+}
+
+.order-title{
+    text-decoration: underline;
 }
 
 .league-section{
@@ -27,11 +27,11 @@
 }
 
 .league-dropdown{
-    margin: 0px 0px 20px 20px;
+    margin: 0px 0px 20px 91px;
     .btn{
         @include btn;
-        background-color: #EEEEEE;
-        border-color: #EEEEEE;
+        background-color: #FFFFFF;
+        border-color: #FFFFFF;
         color: #495057;
     }
    
@@ -40,12 +40,13 @@
 .stock-symbol-section{
     display: flex;
     flex-direction: row;
+    
 }
 
-
 .stock-symbol{
-    display: flex;
-    flex-direction: row;
+    margin: 0px 0px 20px 40px;
+    border: none;
+
 }
 
 .transaction-section{
@@ -53,16 +54,12 @@
     flex-direction: row;
 }
 
-.transaction-title{
-    margin: 0px 0px 20px 20px;
-}
-
 .transaction-dropdown{
-    margin-bottom: 20px;
+    margin: 0px 0px 20px 44px;
     .btn{
         @include btn;
-        background-color: #EEEEEE;
-        border-color: #EEEEEE;
+        background-color: #FFFFFF;
+        border-color: #FFFFFF;
         color: #495057;
     }
 }
@@ -72,9 +69,8 @@
     flex-direction: row;
 }
 
-.quantity{
-    display: flex;
-    flex-direction: row;
+.quantity-box{
+    margin: 0px 0px 20px 77px;
 }
 
 .price-section{
@@ -82,45 +78,23 @@
     flex-direction: row;
 }
 
-.order-stock-boxes{
-    margin-bottom: 20px;
-    color: var(--white);
-    align-self: flex-end;
-    justify-content: space-around;  
-    flex-wrap: wrap;  
-}
-
-.account-details-titles{
-    color: var(--white);
+.radioBoxes{
+    margin: 0px 0px 20px 115px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
 }
 
-
-.account-details{
-    text-decoration:underline;
-}
-
-
-// .order-stock-boxes{
-//     display: flex;
-//     //justify-content: center;
-//     align-items: flex-start;
-//     // flex-wrap: wrap;
-//     flex-direction: column;
-// }
-
-.order-title{
-    text-decoration:underline;
+.duration-section{
+    display: flex;
+    flex-direction: row;
 }
 
 .duration-dropdown{
-    margin-bottom: 20px;
+    margin: 0px 20px 20px 74px;
     .btn{
         @include btn;
-        background-color: #EEEEEE;
-        border-color: #EEEEEE;
+        background-color: #FFFFFF;
+        border-color: #FFFFFF;
         color: #495057;
     }
     
@@ -128,9 +102,61 @@
 
 .previewOrder{
     btn{
-        background-color: #EEEEEE;
-        border-color: #EEEEEE;
+        background-color: #FFFFFF;
+        border-color: #FFFFFF;
     }
         
 }
 
+.account-details-information{
+    //color: var(--white);
+    width:700px;
+    display:  flex;
+     flex-direction: column;
+     padding-left: 200px;
+    padding-bottom:78px ;
+
+ 
+}
+
+.account-details{
+    text-decoration:underline;
+}
+
+.value-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.value-display{
+    margin: 0px 0px 20px 30px;
+    border-radius: 0.25rem;
+}
+
+.buying-power-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.buying-power-display{
+    margin: 0px 0px 20px 20px;
+    border-radius: 0.25rem;
+}
+
+.cash-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.cash-display{
+    margin: 0px 0px 20px 40px;
+    border-radius: 0.25rem;
+}
+
+
+.stock-square{
+    width: 6in;
+    height: 3.5in;
+    background-color:#EEEEEE;
+    margin-top: 1 in;
+}

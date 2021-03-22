@@ -5,9 +5,10 @@ require('dotenv').config();
 
 const CACHE_TIME = 60;
 
-const getNews = async (ticker) >= {
+const getNews = async (ticker) => {
     try {
         const news = await News.findOne({tickerSymbol: ticker});
+        //
         const response = await fetch(`https://cloud.iexapis.com/stable/stock/${ticker}/news?token=${process.env.API_KEY}`);
         const newsData = await response.json();
 
@@ -39,5 +40,5 @@ exports.news = async (request, response) => {
         console.error(err);
         response.status(400).send(err);
     });
-    response.send(news);
+    response.send(newsInfo);
 };

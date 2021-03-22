@@ -1,8 +1,11 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import {
-    BrowserRouter as Router, Switch, Route,
-} from 'react-router-dom';
-import { RegistrationPage, LoginPage, HomePage } from './components/Pages';
+    RegistrationPage,
+    LoginPage,
+    HomePage,
+    CreateLeaguePage,
+} from './components/Pages';
 import Header from './components/Header/Header';
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import './styles/global.scss';

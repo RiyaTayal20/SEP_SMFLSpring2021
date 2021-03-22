@@ -47,11 +47,11 @@ function Register() {
     };
 
     return (
-        <div>
+        <div className="registration-container">
             <div>
                 <div className="registration-form-title">Create your free account here!</div>
             </div>
-            <Container className="registration-container">
+            <Container>
                 <Form className="registration-form">
                     {showError
                     && (

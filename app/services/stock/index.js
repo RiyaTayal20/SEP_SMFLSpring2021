@@ -1,9 +1,9 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
-const stockRoute = require('./routes/stockRoutes');
+const stockRoute = require('./routes/equityRoutes.js');
 
 require('dotenv').config();
 

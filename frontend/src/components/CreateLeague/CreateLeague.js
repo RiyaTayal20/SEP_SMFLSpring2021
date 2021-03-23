@@ -35,7 +35,8 @@ function CreateLeague() {
     return (
         <div>
             <div>
-                <div className="create-league-form-title">Create your fantasy league</div>
+               <div className="create-league-form-title"></div>
+                <h2 className="order-title">Create your fantasy league</h2>
             </div>
             <Container className="create-league-container">
                 <Form className="create-league-form" noValidate validated={validated} onSubmit={handleSubmit}>
@@ -92,7 +93,7 @@ function CreateLeague() {
                                             <InputGroup.Text>%</InputGroup.Text>
                                         </InputGroup.Append>
                                         <Form.Control.Feedback type="invalid">
-                                            Please provide a valid comm
+                                            Please provide a valid commission
                                             percentage to 2 decimal places.
                                         </Form.Control.Feedback>
                                     </InputGroup>
@@ -110,7 +111,7 @@ function CreateLeague() {
                                         </InputGroup.Prepend>
                                         <Form.Control type="number" min="0" step="0.01" placeholder="Enter trade limit" required />
                                         <Form.Control.Feedback type="invalid">
-                                            Please provide a valid trade limit.
+                                            Please provide a valid trade limit to two decimal places.
                                         </Form.Control.Feedback>
                                     </InputGroup>
                                 </Col>

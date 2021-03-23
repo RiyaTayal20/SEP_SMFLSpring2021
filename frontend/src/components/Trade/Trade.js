@@ -9,7 +9,7 @@ function Trade() {
     return (
         <div className="trade-page">
             <div className="order-stock-component">
-                <h2 className="order-title">ORDER STOCK</h2>
+                <h2 className="order-title" style={{ fontSize: '2rem' }}>ORDER STOCK</h2>
                 <div className="league-section">
                     <h3 className="league-title" style={{ fontSize: '1.25rem' }}>League:</h3>
                     <Dropdown className="league-dropdown">
@@ -113,27 +113,72 @@ function Trade() {
                 </Button>
             </div>
             <div className="account-details-information">
-                <h2 className="account-details">ACCOUNT DETAILS:</h2>
+                <h2 className="account-details" style={{ fontSize: '2rem' }}>ACCOUNT DETAILS</h2>
                 <div className="value-section">
-                    <h3 className="value-title">Value (USD):</h3>
+                    <h3 className="value-title" style={{ fontSize: '1.25rem' }}>Value (USD):</h3>
                     <Form>
                         <input className="value-display" type="text" placeholder="Value" readOnly style={{ border: 'none' }} />
                     </Form>
                 </div>
                 <div className="buying-power-section">
-                    <h3 className="buying-power">Buying Power:</h3>
+                    <h3 className="buying-power" style={{ fontSize: '1.25rem' }}>Buying Power:</h3>
                     <Form>
                         <input className="buying-power-display" type="text" placeholder="Buying Power" readOnly style={{ border: 'none' }} />
                     </Form>
                 </div>
                 <div className="cash-section">
-                    <h3 className="cash">Cash: </h3>
+                    <h3 className="cash" style={{ fontSize: '1.25rem' }}>Cash: </h3>
                     <Form>
                         <input className="cash-display" type="text" placeholder="Cash" readOnly style={{ border: 'none' }} />
                     </Form>
                 </div>
                 <div className="stock-square">
-                    <small>swuare</small>
+                    <small>
+                        <div className="displayStock">
+                            <div className="stock-sym-box">
+                                <Form>
+                                    <input className="stock-name-symbol" type="text" placeholder="SYMBOL" readOnly style={{ border: 'none' }} />
+                                </Form>
+                                <h3 className="stock-text" style={{ color: 'black' }}>Stock Name</h3>
+                            </div>
+                            <div className="last-box-section">
+                                <h3 style={{ color: 'black' }}>Last</h3>
+                                <Form>
+                                    <input className="last-price-display" type="text" placeholder="Last" readOnly style={{ border: 'none' }} />
+                                </Form>
+                            </div>
+                            <div className="change-box-section">
+                                <h3 style={{ color: 'black' }}>Change</h3>
+                                <Form>
+                                    <input className="change-price-display" type="text" placeholder="Change" readOnly style={{ border: 'none' }} />
+                                </Form>
+                            </div>
+                            <div className="percent-change-section">
+                                <h3 style={{ color: 'black' }}>% Change</h3>
+                                <Form>
+                                    <input className="percent-change-display" type="text" placeholder="% Change" readOnly style={{ border: 'none' }} />
+                                </Form>
+                            </div>
+                            <div className="volume-section">
+                                <h3 style={{ color: 'black' }}>Volume</h3>
+                                <Form>
+                                    <input className="volume-display" type="text" placeholder="Volume" readOnly style={{ border: 'none' }} />
+                                </Form>
+                            </div>
+                            <div className="day-high-section">
+                                <h3 style={{ color: 'black' }}>Day&apos;s High</h3>
+                                <Form>
+                                    <input className="day-high-display" type="text" placeholder="High" readOnly style={{ border: 'none' }} />
+                                </Form>
+                            </div>
+                            <div className="day-low-section">
+                                <h3 style={{ color: 'black' }}>Day&apos;s Low</h3>
+                                <Form>
+                                    <input className="day-low-display" type="text" placeholder="Day's Low" readOnly style={{ border: 'none' }} />
+                                </Form>
+                            </div>
+                        </div>
+                    </small>
                 </div>
             </div>
         </div>

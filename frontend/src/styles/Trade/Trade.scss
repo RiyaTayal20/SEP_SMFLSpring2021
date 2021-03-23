@@ -5,12 +5,12 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    align-items: center;
     margin-top: 30px;
 }
 
 .order-stock-component{
     width: 450px;
+    align-items: center;
 }
 
 .order-title{
@@ -55,7 +55,7 @@
 }
 
 .transaction-dropdown{
-    margin: 0px 0px 20px 44px;
+    margin: 0px 0px 20px 55px;
     .btn{
         @include btn;
         background-color: #FFFFFF;
@@ -90,7 +90,7 @@
 }
 
 .duration-dropdown{
-    margin: 0px 20px 20px 74px;
+    margin: 0px 0px 20px 74px;
     .btn{
         @include btn;
         background-color: #FFFFFF;
@@ -109,14 +109,11 @@
 }
 
 .account-details-information{
-    //color: var(--white);
-    width:700px;
+    width:550px;
     display:  flex;
-     flex-direction: column;
-     padding-left: 200px;
-    padding-bottom:78px ;
-
- 
+    flex-direction: column;
+    padding-left: 100px;
+    padding-bottom:69px;
 }
 
 .account-details{
@@ -146,6 +143,7 @@
 .cash-section{
     display: flex;
     flex-direction: row;
+    padding-bottom: 10px;
 }
 
 .cash-display{
@@ -155,8 +153,81 @@
 
 
 .stock-square{
-    width: 6in;
+    margin: 0.5in 0in 0in 0in;
+    display : flex;
+    width: 5.5in;
     height: 3.5in;
     background-color:#EEEEEE;
-    margin-top: 1 in;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.displayStock{
+    padding-top: 25px;;
+    padding-left: 50px;
+}
+
+.stock-sym-box{
+    display: flex;
+    flex-direction: row;
+}
+
+.stock-text{
+    margin: 0px 0px 20px 20px;
+}
+
+
+.last-box-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.last-price-display{
+    margin: 0px 0px 20px 20px;
+}
+
+.change-box-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.change-price-display{
+    margin: 0px 0px 20px 20px;
+}
+
+.percent-change-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.percent-change-display{
+    margin: 0in 0in 0.2in 0.2in;
+
+}
+
+.volume-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.volume-display{
+    margin: 0px 0px 20px 20px;
+}
+
+.day-high-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.day-high-display{
+    margin: 0px 0px 20px 20px;
+}
+
+.day-low-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.day-low-display{
+    margin: 0px 0px 20px 20px;
 }

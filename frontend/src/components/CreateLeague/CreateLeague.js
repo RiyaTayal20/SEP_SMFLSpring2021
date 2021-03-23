@@ -104,10 +104,15 @@ function CreateLeague() {
                             <Row>
                                 <Form.Label column> Trade Limit </Form.Label>
                                 <Col>
-                                    <Form.Control type="balance" placeholder="Default is 0" required />
-                                    <Form.Control.Feedback type="invalid">
-                                        Please provide a Trade/Day Limit.
-                                    </Form.Control.Feedback>
+                                    <InputGroup hasValidation>
+                                        <InputGroup.Prepend>
+                                            <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <Form.Control type="number" min="0" step="0.01" placeholder="Enter trade limit" required />
+                                        <Form.Control.Feedback type="invalid">
+                                            Please provide a valid trade limit.
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
                                 </Col>
                             </Row>
                         </Form.Group>

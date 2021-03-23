@@ -1,4 +1,5 @@
 const { check, validationResult } = require('express-validator');
+const jwtDecode = require('jwt-decode');
 const User = require('../models/userModel');
 const League = require('../models/leagueModel');
 
@@ -61,4 +62,68 @@ exports.leagueCreation = [
                 return Promise.reject(new Error('League name already in use'));
             }
         })),
+
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
+        next();
+    },
+];
+
+exports.findValidLeague = [
+    check('leagueName')
+        .trim()
+        .escape()
+        .not()
+        .isEmpty()
+        .withMessage('League name is required')
+        .isLength({ min: 3, max: 255 })
+        .withMessage('League name must be minimum 3 characters'),
+    async (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
+
+        const league = await League
+            .findOne({
+                leagueName: req.body.leagueName,
+            })
+            .then((result) => result)
+            .catch(() => null);
+        if (!league) return res.status(422).json('Error: League not found');
+        res.locals.league = league;
+        next();
+    },
+];
+
+exports.authValidation = [
+    check('Authorization')
+        .not()
+        .isEmpty()
+        .withMessage('Authorization is required for this action')
+        .isString()
+        .withMessage('Authorization must be a string'),
+    async (req, res, next) => {
+        const errors = validationResult(req);
+        const spaceSplit = req.headers.authorization.split(' ');
+        if (spaceSplit.length !== 2 || spaceSplit[0] !== 'Bearer') {
+            return res.status(401).json('Bad Authorization ("Bearer <token>")');
+        }
+        const dotSplit = spaceSplit[1].split('.');
+        if (dotSplit.length !== 3) {
+            return res.status(401).json('Bad Authorization. Token should have 3 periods');
+        }
+        if (!errors.isEmpty()) return res.status(401).json({ errors: errors.array() });
+        try {
+            const decodedToken = jwtDecode(req.headers.authorization.slice(7));
+            res.locals.username = decodedToken.user.username;
+        } catch (err) {
+            return res.status(401).json('Bad Authorization. Cannot decode token');
+        }
+        const userCheck = await User.findOne({
+            username: res.locals.username,
+        }).then((user) => user).catch(() => null);
+
+        if (!userCheck) return res.status(401).json('Bad Authorization. Cannot find decrypted user');
+        next();
+    },
 ];

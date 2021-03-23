@@ -37,6 +37,10 @@ const orderSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
     },
+    totalPrice: {
+        type: Number,
+        required: true,
+    },
 });
 
 const portfolioSchema = new mongoose.Schema({

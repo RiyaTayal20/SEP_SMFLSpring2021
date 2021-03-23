@@ -5,7 +5,7 @@
     height: auto; 
 }
 
-.login-form-title{
+.create-league-form-title {
     padding-top: 30px;
     color: white;
     text-align: center;
@@ -13,22 +13,15 @@
     font-size: 35px;
 }
 
-.site-content {
-    margin-right: 0px !important;
-}
-
-.login-form{ 
-    @extend %flex-center;
-    border-style: solid;
-    border-color: white;
+.create-league-form { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin: 90px; 
-    padding: 0px 110px;
     .form-group {
         @extend %flex-center;
         color: white;
-        align-items: flex-start;
     }
-
     .text-register {
         &:hover {
             text-decoration: underline;
@@ -40,10 +33,20 @@
     }
 }
 
-.text-register{
-    padding: 10px 0px 0px 10px;
+.form-label{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-width: 200px;
 }
 
 .form-group{
     font-weight: bold;
+}
+
+.form-control{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 300px;
 }

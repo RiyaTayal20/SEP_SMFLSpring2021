@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
         max: 1024,
         min: 6,
     },
+    leagues: {
+        type: Array,
+        default: [],
+    },
 });
 
 module.exports = mongoose.model('User', userSchema);

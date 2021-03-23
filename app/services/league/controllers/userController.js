@@ -33,11 +33,10 @@ exports.login = async (req, res, next) => {
     })(req, res, next);
 };
 
-exports.profile = async (req, res) => {
-    res.json({
-        message: 'You accessed a secure route',
-        user: req.user,
-        token: req.query.secret_token,
+exports.findUserById = async (req, res) => {
+    await User.findById(req.body._id, (err, user) => {
+        if (err) throw err;
+        res.send(user);
     });
 };
 

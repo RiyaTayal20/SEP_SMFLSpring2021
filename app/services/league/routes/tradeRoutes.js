@@ -4,4 +4,6 @@ const router = express.Router();
 
 const tradeController = require('../controllers/tradeController');
 
-router.post('/', );
+router.post('/', tradeController.trade);
+
+module.exports = router;

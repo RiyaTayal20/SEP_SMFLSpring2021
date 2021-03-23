@@ -12,10 +12,23 @@
     font-family: 'Rajdhani', sans-serif;
 
   }
-  
+
   *, *:before, *:after {
     box-sizing: inherit;
     font-family: inherit;
+  }
+
+  .site-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .site-content {
+    width: 100%;
+    margin-right: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   %flex-center {

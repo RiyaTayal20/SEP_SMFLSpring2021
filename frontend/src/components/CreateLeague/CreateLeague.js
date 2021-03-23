@@ -171,7 +171,7 @@ function CreateLeague() {
                             </Row>
                         </Form.Group>
                     </div>
-                    <Button type="submit" size="lg">Submit form</Button>
+                    <Button type="submit" size="lg">Create</Button>
                 </Form>
             </Container>
         </div>

@@ -39,4 +39,32 @@ const orderSchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model('Order', orderSchema);
+const portfolioSchema = new mongoose.Schema({
+    owner: {
+        type: String,
+        required: true,
+    },
+    league: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'League',
+        required: true,
+    },
+    cash: {
+        type: Number,
+        required: true,
+    },
+    netWorth: {
+        type: Number,
+        required: true,
+    },
+    currentHoldings: [{
+        ticker: String,
+        quantity: Number,
+    }],
+    orders: [orderSchema],
+});
+
+module.exports = {
+    Order: mongoose.model('Order', orderSchema),
+    Portfolio: mongoose.model('Portfolio', portfolioSchema),
+};

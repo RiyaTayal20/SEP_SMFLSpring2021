@@ -1,4 +1,6 @@
 const { check, validationResult } = require('express-validator');
+const fetch = require('node-fetch');
+
 const User = require('../models/userModel');
 
 exports.signup = [
@@ -40,6 +42,26 @@ exports.signup = [
     (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
+        next();
+    },
+];
+
+exports.ticker = [
+    check('tickerSymbol')
+        .trim()
+        .toLowerCase()
+        .not()
+        .isEmpty()
+        .withMessage('Ticker is required')
+        .custom(async (value) => {
+            const { exists } = await fetch(`${process.env.STOCK_URL}/equity/ticker/${value}`);
+            if (!exists) {
+                return Promise.reject(new Error('Ticker does not exist'));
+            }
+        }),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) return res.status(404).json({ errors: errors.array() });
         next();
     },
 ];

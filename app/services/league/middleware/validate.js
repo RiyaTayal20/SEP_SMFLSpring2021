@@ -62,6 +62,7 @@ exports.leagueCreation = [
                 return Promise.reject(new Error('League name already in use'));
             }
         })),
+
     (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });

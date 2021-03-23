@@ -28,6 +28,9 @@ function App() {
                             <Route path="/home">
                                 <HomePage />
                             </Route>
+                            <Route path="/league/create">
+                                <CreateLeaguePage />
+                            </Route>
                         </Switch>
                     </div>
                 </div>

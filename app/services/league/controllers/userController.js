@@ -39,3 +39,10 @@ exports.findUserById = async (req, res) => {
         res.send(user);
     });
 };
+
+exports.findUserById = async (req, res) => {
+    await User.findById(req.body._id, (err, user) => {
+        if (err) throw err;
+        res.send(user);
+    });
+};

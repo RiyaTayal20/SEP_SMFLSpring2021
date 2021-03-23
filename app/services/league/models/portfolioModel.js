@@ -67,4 +67,5 @@ const portfolioSchema = new mongoose.Schema({
 module.exports = {
     Order: mongoose.model('Order', orderSchema),
     Portfolio: mongoose.model('Portfolio', portfolioSchema),
+    portfolioSchema,
 };

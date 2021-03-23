@@ -1,3 +1,4 @@
+function joinLeague(){
 
     const [validated, setValidated] = useState(false);
 
@@ -101,4 +102,5 @@ return(
   </Form>
 </div>
 
-)
+   )
+}

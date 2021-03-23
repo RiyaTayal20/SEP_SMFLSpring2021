@@ -6,6 +6,7 @@ import {
     RegistrationPage,
     LoginPage,
     HomePage,
+    CreateLeaguePage,
     TradePage,
 } from './components/Pages';
 import Header from './components/Header/Header';

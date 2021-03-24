@@ -1,0 +1,14 @@
+@import '../root.scss';
+@import '../Button.scss';
+
+.Symbol-lookup-page{
+    color: var(--purple);
+}
+.btn {
+    @include btn;
+}
+
+.Search{
+    background-color: #EEEEEE;
+    border-color: #EEEEEE;
+}

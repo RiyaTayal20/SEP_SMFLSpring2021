@@ -1,0 +1,162 @@
+@import '../Button.scss';
+
+.trade-page{
+    color: var(--white);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.order-stock-component{
+    width: 450px;
+}
+
+.order-title{
+    text-decoration: underline;
+}
+
+.league-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.league-title{
+    margin-top: 5px;
+}
+
+.league-dropdown{
+    margin: 0px 0px 20px 91px;
+    .btn{
+        @include btn;
+        background-color: #FFFFFF;
+        border-color: #FFFFFF;
+        color: #495057;
+    }
+   
+}
+
+.stock-symbol-section{
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.stock-symbol{
+    margin: 0px 0px 20px 40px;
+    border: none;
+
+}
+
+.transaction-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.transaction-dropdown{
+    margin: 0px 0px 20px 44px;
+    .btn{
+        @include btn;
+        background-color: #FFFFFF;
+        border-color: #FFFFFF;
+        color: #495057;
+    }
+}
+
+.quantity-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.quantity-box{
+    margin: 0px 0px 20px 77px;
+}
+
+.price-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.radioBoxes{
+    margin: 0px 0px 20px 115px;
+    display: flex;
+    flex-direction: column;
+}
+
+.duration-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.duration-dropdown{
+    margin: 0px 20px 20px 74px;
+    .btn{
+        @include btn;
+        background-color: #FFFFFF;
+        border-color: #FFFFFF;
+        color: #495057;
+    }
+    
+}
+
+.previewOrder{
+    btn{
+        background-color: #FFFFFF;
+        border-color: #FFFFFF;
+    }
+        
+}
+
+.account-details-information{
+    //color: var(--white);
+    width:700px;
+    display:  flex;
+     flex-direction: column;
+     padding-left: 200px;
+    padding-bottom:78px ;
+
+ 
+}
+
+.account-details{
+    text-decoration:underline;
+}
+
+.value-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.value-display{
+    margin: 0px 0px 20px 30px;
+    border-radius: 0.25rem;
+}
+
+.buying-power-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.buying-power-display{
+    margin: 0px 0px 20px 20px;
+    border-radius: 0.25rem;
+}
+
+.cash-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.cash-display{
+    margin: 0px 0px 20px 40px;
+    border-radius: 0.25rem;
+}
+
+
+.stock-square{
+    width: 6in;
+    height: 3.5in;
+    background-color:#EEEEEE;
+    margin-top: 1 in;
+}

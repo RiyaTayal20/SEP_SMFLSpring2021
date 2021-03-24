@@ -34,7 +34,7 @@ function NavigationBar() {
                                 <Card.Link href="#" style={{ color: '#2F2F31' }}>Join League</Card.Link>
                             </ListGroup.Item>
                             <ListGroup.Item className="leagues-item">
-                                <Card.Link href="#" style={{ color: '#2F2F31' }}>Create League</Card.Link>
+                                <Card.Link href="/league/create" style={{ color: '#2F2F31' }}>Create League</Card.Link>
                             </ListGroup.Item>
                             <ListGroup.Item className="leagues-item">
                                 <Card.Link href="#" style={{ color: '#2F2F31' }}>Transaction History</Card.Link>

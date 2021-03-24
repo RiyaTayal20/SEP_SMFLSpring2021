@@ -31,6 +31,9 @@ function App() {
                             <Route path="/home">
                                 <HomePage />
                             </Route>
+                            <Route path="/league/create">
+                                <CreateLeaguePage />
+                            </Route>
                             <Route path="/trade">
                                 <TradePage />
                             </Route>

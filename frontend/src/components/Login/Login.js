@@ -47,7 +47,7 @@ function Login() {
     };
 
     return (
-        <div>
+        <div className="login-container">
             <div>
                 <div className="login-form-title">Sign into your account here!</div>
             </div>

@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Alert from 'react-bootstrap/Alert';
 import '../../styles/CreateLeague/CreateLeague.scss';
 
 function CreateLeague() {
@@ -16,9 +17,9 @@ function CreateLeague() {
     const [limit, setLimit] = useState('');
     const [visibility, setVisibility] = useState('');
     const [aiPlayers, setAiPlayers] = useState('');
-    const [maxPlayers, setMaxPlayers] = useState('')
+    const [maxPlayers, setMaxPlayers] = useState('');
     const [end, setEnd] = useState('');
-    const [showError, setShowErorr] = useState(false);
+    const [showError, setShowError] = useState(false);
     const [error, setError] = useState('');
 
     const [validated, setValidated] = useState(false);
@@ -27,16 +28,16 @@ function CreateLeague() {
         fetch(`${process.env.REACT_APP_API_URL}/league/create`, {
             method: 'POST',
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                leagueName: leagueName,
-                leagueKey: leagueKey,
+                leagueName,
+                leagueKey,
                 settings: {
-                    balance: balance,
-                    aiPlayer: aiPlayers,
-                    maxPlayers: maxPlayers,
+                    balance,
+                    aiPlayers,
+                    maxPlayers,
                     endDate: end,
                     public: visibility,
                     commissionPercent: commission,
@@ -45,7 +46,7 @@ function CreateLeague() {
             }),
         }).then((res) => {
             if (res.ok) {
-
+                console.log('User joined league');
             } else {
                 setShowError(true);
                 res.text().then((text) => {
@@ -74,7 +75,7 @@ function CreateLeague() {
             </div>
             <Container className="create-league-container">
                 <Form className="create-league-form" noValidate validated={validated} onSubmit={handleSubmit}>
-                     {showError
+                    {showError
                         && (
                             <Alert variant="danger" onClose={() => setShowError(false)} dismissible>
                                 <Alert.Heading>Alert</Alert.Heading>
@@ -124,12 +125,13 @@ function CreateLeague() {
                                         <InputGroup.Prepend>
                                             <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
                                         </InputGroup.Prepend>
-                                        <Form.Control 
+                                        <Form.Control
                                             type="number"
-                                            min="0" step="0.01"
+                                            min="0"
+                                            step="0.01"
                                             placeholder="Enter starting balance"
                                             required
-                                            onChange={(e) => setBalance(e.target.value)} 
+                                            onChange={(e) => setBalance(e.target.value)}
                                         />
                                         <Form.Control.Feedback type="invalid">
                                             Please provide a valid starting value.
@@ -151,7 +153,7 @@ function CreateLeague() {
                                             step="0.01"
                                             placeholder="Enter percentage"
                                             required
-                                            onChange={(e) => setCommission(e.target.value)}  
+                                            onChange={(e) => setCommission(e.target.value)}
                                         />
                                         <InputGroup.Append>
                                             <InputGroup.Text>%</InputGroup.Text>
@@ -170,16 +172,12 @@ function CreateLeague() {
                                 <Form.Label column> Trade Limit </Form.Label>
                                 <Col>
                                     <InputGroup hasValidation>
-                                        <InputGroup.Prepend>
-                                            <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
-                                        </InputGroup.Prepend>
                                         <Form.Control
                                             type="number"
                                             min="0"
-                                            step="0.01"
                                             placeholder="Enter trade limit"
                                             required
-                                            onChange={(e) => setLimit(e.target.value)}  
+                                            onChange={(e) => setLimit(e.target.value)}
                                         />
                                         <Form.Control.Feedback type="invalid">
                                             Please provide a valid trade limit to two decimal places
@@ -193,10 +191,10 @@ function CreateLeague() {
                             <Row>
                                 <Form.Label column> Visibility </Form.Label>
                                 <Col>
-                                    <Form.Control 
+                                    <Form.Control
                                         as="select"
                                         defaultValue="Choose..."
-                                        onChange={(e) => setVisibility(e.target.value)} 
+                                        onChange={(e) => setVisibility(e.target.value)}
                                     >
                                         <option value="True">Public</option>
                                         <option value="False">Private</option>
@@ -210,7 +208,7 @@ function CreateLeague() {
                             <Row>
                                 <Form.Label column> # of AI bots: </Form.Label>
                                 <Col>
-                                    <Form.Control as="select" onChange={(e) => setAiPlayers(e.target.value)} >
+                                    <Form.Control as="select" onChange={(e) => setAiPlayers(e.target.value)}>
                                         <option value="0">Zero</option>
                                         <option value="1">One</option>
                                         <option value="2">Two</option>
@@ -231,7 +229,7 @@ function CreateLeague() {
                                             max="12"
                                             placeholder="Enter max players"
                                             required
-                                            onChange={(e) => setLimit(e.target.value)}  
+                                            onChange={(e) => setMaxPlayers(e.target.value)}
                                         />
                                         <Form.Control.Feedback type="invalid">
                                             Please provide a number between 1 and 12
@@ -252,7 +250,7 @@ function CreateLeague() {
                                         max="2050-03-21"
                                         placeholder="Enter an end date"
                                         required
-                                        onChange={(e) => setEnd(e.target.value)}  
+                                        onChange={(e) => setEnd(e.target.value)}
                                     />
                                     <Form.Control.Feedback type="invalid">
                                         Please provide a valid end date.

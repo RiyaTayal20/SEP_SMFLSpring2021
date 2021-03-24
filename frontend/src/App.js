@@ -29,6 +29,9 @@ function App() {
                             <Route path="/home">
                                 <HomePage />
                             </Route>
+                            <Route path="/league/create">
+                                <CreateLeaguePage />
+                            </Route>
                             <Route path="/lookup">
                                 <SymbolLookupPage />
                             </Route>

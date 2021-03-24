@@ -5,6 +5,10 @@
     height: auto; 
 }
 
+.create-league-container{
+    font-size: 18px;
+}
+
 .create-league-form-title {
     padding-top: 30px;
     color: white;
@@ -35,18 +39,21 @@
 
 .form-label{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: flex-start;
-    min-width: 200px;
+    min-width: 300px;
 }
 
 .form-group{
     font-weight: bold;
+    padding: 5px;
 }
 
 .form-control{
+    min-width: 250px;
+}
+
+.form-content{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    min-width: 300px;
 }

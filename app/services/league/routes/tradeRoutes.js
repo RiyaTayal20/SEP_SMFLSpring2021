@@ -5,6 +5,6 @@ const router = express.Router();
 const tradeController = require('../controllers/tradeController');
 const tradeValidation = require('../middleware/validate');
 
-router.post('/submit', tradeValidation.authValidation, tradeController.trade);
+router.post('/submit', tradeValidation.authValidation, tradeValidation.ticker, tradeController.trade);
 
 module.exports = router;

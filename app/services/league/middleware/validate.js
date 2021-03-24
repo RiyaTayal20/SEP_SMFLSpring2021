@@ -56,8 +56,13 @@ exports.ticker = [
         .isEmpty()
         .withMessage('Ticker is required')
         .custom(async (value) => {
-            const { exists } = await fetch(`${process.env.STOCK_URL}/equity/ticker/${value}`);
-            if (!exists) {
+            let tickerExists = false;
+            await fetch(`${process.env.STOCK_URL}/equity/tickers/${value}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    tickerExists = data.exists;
+                });
+            if (!tickerExists) {
                 return Promise.reject(new Error('Ticker does not exist'));
             }
         }),

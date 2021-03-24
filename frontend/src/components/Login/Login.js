@@ -34,8 +34,8 @@ function Login() {
                 res.json().then((data) => {
                     console.log(data.token);
                     localStorage.setItem('token', data.token);
+                    history.push('/home', { username: data.username });
                 });
-                history.push('/home');
             } else {
                 setShowError(true);
                 res.text().then((text) => {
@@ -47,7 +47,7 @@ function Login() {
     };
 
     return (
-        <div>
+        <div className="login-container">
             <div>
                 <div className="login-form-title">Sign into your account here!</div>
             </div>

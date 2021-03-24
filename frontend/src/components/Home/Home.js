@@ -1,14 +1,14 @@
 import React from 'react';
 import '../../styles/Home/Home.scss';
 import Form from 'react-bootstrap/Form';
-// import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import Icon from '../../icons/user-profile.png';
 
 function Home() {
-    // const history = useHistory();
-    // if (!localStorage.getItem('token')) {
-    //     return <Redirect to="/user/login" />;
-    // }
+    const history = useHistory();
+    if (!localStorage.getItem('token')) {
+        return <Redirect to="/user/login" />;
+    }
     // Pass this token into auth header when making requests
     // const token = localStorage.getItem('token');
 
@@ -26,7 +26,7 @@ function Home() {
                             borderRadius: '0rem',
                             textAlign: 'center',
                         }}
-                        // placeholder={history.location.state.username}
+                        placeholder={history.location.state.username}
                         disabled
                     />
                 </Form.Group>

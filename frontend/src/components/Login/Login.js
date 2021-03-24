@@ -20,7 +20,7 @@ function Login() {
     };
 
     const login = () => {
-        fetch('http://localhost:5000/user/login', {
+        fetch(`${process.env.REACT_APP_API_URL}/user/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

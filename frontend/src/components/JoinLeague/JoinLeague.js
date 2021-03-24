@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../styles/JoinLeague/JoinLeague.scss';
 import Form from 'react-bootstrap/Form';
 // import Container from 'react-bootstrap/Container';
@@ -20,6 +20,31 @@ function JoinLeague() {
 
         setValidated(true);
     };
+
+    const [leagues, setLeagues] = useState([{ leagueName: 'thing' }, { leagueName: 'thing2' }]);
+
+    const getLeagues = () => {
+        fetch(`${process.env.REACT_APP_API_URL}/league/find/all`, {
+            method: 'GET',
+        }).then((res) => {
+            if (res.ok) {
+                res.json().then((data) => {
+                    console.log(data);
+                    setLeagues(data);
+                });
+            } else {
+                res.text().then((text) => {
+                    console.log(text);
+                });
+            }
+        }).catch((err) => console.log(err));
+    };
+
+    useEffect(() => {
+        getLeagues();
+    });
+    console.log('Final Leagues: \n');
+    console.log(leagues);
 
     return (
         <div>
@@ -46,7 +71,23 @@ function JoinLeague() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        {
+                            leagues.map((item) => (
+                                <tr>
+                                    <td>
+                                        {' '}
+                                        {item.leagueName}
+                                        {' '}
+                                    </td>
+                                    <td> 10/21 </td>
+                                    <td> 10 </td>
+                                    <td>
+                                        <Button type="submit">Join League</Button>
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                        {/* <tr>
                             <td>League Name 1</td>
                             <td> 10/21 </td>
                             <td> 10 </td>
@@ -85,7 +126,7 @@ function JoinLeague() {
                             <td>
                                 <Button type="submit">Join League</Button>
                             </td>
-                        </tr>
+                        </tr> */}
                     </tbody>
                 </Table>
 

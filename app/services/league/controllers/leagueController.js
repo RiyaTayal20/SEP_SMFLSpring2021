@@ -109,9 +109,9 @@ exports.getLeagueNames = async (req, res) => {
 };
 
 exports.getLeagueByName = async (req, res) => {
-    await League.findOne({ leagueName: req.body.leagueName }, (err, result) => {
+    await League.findOne({ leagueName: req.params.leagueName }, (err, result) => {
         if (err) throw err;
-        if (!result) res.status(404).send('League not found');
+        if (!result) res.status(404).send('League(s) not found');
         else res.send(result);
     });
 };

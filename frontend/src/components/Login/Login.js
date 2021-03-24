@@ -34,8 +34,8 @@ function Login() {
                 res.json().then((data) => {
                     console.log(data.token);
                     localStorage.setItem('token', data.token);
+                    history.push('/home', { username: data.username });
                 });
-                history.push('/home');
             } else {
                 setShowError(true);
                 res.text().then((text) => {

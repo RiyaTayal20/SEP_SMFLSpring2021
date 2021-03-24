@@ -1,24 +1,43 @@
 const League = require('../models/leagueModel');
 const User = require('../models/userModel');
+const { Portfolio } = require('../models/portfolioModel');
 
-const addPlayerToLeague = async (user, leagueID) => Promise.all([
-    await League.findByIdAndUpdate(
+const addPlayerToLeague = async (user, leagueID) => {
+    const league = await League.findById(
         leagueID,
-        { $addToSet: { playerList: user } },
-        {},
         (err) => {
             if (err) throw err;
         },
-    ),
-    await User.findOneAndUpdate(
-        { username: user },
-        { $addToSet: { leagues: leagueID } },
-        {},
-        (err) => {
-            if (err) throw err;
-        },
-    ),
-]);
+    );
+    return Promise.all([
+        await League.findByIdAndUpdate(
+            leagueID,
+            {
+                $addToSet: {
+                    playerList: user,
+                    portfolioList: new Portfolio({
+                        owner: user,
+                        league: leagueID,
+                        cash: league.settings.balance,
+                        netWorth: league.settings.balance,
+                    }),
+                },
+            },
+            {},
+            (err) => {
+                if (err) throw err;
+            },
+        ),
+        await User.findOneAndUpdate(
+            { username: user },
+            { $addToSet: { leagues: leagueID } },
+            {},
+            (err) => {
+                if (err) throw err;
+            },
+        ),
+    ]);
+};
 
 exports.createLeague = async (req, res) => {
     const user = res.locals.username;
@@ -83,6 +102,14 @@ exports.leaveLeague = async (req, res) => {
         await User.findOneAndUpdate(
             { username },
             { $pull: { leagues: _id } },
+            { new: true },
+            (err) => {
+                if (err) throw err;
+            },
+        ),
+        await League.findOneAndUpdate(
+            { 'portfolioList.owner': username },
+            { $pull: { portfolioList: { owner: username } } },
             { new: true },
             (err) => {
                 if (err) throw err;

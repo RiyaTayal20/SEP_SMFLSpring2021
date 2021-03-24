@@ -1,24 +1,43 @@
 const League = require('../models/leagueModel');
 const User = require('../models/userModel');
+const { Portfolio } = require('../models/portfolioModel');
 
-const addPlayerToLeague = async (user, leagueID) => Promise.all([
-    await League.findByIdAndUpdate(
+const addPlayerToLeague = async (user, leagueID) => {
+    const league = await League.findById(
         leagueID,
-        { $addToSet: { playerList: user } },
-        {},
         (err) => {
             if (err) throw err;
         },
-    ),
-    await User.findOneAndUpdate(
-        { username: user },
-        { $addToSet: { leagues: leagueID } },
-        {},
-        (err) => {
-            if (err) throw err;
-        },
-    ),
-]);
+    );
+    return Promise.all([
+        await League.findByIdAndUpdate(
+            leagueID,
+            {
+                $addToSet: {
+                    playerList: user,
+                    portfolioList: new Portfolio({
+                        owner: user,
+                        league: leagueID,
+                        cash: league.settings.balance,
+                        netWorth: league.settings.balance,
+                    }),
+                },
+            },
+            {},
+            (err) => {
+                if (err) throw err;
+            },
+        ),
+        await User.findOneAndUpdate(
+            { username: user },
+            { $addToSet: { leagues: leagueID } },
+            {},
+            (err) => {
+                if (err) throw err;
+            },
+        ),
+    ]);
+};
 
 exports.createLeague = async (req, res) => {
     const user = res.locals.username;
@@ -88,6 +107,14 @@ exports.leaveLeague = async (req, res) => {
                 if (err) throw err;
             },
         ),
+        await League.findOneAndUpdate(
+            { 'portfolioList.owner': username },
+            { $pull: { portfolioList: { owner: username } } },
+            { new: true },
+            (err) => {
+                if (err) throw err;
+            },
+        ),
     ]);
     request
         .then((succ) => res.send(`Successfully left league (${req.body.leagueName})\n ${succ}`))
@@ -109,9 +136,9 @@ exports.getLeagueNames = async (req, res) => {
 };
 
 exports.getLeagueByName = async (req, res) => {
-    await League.findOne({ leagueName: req.body.leagueName }, (err, result) => {
+    await League.findOne({ leagueName: req.params.leagueName }, (err, result) => {
         if (err) throw err;
-        if (!result) res.status(404).send('League not found');
+        if (!result) res.status(404).send('League(s) not found');
         else res.send(result);
     });
 };

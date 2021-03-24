@@ -20,7 +20,7 @@ function Login() {
     };
 
     const login = () => {
-        fetch(`${process.env.REACT_APP_API_URL}/user/login`, {
+        fetch('http://localhost:5000/user/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -31,11 +31,13 @@ function Login() {
             }),
         }).then((res) => {
             if (res.ok) {
+                console.log(res.json);
                 res.json().then((data) => {
                     console.log(data.token);
                     localStorage.setItem('token', data.token);
                     history.push('/home', { username: data.username });
-                });
+                })
+                    .catch(console.error);
             } else {
                 setShowError(true);
                 res.text().then((text) => {

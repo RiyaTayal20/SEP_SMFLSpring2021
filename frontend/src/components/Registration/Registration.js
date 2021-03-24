@@ -21,7 +21,7 @@ function Register() {
     };
 
     const register = () => {
-        fetch(`${process.env.REACT_APP_API_URL}/user/register`, {
+        fetch('http://localhost:5000/user/register', {
             method: 'POST',
             mode: 'cors',
             headers: {

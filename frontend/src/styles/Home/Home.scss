@@ -1,11 +1,12 @@
 .home-page{
     margin-top: 10vh;
     display: flex;
-    display: row;
+    flex-direction: row;
 }
 
 .user-profile-section{
-
+    margin-left: 5vw;
+    text-align: center;
 }
 
 .username{
@@ -14,4 +15,23 @@
 
 .form{
     background-color: peachpuff;
+}
+
+.league-information{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10vw;
+}
+
+.tab-placeholder{
+    padding: 2vh;
+    border: 1px solid;
+    border-color: plum;
+}
+
+.transaction-placeholder{
+    margin: 5vh 0vh 0vh 0vh;
+    padding: 2vh;
+    border: 1px solid;
+    border-color: plum;
 }

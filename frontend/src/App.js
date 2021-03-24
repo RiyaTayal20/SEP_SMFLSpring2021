@@ -16,7 +16,6 @@ function App() {
         <Router>
             <div className="App">
                 <Header />
-<<<<<<< Updated upstream
                 <div className="site-container">
                     { ['/user/register', '/user/login'].indexOf(window.location.pathname) < 0 && <NavigationBar /> }
                     <div className="site-content">
@@ -36,23 +35,6 @@ function App() {
                         </Switch>
                     </div>
                 </div>
-=======
-                <Switch>
-                    <Route path="/user/register">
-                        <RegistrationPage />
-                    </Route>
-                    <Route path="/user/login">
-                        <LoginPage />
-                    </Route>
-                    <NavigationBar />
-                    <Route path="/home">
-                        <HomePage />
-                    </Route>
-                    <Route path="/trade">
-                        <TradePage />
-                    </Route>
-                </Switch>
->>>>>>> Stashed changes
             </div>
         </Router>
     );

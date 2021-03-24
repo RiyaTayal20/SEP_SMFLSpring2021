@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
+const League = require('../models/leagueModel');
 require('../config/passportConfig')(passport);
 require('dotenv').config();
 
@@ -28,7 +29,7 @@ exports.login = async (req, res, next) => {
             const body = { _id: user._id, username: user.username };
             const token = jwt.sign({ user: body }, `${process.env.JWT_KEY}`);
 
-            return res.send(token);
+            return res.send({ token, username: user.username });
         });
     })(req, res, next);
 };
@@ -44,5 +45,13 @@ exports.findUserById = async (req, res) => {
     await User.findById(req.body._id, (err, user) => {
         if (err) throw err;
         res.send(user);
+    });
+};
+
+exports.getLeagueByUser = async (req, res) => {
+    await League.find({ 'portfolioList.owner': req.params.username }, (err, result) => {
+        if (err) throw err;
+        if (!result) res.status(404).send('League not found');
+        else res.send(result);
     });
 };

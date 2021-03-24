@@ -12,15 +12,16 @@ function CreateLeague() {
     // const history = useHistory();
     const [leagueName, setLeagueName] = useState('');
     const [leagueKey, setLeagueKey] = useState('');
+    const [showLeagueKey, setShowLeagueKey] = useState(false);
     const [balance, setBalance] = useState('');
     const [commission, setCommission] = useState('');
     const [limit, setLimit] = useState('');
-    const [visibility, setVisibility] = useState('');
+    const [visibility, setVisibility] = useState(true);
     const [aiPlayers, setAiPlayers] = useState('');
     const [maxPlayers, setMaxPlayers] = useState('');
     const [end, setEnd] = useState('');
     const [showError, setShowError] = useState(false);
-    const [error, setError] = useState('');
+    const [errors, setErrors] = useState([]);
 
     const [validated, setValidated] = useState(false);
 
@@ -46,12 +47,13 @@ function CreateLeague() {
             }),
         }).then((res) => {
             if (res.ok) {
-                console.log('User joined league');
+                console.log('Sccessfully created league');
+                // history.push('some league home page');
             } else {
                 setShowError(true);
-                res.text().then((text) => {
-                    console.log(text);
-                    setError(text);
+                res.json().then((data) => {
+                    console.log(data.errors);
+                    setErrors(data.errors);
                 });
             }
         }).catch((err) => console.log(err));
@@ -59,11 +61,10 @@ function CreateLeague() {
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
+        event.preventDefault();
         if (form.checkValidity() === false) {
-            event.preventDefault();
             event.stopPropagation();
         }
-
         setValidated(true);
         createLeague();
     };
@@ -79,7 +80,7 @@ function CreateLeague() {
                         && (
                             <Alert variant="danger" onClose={() => setShowError(false)} dismissible>
                                 <Alert.Heading>Alert</Alert.Heading>
-                                <ol><li>{error}</li></ol>
+                                <ol>{errors.map((error) => <li>{error.msg}</li>)}</ol>
                             </Alert>
                         )}
                     <div className="form-content">
@@ -95,23 +96,6 @@ function CreateLeague() {
                                     />
                                     <Form.Control.Feedback type="invalid">
                                         Please provide a League Name.
-                                    </Form.Control.Feedback>
-                                </Col>
-                            </Row>
-                        </Form.Group>
-
-                        <Form.Group controlId="formLeagueKey">
-                            <Row>
-                                <Form.Label column>League Key</Form.Label>
-                                <Col>
-                                    <Form.Control
-                                        required
-                                        type="password"
-                                        placeholder="Enter League Key..."
-                                        onChange={(e) => setLeagueKey(e.target.value)}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        Please provide a League Key.
                                     </Form.Control.Feedback>
                                 </Col>
                             </Row>
@@ -194,15 +178,42 @@ function CreateLeague() {
                                     <Form.Control
                                         as="select"
                                         defaultValue="Choose..."
-                                        onChange={(e) => setVisibility(e.target.value)}
+                                        onChange={(e) => {
+                                            setVisibility(e.target.value);
+                                            if (e.target.value === 'false') {
+                                                setShowLeagueKey(true);
+                                            } else {
+                                                setShowLeagueKey(false);
+                                            }
+                                        }}
                                     >
-                                        <option value="True">Public</option>
-                                        <option value="False">Private</option>
+                                        <option value="true">Public</option>
+                                        <option value="false">Private</option>
                                     </Form.Control>
 
                                 </Col>
                             </Row>
                         </Form.Group>
+
+                        {showLeagueKey
+                        && (
+                            <Form.Group controlId="formLeagueKey">
+                                <Row>
+                                    <Form.Label column>League Key</Form.Label>
+                                    <Col>
+                                        <Form.Control
+                                            required
+                                            type="password"
+                                            placeholder="Enter League Key..."
+                                            onChange={(e) => setLeagueKey(e.target.value)}
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            Please provide a League Key.
+                                        </Form.Control.Feedback>
+                                    </Col>
+                                </Row>
+                            </Form.Group>
+                        )}
 
                         <Form.Group controlId="NumofAIBots">
                             <Row>

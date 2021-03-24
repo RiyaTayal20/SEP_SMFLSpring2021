@@ -1,5 +1,8 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import '../../styles/Home/Home.scss';
+import Form from 'react-bootstrap/Form';
+import { Redirect, useHistory } from 'react-router-dom';
+import Icon from '../../icons/user-profile.png';
 
 function Home() {
     if (!localStorage.getItem('token')) {
@@ -8,9 +11,28 @@ function Home() {
     // Pass this token into auth header when making requests
     // const token = localStorage.getItem('token');
     // console.log(token);
-
+    const history = useHistory();
     return (
-        <div>Placeholder</div>
+        <div className="home-page">
+            <div className="user-profile-section" style={{ justifyContent: 'center' }}>
+                <img src={Icon} alt="dropdown-arrow" className="dropdown-icon" style={{ height: '200px', width: '200px' }} />
+                <Form.Group className="username">
+                    <Form.Control
+                        className="form"
+                        style={{
+                            backgroundColor: 'white',
+                            borderRadius: '0rem',
+                            textAlign: 'center',
+                        }}
+                        placeholder={history.location.state.username}
+                        disabled
+                    />
+                </Form.Group>
+            </div>
+            <div className="tab-placeholder">
+                Tabs will go here.
+            </div>
+        </div>
     );
 }
 export default Home;

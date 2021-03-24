@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-const { Order, Portfolio } = require('../models/portfolioModel');
+const { Order } = require('../models/portfolioModel');
 const League = require('../models/leagueModel');
 
 const MARKET_ORDERS = ['marketBuy', 'marketSell'];
@@ -19,13 +19,7 @@ exports.trade = async (req, res) => {
         let order;
         let userPortfolio;
         let currPrice;
-        const { username } = res.locals;
-        const selectedLeague = await League.findOne(
-            { leagueName: req.body.leagueName },
-            (err) => {
-                if (err) throw err;
-            },
-        );
+        const { league: selectedLeague, username } = res.locals;
         // Define user portfolio
         selectedLeague.portfolioList.forEach((portfolio) => {
             if (portfolio.owner === username) {

@@ -47,8 +47,6 @@ exports.findUserById = async (req, res) => {
         res.send(user);
     });
 };
-<<<<<<< HEAD
-=======
 
 exports.getLeagueByUser = async (req, res) => {
     await League.find({ 'portfolioList.owner': req.params.username }, (err, result) => {
@@ -57,4 +55,3 @@ exports.getLeagueByUser = async (req, res) => {
         else res.send(result);
     });
 };
->>>>>>> main

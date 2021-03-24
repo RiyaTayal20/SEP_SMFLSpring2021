@@ -172,3 +172,15 @@ exports.disbandLeague = async (req, res) => {
     delReq.then(() => res.send(`Successfully disbanded league! (${res.locals.league.leagueName})`))
         .catch((err) => res.status(422).send(`Cannot disband league cleanly. Unknown Error occurred. \n ${err}`));
 };
+
+exports.getPortfolio = (req, res) => {
+    const { username, league } = res.locals;
+    let userPortfolio;
+    league.portfolioList.forEach((portfolio) => {
+        if (portfolio.owner === username) {
+            userPortfolio = portfolio;
+        }
+    });
+    if (!userPortfolio) res.status(404).send('User portfolio not found');
+    res.send(userPortfolio);
+};

@@ -12,16 +12,9 @@ const addPlayerToLeague = async (user, leagueID) => {
     return Promise.all([
         await League.findByIdAndUpdate(
             leagueID,
-            { $addToSet: { playerList: user } },
-            {},
-            (err) => {
-                if (err) throw err;
-            },
-        ),
-        await League.findByIdAndUpdate(
-            leagueID,
             {
                 $addToSet: {
+                    playerList: user,
                     portfolioList: new Portfolio({
                         owner: user,
                         league: leagueID,

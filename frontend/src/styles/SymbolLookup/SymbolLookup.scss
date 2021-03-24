@@ -2,27 +2,47 @@
 @import '../Button.scss';
 
 
-.Symbol-lookup-page{
+.symbol-lookup-page{
     display: flex;
     color: var(--purple);
-    padding-top: 100px;
+    padding: 15vh 0vh 0vh 8vw;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
     
 .symbol-text{
-    padding-bottom:25px;
+    padding-bottom: 25px;
 }
 
+.search-component{
+    display: flex;
+    flex-direction: row;
+}
+
+.image{
+    display: flex;
+   // text-align: center;
+}
 
 .btn {
     @include btn;
+    height: 45px;
+    width: 45px;
+    text-align: center;
 }
 
-.Search{
+
+.search{
     display: flex;
     background-color: #EEEEEE;
-    width: 800px;
-    
+    width: 60vw;
+
 }
+
+.search-container{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+}
+

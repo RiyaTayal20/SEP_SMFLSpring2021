@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import {
+    Row, Col, Tab, Tabs,
+} from 'react-bootstrap';
 import '../../styles/StockLookup/IndividualStock.scss';
+/* FIX NULL VALUES (dayLow, dayHigh, open, bid) */
 
 function IndividualStockPage() {
     const [ticker, setTicker] = useState('');
@@ -42,17 +47,17 @@ function IndividualStockPage() {
                 setStatistics({
                     tickerSymbol: data.tickerSymbol,
                     equityName: data.equityName,
-                    peRatio: data.peRatio,
+                    peRatio: data.peRatio.toFixed(3),
                     askPrice: data.askPrice,
                     avgVolume: data.avgVolume,
-                    beta: data.beta,
-                    dividend: data.dividend,
+                    beta: data.beta.toFixed(3),
+                    dividend: data.dividend.toFixed(3),
                     bidPrice: data.bidPrice,
                     dayHigh: data.dayHigh,
                     dayLow: data.dayLow,
-                    earningsDate: data.earningsDate,
+                    earningsDate: data.earningsDate.slice(0, data.earningsDate.lastIndexOf('T')),
                     eps: data.eps,
-                    exDividend: data.exDividend,
+                    exDividend: data.exDividend.slice(0, data.exDividend.lastIndexOf('T')),
                     openPrice: data.openPrice,
                     volume: data.volume,
                     week52High: data.week52High,
@@ -95,64 +100,115 @@ function IndividualStockPage() {
                                 </b>
                             </h2>
                         </div>
+                        <div className="graph">
+                            <Tabs defaultActiveKey="profile">
+                                <Tab eventKey="1d" title="1D">
+                                    <p>1 Day</p>
+                                    <p>Graph goes here!</p>
+                                </Tab>
+                                <Tab eventKey="5d" title="5D">
+                                    <p>5 Days</p>
+                                </Tab>
+                                <Tab eventKey="1m" title="1M">
+                                    <p>1 Month</p>
+                                </Tab>
+                                <Tab eventKey="6m" title="6M">
+                                    <p>6 Months</p>
+                                </Tab>
+                                <Tab eventKey="ytd" title="YTD">
+                                    <p>Year To Date</p>
+                                </Tab>
+                                <Tab eventKey="1y" title="1Y">
+                                    <p>1 Year</p>
+                                </Tab>
+                                <Tab eventKey="5y" title="5Y">
+                                    <p>5 Year</p>
+                                </Tab>
+                            </Tabs>
+                        </div>
                         <div className="stats">
-                            <h3>
-                                <b>Previous Close:&nbsp;</b>
-                                {statistics.previousClose}
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <b>Market Capitalization:&nbsp;</b>
-                                {statistics.marketCap}
-                            </h3>
-                            <h3>
-                                <b>Open:&nbsp;</b>
-                                {statistics.openPrice}
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <b>BetaMarket Capitalization:&nbsp;</b>
-                                {statistics.beta}
-                            </h3>
-                            <h3>
-                                <b>Bid Price:&nbsp;</b>
-                                {statistics.bidPrice}
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <b>PE Ratio:&nbsp;</b>
-                                {statistics.peRatio}
-                            </h3>
-                            <h3>
-                                <b>Ask:&nbsp;</b>
-                                {statistics.askPrice}
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <b>EPS:&nbsp;</b>
-                                {statistics.eps}
-                            </h3>
-                            <h3>
-                                <b>Day Range:&nbsp;</b>
-                                {statistics.dayLow}
-                                -
-                                {statistics.dayHigh}
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <b>Earning Date:&nbsp;</b>
-                                {statistics.earningsDate}
-                            </h3>
-                            <h3>
-                                <b>52 Week Range:&nbsp;</b>
-                                {statistics.week52Low}
-                                -
-                                {statistics.week52High}
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <b>Dividend:&nbsp;</b>
-                                {statistics.dividend}
-                            </h3>
-                            <h3>
-                                <b>Volume:&nbsp;</b>
-                                {statistics.volume}
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <b>Ex-Dividend Date:&nbsp;</b>
-                                {statistics.exDividend}
-                            </h3>
-                            <h3>
-                                <b>Average Volume:&nbsp;</b>
-                                {statistics.avgVolume}
-                            </h3>
+                            <Container fluid="md">
+                                <Row>
+                                    <Col>
+                                        <b>Previous Close:&nbsp;</b>
+                                        {statistics.previousClose}
+                                    </Col>
+                                    <Col>
+                                        <b>Market Cap:&nbsp;</b>
+                                        {statistics.marketCap}
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <b>Open:&nbsp;</b>
+                                        {statistics.openPrice}
+                                    </Col>
+                                    <Col>
+                                        <b>Beta:&nbsp;</b>
+                                        {statistics.beta}
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <b>Bid:&nbsp;</b>
+                                        {statistics.bid}
+                                    </Col>
+                                    <Col>
+                                        <b>PE Ratio:&nbsp;</b>
+                                        {statistics.peRatio}
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <b>Ask:&nbsp;</b>
+                                        {statistics.askPrice}
+                                    </Col>
+                                    <Col>
+                                        <b>EPS:&nbsp;</b>
+                                        {statistics.eps}
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <b>Day Range:&nbsp;</b>
+                                        {statistics.dayLow}
+                                        -
+                                        {statistics.dayHigh}
+                                    </Col>
+                                    <Col>
+                                        <b>Earnings Date:&nbsp;</b>
+                                        {statistics.earningsDate}
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <b>52 Week Range:&nbsp;</b>
+                                        {statistics.week52Low}
+                                        -
+                                        {statistics.week52High}
+                                    </Col>
+                                    <Col>
+                                        <b>Dividend:&nbsp;</b>
+                                        {statistics.dividend}
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <b>Volume:&nbsp;</b>
+                                        {statistics.volume}
+                                    </Col>
+                                    <Col>
+                                        <b>Ex Dividend Date:&nbsp;</b>
+                                        {statistics.exDividend}
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <b>Average Volume:&nbsp;</b>
+                                        {statistics.avgVolume}
+                                    </Col>
+                                </Row>
+                            </Container>
                         </div>
                     </div>
                 )}

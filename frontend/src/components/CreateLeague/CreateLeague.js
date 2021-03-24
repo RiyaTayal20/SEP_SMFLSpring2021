@@ -35,7 +35,7 @@ function CreateLeague() {
     return (
         <div>
             <div className="create-league-form-title">
-                <h2 className="order-title">Create your fantasy league</h2>
+                Create your fantasy league
             </div>
             <Container className="create-league-container">
                 <Form className="create-league-form" noValidate validated={validated} onSubmit={handleSubmit}>

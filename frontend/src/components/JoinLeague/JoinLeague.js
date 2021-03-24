@@ -100,6 +100,12 @@ return(
       Private Key:
     </Form.Label>
     <Col>
+      <Form.Control type="text" placeholder="Enter League Name here..." required/>
+      <Form.Control.Feedback type="invalid">
+                        Please provide a League Name.
+      </Form.Control.Feedback>
+    </Col>
+    <Col>
       <Form.Control type="text" placeholder="Enter private key here" required/>
       <Form.Control.Feedback type="invalid">
                         Please provide a Private Key.

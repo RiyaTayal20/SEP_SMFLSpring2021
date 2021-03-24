@@ -32,6 +32,7 @@ exports.trade = async (req, res) => {
                 userPortfolio = portfolio;
             }
         });
+        if (!userPortfolio) throw Error('User portfolio not found');
         if (MARKET_ORDERS.includes(req.body.orderType)) { // Market order
             await getMarketPrice(req.body.tickerSymbol)
                 .then((response) => response.json())
@@ -50,10 +51,33 @@ exports.trade = async (req, res) => {
                 quantity: req.body.quantity,
                 pricePerShare: currPrice || req.body.pricePerShare,
                 expiryDate: req.body.expiryDate, // Maybe add function to handle common intervals
-                executed: false,
+                executed: true, // Execute immediately
                 activeLimitOrder: false,
                 totalPrice: currPrice * req.body.quantity,
             });
+            // Check current holdings
+            let currHolding;
+            userPortfolio.currentHoldings.forEach((holding) => {
+                if (holding.ticker === req.body.tickerSymbol) {
+                    currHolding = holding;
+                }
+            });
+            const prevQuantity = (currHolding) ? currHolding.quantity : 0;
+            // Add order to portfolio
+            await League.findOneAndUpdate(
+                { _id: selectedLeague._id, 'portfolioList.owner': username },
+                {
+                    $addToSet: { 'portfolioList.$.orders': order },
+                    $set: { 'portfolioList.$.cash': (userPortfolio.cash - (currPrice * req.body.quantity)), 'portfolioList.$.currentHoldings': { ticker: req.body.tickerSymbol, quantity: prevQuantity + req.body.quantity } },
+                },
+                {
+                    upsert: true,
+                    new: true,
+                },
+                (err) => {
+                    if (err) throw err;
+                },
+            );
         } else { // Limit order: DEMO #2
             order = new Order({
                 orderType: req.body.orderType,
@@ -65,20 +89,27 @@ exports.trade = async (req, res) => {
                 executed: false,
                 activeLimitOrder: true,
             });
+            // Add order to portfolio
+            await League.findOneAndUpdate(
+                { _id: selectedLeague._id, 'portfolioList.owner': username },
+                { $addToSet: { 'portfolioList.$.orders': order }, $set: { 'portfolioList.$.cash': userPortfolio.cash - (currPrice * req.body.quantity) } },
+                {
+                    upsert: true,
+                    new: true,
+                },
+                (err) => {
+                    if (err) throw err;
+                },
+            );
         }
-        // Add order to portfolio
-        await League.findOneAndUpdate(
-            { _id: selectedLeague._id, 'portfolioList.owner': username },
-            { $addToSet: { 'portfolioList.$.orders': order } },
-            {
-                upsert: true,
-                new: true,
-            },
+        // Return updated portfolio to user
+        const updatedLeague = await League.findOne(
+            { leagueName: req.body.leagueName },
             (err) => {
                 if (err) throw err;
             },
         );
-        selectedLeague.portfolioList.forEach((portfolio) => {
+        updatedLeague.portfolioList.forEach((portfolio) => {
             if (portfolio.owner === username) {
                 res.send(portfolio);
             }

@@ -1,4 +1,15 @@
-function joinLeague(){
+/* eslint-disable */
+import React, { useState } from 'react';
+import '../../styles/JoinLeague/JoinLeague.scss';
+import Form from 'react-bootstrap/Form';
+// import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Table from 'react-bootstrap/Table';
+// import InputGroup from 'react-bootstrap/InputGroup';
+
+function JoinLeague(){
 
     const [validated, setValidated] = useState(false);
 
@@ -104,3 +115,5 @@ return(
 
    )
 }
+
+export default JoinLeague;

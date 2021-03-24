@@ -5,6 +5,7 @@ import {
     LoginPage,
     HomePage,
     CreateLeaguePage,
+    JoinLeaguePage,
 } from './components/Pages';
 import Header from './components/Header/Header';
 import NavigationBar from './components/NavigationBar/NavigationBar';
@@ -30,6 +31,9 @@ function App() {
                             </Route>
                             <Route path="/league/create">
                                 <CreateLeaguePage />
+                            </Route>
+                            <Route path="/league/join">
+                                <JoinLeaguePage />
                             </Route>
                         </Switch>
                     </div>

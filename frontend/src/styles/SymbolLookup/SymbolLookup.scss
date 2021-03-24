@@ -1,14 +1,28 @@
 @import '../root.scss';
 @import '../Button.scss';
 
+
 .Symbol-lookup-page{
+    display: flex;
     color: var(--purple);
+    padding-top: 100px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
+    
+.symbol-text{
+    padding-bottom:25px;
+}
+
+
 .btn {
     @include btn;
 }
 
 .Search{
+    display: flex;
     background-color: #EEEEEE;
-    border-color: #EEEEEE;
+    width: 800px;
+    
 }

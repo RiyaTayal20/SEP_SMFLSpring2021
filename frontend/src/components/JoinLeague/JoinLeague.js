@@ -21,7 +21,7 @@ function JoinLeague() {
         setValidated(true);
     };
 
-    const [leagues, setLeagues] = useState([{ leagueName: 'thing' }, { leagueName: 'thing2' }]);
+    const [leagues, setLeagues] = useState([]);
 
     const getLeagues = () => {
         fetch(`${process.env.REACT_APP_API_URL}/league/find/all`, {
@@ -55,7 +55,7 @@ function JoinLeague() {
                         <h2 className="order-title">Join a League</h2>
                     </Col>
                     <Col sm={2}>
-                        <Button type="submit">Refresh</Button>
+                        <Button type="submit" onClick={getLeagues}>Refresh</Button>
                     </Col>
                 </Row>
             </div>
@@ -75,12 +75,16 @@ function JoinLeague() {
                             leagues.map((item) => (
                                 <tr>
                                     <td>
-                                        {' '}
                                         {item.leagueName}
-                                        {' '}
                                     </td>
-                                    <td> 10/21 </td>
-                                    <td> 10 </td>
+                                    <td>
+                                        {new Date(item.settings.endDate).toLocaleDateString('en-US')}
+                                    </td>
+                                    <td>
+                                        {item.playerList.length}
+                                        /
+                                        {item.settings.maxPlayers}
+                                    </td>
                                     <td>
                                         <Button type="submit">Join League</Button>
                                     </td>

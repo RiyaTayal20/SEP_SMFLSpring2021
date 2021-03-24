@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Line } from 'react-chartjs-2';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import {
-    Row, Col, Tab, Tabs,
+    Row, Col, // Tab, Tabs,
 } from 'react-bootstrap';
 import '../../styles/StockLookup/IndividualStock.scss';
 /* FIX NULL VALUES (dayLow, dayHigh, open, bid) */
@@ -13,6 +14,9 @@ function IndividualStockPage() {
     const [ticker, setTicker] = useState('');
     const [state, setState] = useState('');
     const [currentPrice, setcurrPrice] = useState('');
+    const [date, setDate] = useState('');
+    const [days, setDays] = useState([]);
+    const [prices, setPrices] = useState([]);
     const [statistics, setStatistics] = useState({
         tickerSymbol: '',
         equityName: '',
@@ -34,6 +38,22 @@ function IndividualStockPage() {
         previousClose: '',
         marketCap: '',
     });
+    function getHistoricalData(input) {
+        setDate(input);
+        setDays([]);
+        setPrices([]);
+        axios.get(`http://localhost:3000/equity/historical/${ticker}?timeframe=${input}`)
+            .then((response) => {
+                const { data } = response;
+                for (let i = 0; i < Object.keys(data).length; i += 1) {
+                    /* eslint-disable */ 
+                    setDays((days) => [...days, i]);
+                    setPrices((prices) => [...prices, data[Object.keys(data)[i]]]);
+                    /* eslint-enable */
+                }
+            })
+            .catch((err) => console.error(err));
+    }
     const getData = () => {
         axios.get(`http://localhost:3000/equity/current/${ticker}`)
             .then((response) => {
@@ -100,31 +120,93 @@ function IndividualStockPage() {
                                 </b>
                             </h2>
                         </div>
+                        <div className="graph-btns">
+                            <Button onClick={() => getHistoricalData('5d')} variant="outline-primary">
+                                5D
+                            </Button>
+                            <Button onClick={() => getHistoricalData('1m')} variant="outline-primary">
+                                1M
+                            </Button>
+                            <Button onClick={() => getHistoricalData('6m')} variant="outline-primary">
+                                6M
+                            </Button>
+                            <Button onClick={() => getHistoricalData('ytd')} variant="outline-primary">
+                                YTD
+                            </Button>
+                            <Button onClick={() => getHistoricalData('1y')} variant="outline-primary">
+                                1Y
+                            </Button>
+                            <Button onClick={() => getHistoricalData('5y')} variant="outline-primary">
+                                5Y
+                            </Button>
+                        </div>
                         <div className="graph">
-                            <Tabs defaultActiveKey="profile">
-                                <Tab eventKey="1d" title="1D">
-                                    <p>1 Day</p>
-                                    <p>Graph goes here!</p>
-                                </Tab>
-                                <Tab eventKey="5d" title="5D">
-                                    <p>5 Days</p>
-                                </Tab>
-                                <Tab eventKey="1m" title="1M">
-                                    <p>1 Month</p>
-                                </Tab>
-                                <Tab eventKey="6m" title="6M">
-                                    <p>6 Months</p>
-                                </Tab>
-                                <Tab eventKey="ytd" title="YTD">
-                                    <p>Year To Date</p>
-                                </Tab>
-                                <Tab eventKey="1y" title="1Y">
-                                    <p>1 Year</p>
-                                </Tab>
-                                <Tab eventKey="5y" title="5Y">
-                                    <p>5 Year</p>
-                                </Tab>
-                            </Tabs>
+                            <h2>{date}</h2>
+                            <Line
+                                data={{
+                                    labels: days,
+                                    datasets: [
+                                        {
+                                            label: 'Price',
+                                            data: prices,
+                                            borderColor: 'rgba(98, 252, 3, 1)',
+                                            hoverBackgroundColor: 'blue',
+                                            fill: false,
+                                            borderWidth: 1,
+                                            lineTension: 0.1,
+                                        },
+                                    ],
+                                }}
+                                height={400}
+                                width={600}
+                                options={{
+                                    backgroundColor: 'white',
+                                    maintainAspectRatio: false,
+                                    tooltips: {
+                                        backgroundColor: 'blue',
+                                    },
+                                    scales: {
+                                        yAxes: [{
+                                            gridLines: {
+                                                color: 'gray',
+                                                zeroLineColor: 'white',
+                                            },
+                                            scaleLabel: {
+                                                display: true,
+                                                fontSize: 15,
+                                                fontColor: 'white',
+                                                fontStyle: 'bold',
+                                                labelString: '$',
+                                            },
+                                            ticks: {
+                                                fontColor: 'white',
+                                            },
+                                        }],
+                                        xAxes: [{
+                                            gridLines: {
+                                                color: 'gray',
+                                                zeroLineColor: 'white',
+                                            },
+                                            scaleLabel: {
+                                                display: true,
+                                                fontSize: 15,
+                                                fontColor: 'white',
+                                                fontStyle: 'bold',
+                                                labelString: 'Days',
+                                            },
+                                            ticks: {
+                                                fontColor: 'white',
+                                            },
+                                        }],
+                                    },
+                                    legend: {
+                                        labels: {
+                                            fontSize: 12,
+                                            fontColor: 'white',
+                                        },
+                                    },
+                                }}
+                            />
                         </div>
                         <div className="stats">
                             <Container fluid="md">

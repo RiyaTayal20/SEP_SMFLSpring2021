@@ -8,6 +8,7 @@ import {
     HomePage,
     CreateLeaguePage,
     IndividualStockPage,
+    TradePage,
 } from './components/Pages';
 import Header from './components/Header/Header';
 import NavigationBar from './components/NavigationBar/NavigationBar';
@@ -36,6 +37,9 @@ function App() {
                             </Route>
                             <Route path="/stock">
                                 <IndividualStockPage />
+                            </Route>
+                            <Route path="/trade">
+                                <TradePage />
                             </Route>
                         </Switch>
                     </div>

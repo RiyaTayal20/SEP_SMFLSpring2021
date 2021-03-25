@@ -71,8 +71,8 @@ function CreateLeague() {
 
     return (
         <div>
-            <div>
-                <h2 className="order-title">Create your fantasy league</h2>
+            <div className="create-league-form-title">
+                Create your fantasy league
             </div>
             <Container className="create-league-container">
                 <Form className="create-league-form" noValidate validated={validated} onSubmit={handleSubmit}>
@@ -164,7 +164,7 @@ function CreateLeague() {
                                             onChange={(e) => setLimit(e.target.value)}
                                         />
                                         <Form.Control.Feedback type="invalid">
-                                            Please provide a valid trade limit to 2 decimal places.
+                                            Please provide a valid trade limit to two decimal places
                                         </Form.Control.Feedback>
                                     </InputGroup>
                                 </Col>

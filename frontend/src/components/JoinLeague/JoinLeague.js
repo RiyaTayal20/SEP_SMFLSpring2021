@@ -85,7 +85,7 @@ function JoinLeague() {
                 {showAlert
                     && (
                         <Alert variant="success" onClose={() => setShowAlert(false)} dismissible>
-                            You successfully joined
+                            You successfully joined&nbsp;
                             {selectedLeague.leagueName}
                             !
                         </Alert>

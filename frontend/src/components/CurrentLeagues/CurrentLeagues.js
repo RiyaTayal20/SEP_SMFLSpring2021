@@ -47,7 +47,16 @@ function CurrentLeagues() {
                     {leagues && leagues.map((league) => (
                         <ListGroup.Item>
                             <p className="current-league-name">{league.leagueName}</p>
-                            <p className="current-league-worth">{league.settings.balance}</p>
+                            {league.portfolioList
+                                && league.portfolioList.map((portfolio) => {
+                                    console.log(portfolio);
+                                    if (portfolio.owner === username) {
+                                        console.log(portfolio.netWorth);
+                                        return (<p className="current-league-worth">{portfolio.cash}</p>);
+                                    }
+                                    console.log('NOne');
+                                    return null;
+                                })}
                         </ListGroup.Item>
                     ))}
                 </ListGroup>

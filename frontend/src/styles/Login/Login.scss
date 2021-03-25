@@ -21,7 +21,7 @@
     @extend %flex-center;
     border-style: solid;
     border-color: white;
-    margin: 90px; 
+    margin: 90px auto; 
     padding: 0px 110px;
     .form-group {
         @extend %flex-center;

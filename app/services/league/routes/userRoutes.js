@@ -13,4 +13,6 @@ router.post('/login', userController.login);
 
 router.get('/find', userController.findUserById);
 
+router.get('/:username/league', userController.getLeagueByUser);
+
 module.exports = router;

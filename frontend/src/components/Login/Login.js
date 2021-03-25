@@ -34,6 +34,7 @@ function Login() {
                 res.json().then((data) => {
                     console.log(data.token);
                     localStorage.setItem('token', data.token);
+                    sessionStorage.setItem('username', data.username);
                     history.push('/home', { username: data.username });
                 });
             } else {

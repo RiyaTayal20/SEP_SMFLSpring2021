@@ -28,7 +28,7 @@ function NavigationBar() {
                     <Accordion.Collapse eventKey="0">
                         <ListGroup style={{ marginLeft: '20px', borderRadius: '0rem' }}>
                             <ListGroup.Item className="leagues-item">
-                                <Card.Link href="#" style={{ color: '#2F2F31' }}>Current Leagues</Card.Link>
+                                <Card.Link href="/league/view" style={{ color: '#2F2F31' }}>Current Leagues</Card.Link>
                             </ListGroup.Item>
                             <ListGroup.Item className="leagues-item">
                                 <Card.Link href="#" style={{ color: '#2F2F31' }}>Join League</Card.Link>

@@ -78,7 +78,7 @@ exports.joinLeague = async (req, res) => {
     }
 
     addPlayerToLeague(username, _id)
-        .then((succ) => res.status(422).send(`Sucessfully joined league! (${req.body.leagueName}) \n ${succ}`))
+        .then((succ) => res.send(`Sucessfully joined league! (${req.body.leagueName}) \n ${succ}`))
         .catch((err) => res.status(422).send(`{${err}}`));
 };
 

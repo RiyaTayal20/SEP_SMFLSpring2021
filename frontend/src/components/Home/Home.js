@@ -41,27 +41,27 @@ function Home() {
                 <div className="tab-placeholder">
                     <Tabs defaultActiveKey="allLeaguesPerformance" id="uncontrolled-tab-example">
                         <Tab className="tab" eventKey="allLeaguesPerformance" title="All Leagues Performance">
-                            <div className="image">
+                            <div className="graph-icon">
                                 <img src={graphIcon} alt="performanceGraph" className="performance-graphs" style={{ height: '29vh', width: '38vw' }} />
                             </div>
                         </Tab>
                         <Tab className="tab" eventKey="leagueOne" title="League 1">
-                            <div className="image">
+                            <div className="graph-icon">
                                 <img src={graphIcon} alt="performanceGraph" className="performance-graphs" style={{ height: '29vh', width: '38vw' }} />
                             </div>
                         </Tab>
                         <Tab className="tab" eventKey="leagueTwo" title="League 2">
-                            <div className="image">
+                            <div className="graph-icon">
                                 <img src={graphIcon} alt="performanceGraph" className="performance-graphs" style={{ height: '29vh', width: '38vw' }} />
                             </div>
                         </Tab>
                         <Tab className="tab" eventKey="leagueThree" title="League 3">
-                            <div className="image">
+                            <div className="graph-icon">
                                 <img src={graphIcon} alt="performanceGraph" className="performance-graphs" style={{ height: '29vh', width: '38vw' }} />
                             </div>
                         </Tab>
                         <Tab className="tab" eventKey="leagueFour" title="League 4">
-                            <div className="image">
+                            <div className="graph-icon">
                                 <img src={graphIcon} alt="performanceGraph" className="performance-graphs" style={{ height: '29vh', width: '38vw' }} />
                             </div>
                         </Tab>

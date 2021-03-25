@@ -85,7 +85,9 @@ function JoinLeague() {
                 {showAlert
                     && (
                         <Alert variant="success" onClose={() => setShowAlert(false)} dismissible>
-                            You successfully joined {selectedLeague.leagueName}!
+                            You successfully joined
+                            {selectedLeague.leagueName}
+                            !
                         </Alert>
                     )}
                 {showError
@@ -113,7 +115,11 @@ function JoinLeague() {
                                         {`${new Date(league.settings.endDate).getMonth() + 1
                                         }/${new Date(league.settings.endDate).getDate() + 1}/${new Date(league.settings.endDate).getFullYear()}`}
                                     </td>
-                                    <td>{league.playerList.length}/{league.settings.maxPlayers}</td>
+                                    <td>
+                                        {league.playerList.length}
+                                        /
+                                        {league.settings.maxPlayers}
+                                    </td>
                                     {league.settings.public
                                         ? <td>Public</td>
                                         : <td>Private</td>}

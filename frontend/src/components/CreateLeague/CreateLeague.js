@@ -21,43 +21,49 @@ function CreateLeague() {
     const [maxPlayers, setMaxPlayers] = useState('');
     const [end, setEnd] = useState('');
     const [showError, setShowError] = useState(false);
+    const [showSucc, setShowSucc] = useState(false);
+    // const [selectedLeague, setSelectedLeague] = useState('');
     const [errors, setErrors] = useState([]);
 
     const [validated, setValidated] = useState(false);
 
-    const createLeague = () => {
-        fetch(`${process.env.REACT_APP_API_URL}/league/create`, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-                'Content-Type': 'application/json',
+    const createLeague = () => fetch(`${process.env.REACT_APP_API_URL}/league/create`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            leagueName,
+            leagueKey,
+            settings: {
+                balance,
+                aiPlayers,
+                maxPlayers,
+                endDate: end,
+                public: visibility,
+                commissionPercent: commission,
+                tradeLimit: limit,
             },
-            body: JSON.stringify({
-                leagueName,
-                leagueKey,
-                settings: {
-                    balance,
-                    aiPlayers,
-                    maxPlayers,
-                    endDate: end,
-                    public: visibility,
-                    commissionPercent: commission,
-                    tradeLimit: limit,
-                },
-            }),
-        }).then((res) => {
-            if (res.ok) {
-                console.log('Successfully created league');
-                // history.push('some league home page');
-            } else {
-                setShowError(true);
-                res.json().then((data) => {
-                    console.log(data.errors);
-                    setErrors(data.errors);
-                });
-            }
-        }).catch((err) => console.log(err));
-    };
+        }),
+    }).then((res) => {
+        if (res.ok) {
+            console.log('Successfully created league');
+            // history.push('some league home page');
+        } else {
+            setShowError(true);
+            setShowSucc(false);
+            res.json().then((data) => {
+                console.log(data.errors);
+                setErrors(data.errors);
+                return null;
+            });
+        }
+        return res.json().then((data) => data);
+    }).catch((err) => {
+        console.log(err);
+        return null;
+    });
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -66,7 +72,15 @@ function CreateLeague() {
             event.stopPropagation();
         }
         setValidated(true);
-        createLeague();
+        const league = createLeague();
+
+        // This part is not working yet
+        if (league != null) {
+            setShowSucc(true);
+            setShowError(false);
+            console.log(league);
+            // setSelectedLeague(league);
+        }
     };
 
     return (
@@ -76,6 +90,12 @@ function CreateLeague() {
             </div>
             <Container className="create-league-container">
                 <Form className="create-league-form" noValidate validated={validated} onSubmit={handleSubmit}>
+                    {showSucc
+                    && (
+                        <Alert variant="success" onClose={() => setShowSucc(false)} dismissible>
+                            You successfully created the league!
+                        </Alert>
+                    )}
                     {showError
                         && (
                             <Alert variant="danger" onClose={() => setShowError(false)} dismissible>

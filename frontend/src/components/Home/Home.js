@@ -12,6 +12,7 @@ function Home() {
     if (!localStorage.getItem('token')) {
         return <Redirect to="/user/login" />;
     }
+    console.log(history);
     // Pass this token into auth header when making requests
     // const token = localStorage.getItem('token');
 
@@ -25,7 +26,7 @@ function Home() {
                     <Form.Control
                         className="form"
                         type="text"
-                        placeholder={history.location.state.username}
+                        placeholder={sessionStorage.getItem('username')}
                         style={{
                             backgroundColor: 'var(--dark-scale-grey)',
                             borderRadius: '0rem',

@@ -1,6 +1,7 @@
 :root {
     --mint: #3FC380;
     --dark-scale-grey: #2F2F31;
+    --white: #FFFFFF;
   }
   
   html, body {
@@ -39,5 +40,5 @@
   .container {
     height: 80vh;
     display: flex;
-    justify-content: center;
+    // justify-content: center;
   }

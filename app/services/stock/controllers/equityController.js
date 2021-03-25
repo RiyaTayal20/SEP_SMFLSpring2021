@@ -43,7 +43,7 @@ const getStatistics = async (ticker) => {
                     equityName: keyStats.companyName,
                     currentPrice: equityQuote.latestPrice,
                     previousClose: equityQuote.previousClose,
-                    openPrice: equityQuote.open,
+                    openPrice: equityQuote.iexOpen,
                     marketCap: keyStats.marketcap,
                     peRatio: keyStats.peRatio,
                     beta: keyStats.beta,

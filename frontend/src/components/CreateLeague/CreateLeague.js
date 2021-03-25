@@ -49,10 +49,12 @@ function CreateLeague() {
     }).then((res) => {
         if (res.ok) {
             console.log('Successfully created league');
+            setShowSucc(true);
+            setShowError(false);
             // history.push('some league home page');
         } else {
-            setShowError(true);
             setShowSucc(false);
+            setShowError(true);
             res.json().then((data) => {
                 console.log(data.errors);
                 setErrors(data.errors);
@@ -72,8 +74,6 @@ function CreateLeague() {
             event.stopPropagation();
         }
         setValidated(true);
-        setShowSucc(true);
-        setShowError(false);
         createLeague();
     };
 
@@ -87,7 +87,7 @@ function CreateLeague() {
                     {showSucc
                     && (
                         <Alert variant="success" onClose={() => setShowSucc(false)} dismissible>
-                            You successfully created the
+                            You successfully created&nbsp;
                             {leagueName}
                             !
                         </Alert>

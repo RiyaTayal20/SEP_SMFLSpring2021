@@ -7,6 +7,7 @@ import {
     LoginPage,
     HomePage,
     CreateLeaguePage,
+    JoinLeaguePage,
     IndividualStockPage,
     TradePage,
     CurrentLeaguesPage,
@@ -37,6 +38,9 @@ function App() {
                             </Route>
                             <Route path="/league/create">
                                 <CreateLeaguePage />
+                            </Route>
+                            <Route path="/league/join">
+                                <JoinLeaguePage />
                             </Route>
                             <Route path="/stock">
                                 <IndividualStockPage />

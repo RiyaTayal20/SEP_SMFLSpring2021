@@ -7,6 +7,7 @@ import {
     LoginPage,
     HomePage,
     CreateLeaguePage,
+    JoinLeaguePage,
     TradePage,
 } from './components/Pages';
 import Header from './components/Header/Header';
@@ -33,6 +34,9 @@ function App() {
                             </Route>
                             <Route path="/league/create">
                                 <CreateLeaguePage />
+                            </Route>
+                            <Route path="/league/join">
+                                <JoinLeaguePage />
                             </Route>
                             <Route path="/trade">
                                 <TradePage />

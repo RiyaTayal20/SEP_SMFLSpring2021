@@ -1,0 +1,36 @@
+@import '../root.scss';
+@import '../Button.scss';
+
+.join-league-form-title{
+    font-size: 35px;
+    color: white;
+    padding: 30px;
+}
+
+.table {
+    background-color: var(--light-scale-grey);
+}
+
+
+
+.join-league-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 18px;
+}
+
+.join-league-form{
+    width: 800px;
+    overflow: auto;
+    margin-bottom: 100px;
+    .btn {
+        @include btn;
+    }
+}
+
+.private-league-form{
+    .btn {
+        @include btn;
+    }
+}

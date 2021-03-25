@@ -3,25 +3,36 @@
 
 .container{
     height: auto; 
+    color:white;
 }
 
 .join-league-container{
     font-size: 18px;
+    color:white;
 }
 
 .join-league-form-title {
-    padding-top: 30px;
-    color: white;
+    padding-top: 5%;
+    color:white;
     text-align: center;
     height: 0px;
-    font-size: 35px;
+    font-size: 200%;
+    .h2 {
+        color:white;
+        text-align: center;
+    }
 }
+
+
 
 .join-league-form { 
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 90px; 
+    margin: 10%; 
+    .table{
+        color:white;
+    }
     .form-group {
         @extend %flex-center;
         color: white;
@@ -41,19 +52,21 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    min-width: 300px;
+    min-width: 20%;
 }
 
 .form-group{
     font-weight: bold;
-    padding: 5px;
+    margin:5%
+    //padding: 10%;
 }
 
 .form-control{
-    min-width: 250px;
+    min-width: 100%;
 }
 
 .form-content{
     display: flex;
     flex-direction: column;
 }
+

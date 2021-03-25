@@ -1,11 +1,14 @@
+@import '../root.scss';
+
 .home-page{
-    margin-top: 10vh;
+    margin: 6vh 2vw 6vh 6vw;
+    align-content: auto;
     display: flex;
     flex-direction: row;
 }
 
 .user-profile-section{
-    margin-left: 5vw;
+    margin: 8vh 0vw 8vh 1vw;
     text-align: center;
 }
 
@@ -13,25 +16,76 @@
     margin-top: 1vh;
 }
 
-.form{
-    background-color: peachpuff;
-}
-
 .league-information{
     display: flex;
     flex-direction: column;
-    margin-left: 10vw;
+    margin: 5vh 3vw 5vh 9vw;
 }
 
 .tab-placeholder{
-    padding: 2vh;
-    border: 1px solid;
-    border-color: plum;
+    background-color: white;
+    width: 40vw;
+    border-radius: 0.25rem;
+
+    .tab{
+        background-color: white;
+        object-fit: inherit;
+        color: var(--dark-grey-scale);
+    }
+}
+
+.image{
+    padding: 4vh 0vw;
+    text-align:center;
 }
 
 .transaction-placeholder{
-    margin: 5vh 0vh 0vh 0vh;
-    padding: 2vh;
-    border: 1px solid;
-    border-color: plum;
+    margin: 5vh 2vw 0vh 0vw;
+    padding: 2vh 2vw;
+    width: 40vw;
+    color: var(--dark-grey-scale);
+    background-color: white;
+}
+
+.history-text{
+    color: var(--dark-grey-scale);
+}
+
+.transaction-container{
+    display: flex;
+    flex-direction: row;
+    margin-top: 2vh;
+
+    .column-one{
+        display: flex;
+        flex-direction: column;
+
+        .title{
+            margin: 2vh 0vw;
+        }
+
+        .stock-title{
+            margin-left: 3vw;
+        }
+    }
+
+    .column-two{
+        display: flex;
+        flex-direction: column;
+        margin-left: 7vw;
+
+        .title{
+            margin: 2vh 0vw;
+        }
+    }
+
+    .column-three{
+        display: flex;
+        flex-direction: column;
+        margin-left: 7vw;
+
+        .title{
+            margin: 2vh 0vw;
+        }
+    }
 }

@@ -5,6 +5,8 @@ import CreateLeaguePage from './CreateLeague/CreateLeague';
 import IndividualStockPage from './StockLookup/IndividualStock';
 import TradePage from './Trade/Trade';
 
+import SymbolLookupPage from './SymbolLookup/SymbolLookup';
+
 export {
     RegistrationPage,
     LoginPage,
@@ -12,4 +14,5 @@ export {
     CreateLeaguePage,
     IndividualStockPage,
     TradePage,
+    SymbolLookupPage,
 };

@@ -1,14 +1,14 @@
 @import '../root.scss';
 
 .home-page{
-    margin: 6vh 2vw 6vh 6vw;
+    margin: 5vh 2vw 6vh 6vw;
     align-content: auto;
     display: flex;
     flex-direction: row;
 }
 
 .user-profile-section{
-    margin: 8vh 0vw 8vh 1vw;
+    margin: 5vh 0vw 8vh 3vw;
     text-align: center;
 }
 
@@ -19,7 +19,7 @@
 .league-information{
     display: flex;
     flex-direction: column;
-    margin: 5vh 3vw 5vh 9vw;
+    margin: 5vh 3vw 5vh 8vw;
 }
 
 .tab-placeholder{

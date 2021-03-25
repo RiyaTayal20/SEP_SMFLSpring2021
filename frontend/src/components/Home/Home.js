@@ -19,7 +19,7 @@ function Home() {
         <div className="home-page">
             <div className="user-profile-section" style={{ justifyContent: 'center' }}>
                 <div className="image-container">
-                    <img src={Icon} alt="userProfile" className="user-profile-image" style={{ height: '200px', width: '200px' }} />
+                    <img src={Icon} alt="userProfile" className="user-profile-image" style={{ height: '230px', width: '230px' }} />
                 </div>
                 <Form.Group className="username">
                     <Form.Control

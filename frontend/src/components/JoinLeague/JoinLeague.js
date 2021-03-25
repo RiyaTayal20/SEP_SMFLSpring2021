@@ -113,7 +113,7 @@ function JoinLeague() {
                                         {`${new Date(league.settings.endDate).getMonth() + 1
                                         }/${new Date(league.settings.endDate).getDate() + 1}/${new Date(league.settings.endDate).getFullYear()}`}
                                     </td>
-                                    <td>{league.playerList.length}</td>
+                                    <td>{league.playerList.length}/{league.settings.maxPlayers}</td>
                                     {league.settings.public
                                         ? <td>Public</td>
                                         : <td>Private</td>}

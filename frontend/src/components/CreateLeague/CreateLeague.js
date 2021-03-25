@@ -47,7 +47,7 @@ function CreateLeague() {
             }),
         }).then((res) => {
             if (res.ok) {
-                console.log('Sccessfully created league');
+                console.log('Successfully created league');
                 // history.push('some league home page');
             } else {
                 setShowError(true);

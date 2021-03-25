@@ -48,7 +48,7 @@ exports.signup = [
     },
 ];
 
-exports.ticker = [
+exports.validTicker = [
     check('tickerSymbol')
         .trim()
         .toLowerCase()

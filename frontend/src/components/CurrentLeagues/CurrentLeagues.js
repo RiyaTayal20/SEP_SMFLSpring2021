@@ -47,7 +47,7 @@ function CurrentLeagues() {
                     {leagues && leagues.map((league) => (
                         <ListGroup.Item>
                             <p className="current-league-name">{league.leagueName}</p>
-                            <p className="current-league-worth">$930</p>
+                            <p className="current-league-worth">{league.settings.balance}</p>
                         </ListGroup.Item>
                     ))}
                 </ListGroup>

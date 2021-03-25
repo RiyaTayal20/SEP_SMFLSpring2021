@@ -24,6 +24,7 @@ const leagueSchema = new mongoose.Schema({
     settings: {
         balance: {
             type: Number,
+            default: 10000,
         },
         aiPlayer: {
             type: Number,

@@ -286,19 +286,19 @@ exports.getPortfolio = async (req, res) => {
             statistics.push(getStatistics(ticker));
             // Get cost basis
             const costBasis = calculateCostBasis(ticker, portfolio);
-            remapHoldings[ticker].costBasis = costBasis;
+            remapHoldings[ticker].costBasis = costBasis.toFixed(2);
         }
         const setPrices = await Promise.all(currentPrices).then((result) => {
             for (let i = 0; i < portfolioInfo.holdings.length; i += 1) {
                 const { ticker, quantity } = portfolioInfo.holdings[i];
                 // Current and total price
-                remapHoldings[ticker].currentPrice = result[i].price;
-                remapHoldings[ticker].totalValue = result[i].price * quantity;
+                remapHoldings[ticker].currentPrice = result[i].price.toFixed(2);
+                remapHoldings[ticker].totalValue = result[i].price * quantity.toFixed(2);
                 // Gain/loss
                 // eslint-disable-next-line max-len
-                remapHoldings[ticker].totalChange = (remapHoldings[ticker].costBasis * quantity) - remapHoldings[ticker].totalValue;
+                remapHoldings[ticker].totalChange = ((remapHoldings[ticker].costBasis * quantity) - remapHoldings[ticker].totalValue).toFixed(2);
                 // eslint-disable-next-line max-len
-                remapHoldings[ticker].percentChange = remapHoldings[ticker].totalChange / (remapHoldings[ticker].costBasis * quantity);
+                remapHoldings[ticker].percentChange = (remapHoldings[ticker].totalChange / (remapHoldings[ticker].costBasis * quantity)).toFixed(2);
             }
         });
         const setNames = await Promise.all(statistics).then((result) => {

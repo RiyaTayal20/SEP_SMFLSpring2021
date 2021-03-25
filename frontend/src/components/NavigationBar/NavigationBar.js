@@ -44,7 +44,7 @@ function NavigationBar() {
                 </Card>
             </Accordion>
             <Card.Header class="card-header" style={{ backgroundColor: 'white' }}>
-                <Card.Link href="#" style={{ color: '#2F2F31' }}>Symbol Lookup</Card.Link>
+                <Card.Link href="/lookup" style={{ color: '#2F2F31' }}>Symbol Lookup</Card.Link>
             </Card.Header>
             <Card.Header class="card-header" style={{ backgroundColor: 'white' }}>
                 <Card.Link href="#" style={{ color: '#2F2F31' }}>News</Card.Link>

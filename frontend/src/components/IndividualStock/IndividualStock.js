@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
-import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import {
     Row, Col, // Tab, Tabs,
 } from 'react-bootstrap';
-import '../../styles/StockLookup/IndividualStock.scss';
-/* FIX NULL VALUES (dayLow, dayHigh, open, bid) */
+import '../../styles/IndividualStock/IndividualStock.scss';
+import { useHistory } from 'react-router-dom';
 
 function IndividualStockPage() {
-    const [ticker, setTicker] = useState('');
+    const history = useHistory();
+    const ticker = history.location.state.tickerSymbol;
     const [state, setState] = useState('');
     const [currentPrice, setcurrPrice] = useState('');
     const [date, setDate] = useState('');
@@ -42,7 +42,7 @@ function IndividualStockPage() {
         setDate(input);
         setDays([]);
         setPrices([]);
-        axios.get(`http://localhost:3000/equity/historical/${ticker}?timeframe=${input}`)
+        axios.get(`${process.env.REACT_APP_API_URL}/${ticker}?timeframe=${input}`)
             .then((response) => {
                 const { data } = response;
                 for (let i = 0; i < Object.keys(data).length; i += 1) {
@@ -54,14 +54,14 @@ function IndividualStockPage() {
             })
             .catch((err) => console.error(err));
     }
-    const getData = () => {
-        axios.get(`http://localhost:3000/equity/current/${ticker}`)
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/equity/current/${ticker}`)
             .then((response) => {
                 const { data } = response;
                 setcurrPrice(data.price);
             })
             .catch((err) => console.error(err));
-        axios.get(`http://localhost:3000/equity/statistics/${ticker}`)
+        axios.get(`${process.env.REACT_APP_API_URL}/equity/statistics/${ticker}`)
             .then((response) => {
                 const { data } = response;
                 if (data.bidPrice == null || data.bidPrice === 0) {
@@ -75,6 +75,10 @@ function IndividualStockPage() {
                 }
                 if (data.dayHigh == null) {
                     data.dayHigh = 'N/A';
+                }
+                if (data.dividend == null || data.dividend === 0) {
+                    data.exDividend = 'N/A';
+                    data.dividend = 'N/A';
                 }
                 setStatistics({
                     tickerSymbol: data.tickerSymbol,
@@ -100,21 +104,9 @@ function IndividualStockPage() {
             })
             .catch((err) => console.error(err));
         setState('display');
-    };
+    }, []);
     return (
         <div className="stock-container">
-            <h4>Temporary form where you enter desired equity!</h4>
-            <div className="ticker-form">
-                <Form className="form">
-                    <Form.Group controlId="formTicker">
-                        <Form.Label>Ticker Symbol:</Form.Label>
-                        <Form.Control type="text" placeholder="Enter ticker" onChange={(e) => setTicker(e.target.value)} />
-                    </Form.Group>
-                    <Button className="submit-button" onClick={getData}>
-                        Submit
-                    </Button>
-                </Form>
-            </div>
             <div className="stockInfo">
                 {state === 'display' && (
                     <div>

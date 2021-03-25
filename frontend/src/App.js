@@ -11,6 +11,7 @@ import {
     TradePage,
     CurrentLeaguesPage,
     SymbolLookupPage,
+    PortfolioPage,
 } from './components/Pages';
 import Header from './components/Header/Header';
 import NavigationBar from './components/NavigationBar/NavigationBar';
@@ -45,6 +46,9 @@ function App() {
                             </Route>
                             <Route path="/league/view">
                                 <CurrentLeaguesPage />
+                            </Route>
+                            <Route path="/portfolio">
+                                <PortfolioPage />
                             </Route>
                             <Route path="/lookup">
                                 <SymbolLookupPage />

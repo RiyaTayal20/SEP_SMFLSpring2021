@@ -42,7 +42,7 @@ function IndividualStockPage() {
         setDate(input);
         setDays([]);
         setPrices([]);
-        axios.get(`${process.env.REACT_APP_API_URL}/${ticker}?timeframe=${input}`)
+        axios.get(`${process.env.REACT_APP_SAPI_URL}/${ticker}?timeframe=${input}`)
             .then((response) => {
                 const { data } = response;
                 for (let i = 0; i < Object.keys(data).length; i += 1) {
@@ -55,13 +55,13 @@ function IndividualStockPage() {
             .catch((err) => console.error(err));
     }
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/equity/current/${ticker}`)
+        axios.get(`${process.env.REACT_APP_SAPI_URL}/equity/current/${ticker}`)
             .then((response) => {
                 const { data } = response;
                 setcurrPrice(data.price);
             })
             .catch((err) => console.error(err));
-        axios.get(`${process.env.REACT_APP_API_URL}/equity/statistics/${ticker}`)
+        axios.get(`${process.env.REACT_APP_SAPI_URL}/equity/statistics/${ticker}`)
             .then((response) => {
                 const { data } = response;
                 if (data.bidPrice == null || data.bidPrice === 0) {

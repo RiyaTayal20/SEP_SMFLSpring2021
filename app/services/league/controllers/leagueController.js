@@ -293,7 +293,7 @@ exports.getPortfolio = async (req, res) => {
                 const { ticker, quantity } = portfolioInfo.holdings[i];
                 // Current and total price
                 remapHoldings[ticker].currentPrice = result[i].price.toFixed(2);
-                remapHoldings[ticker].totalValue = result[i].price * quantity.toFixed(2);
+                remapHoldings[ticker].totalValue = (result[i].price * quantity).toFixed(2);
                 // Gain/loss
                 // eslint-disable-next-line max-len
                 remapHoldings[ticker].totalChange = ((remapHoldings[ticker].costBasis * quantity) - remapHoldings[ticker].totalValue).toFixed(2);

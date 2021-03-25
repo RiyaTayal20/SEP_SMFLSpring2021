@@ -9,6 +9,7 @@ import {
     CreateLeaguePage,
     IndividualStockPage,
     TradePage,
+    CurrentLeaguesPage,
     SymbolLookupPage,
 } from './components/Pages';
 import Header from './components/Header/Header';
@@ -41,6 +42,9 @@ function App() {
                             </Route>
                             <Route path="/trade">
                                 <TradePage />
+                            </Route>
+                            <Route path="/league/view">
+                                <CurrentLeaguesPage />
                             </Route>
                             <Route path="/lookup">
                                 <SymbolLookupPage />

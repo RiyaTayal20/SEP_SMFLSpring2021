@@ -4,6 +4,7 @@ import HomePage from './Home/Home';
 import CreateLeaguePage from './CreateLeague/CreateLeague';
 import IndividualStockPage from './IndividualStock/IndividualStock';
 import TradePage from './Trade/Trade';
+import CurrentLeaguesPage from './CurrentLeagues/CurrentLeagues';
 import SymbolLookupPage from './SymbolLookup/SymbolLookup';
 
 export {
@@ -13,5 +14,6 @@ export {
     CreateLeaguePage,
     IndividualStockPage,
     TradePage,
+    CurrentLeaguesPage,
     SymbolLookupPage,
 };

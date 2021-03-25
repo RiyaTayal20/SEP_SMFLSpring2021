@@ -8,13 +8,13 @@ import Icon from '../../icons/dropdown-arrow.png';
 function NavigationBar() {
     return (
         <Accordion className="sidebar" style={{ border: '4px' }}>
-            <Card.Header class="card-header" style={{ backgroundColor: 'white' }}>
+            <Card.Header className="card-header" style={{ backgroundColor: 'white' }}>
                 <Card.Link className="card-link" href="/home" style={{ color: '#2F2F31' }}>Home</Card.Link>
             </Card.Header>
-            <Card.Header class="card-header" style={{ backgroundColor: 'white' }}>
+            <Card.Header className="card-header" style={{ backgroundColor: 'white' }}>
                 <Card.Link href="#" style={{ color: '#2F2F31' }}>Portfolio</Card.Link>
             </Card.Header>
-            <Card.Header class="card-header" style={{ backgroundColor: 'white' }}>
+            <Card.Header className="card-header" style={{ backgroundColor: 'white' }}>
                 <Card.Link href="/trade" style={{ color: '#2F2F31' }}>Trade</Card.Link>
             </Card.Header>
             <Accordion defaultActiveKey="0">
@@ -43,13 +43,13 @@ function NavigationBar() {
                     </Accordion.Collapse>
                 </Card>
             </Accordion>
-            <Card.Header class="card-header" style={{ backgroundColor: 'white' }}>
+            <Card.Header className="card-header" style={{ backgroundColor: 'white' }}>
                 <Card.Link href="/lookup" style={{ color: '#2F2F31' }}>Symbol Lookup</Card.Link>
             </Card.Header>
-            <Card.Header class="card-header" style={{ backgroundColor: 'white' }}>
+            <Card.Header className="card-header" style={{ backgroundColor: 'white' }}>
                 <Card.Link href="#" style={{ color: '#2F2F31' }}>News</Card.Link>
             </Card.Header>
-            <Card.Header class="card-header" style={{ backgroundColor: 'white' }}>
+            <Card.Header className="card-header" style={{ backgroundColor: 'white' }}>
                 <Card.Link href="#" style={{ color: '#2F2F31' }}>Settings</Card.Link>
             </Card.Header>
         </Accordion>

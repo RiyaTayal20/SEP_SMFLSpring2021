@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const { portfolioSchema } = require('./portfolioModel');
+
 const leagueSchema = new mongoose.Schema({
     leagueName: {
         type: String,
@@ -18,6 +20,7 @@ const leagueSchema = new mongoose.Schema({
         type: Array,
         default: [],
     },
+    portfolioList: [portfolioSchema],
     settings: {
         balance: {
             type: Number,

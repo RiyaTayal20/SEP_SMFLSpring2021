@@ -1,10 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+    BrowserRouter as Router, Switch, Route,
+} from 'react-router-dom';
 import {
     RegistrationPage,
     LoginPage,
     HomePage,
     CreateLeaguePage,
+    TradePage,
     SymbolLookupPage,
 } from './components/Pages';
 import Header from './components/Header/Header';
@@ -31,6 +34,9 @@ function App() {
                             </Route>
                             <Route path="/league/create">
                                 <CreateLeaguePage />
+                            </Route>
+                            <Route path="/trade">
+                                <TradePage />
                             </Route>
                             <Route path="/lookup">
                                 <SymbolLookupPage />

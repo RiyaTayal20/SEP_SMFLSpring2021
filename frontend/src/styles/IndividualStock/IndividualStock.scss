@@ -1,0 +1,71 @@
+.stock-container{
+    display: flex;
+    flex-direction: column;
+    color: white;
+    margin: 4vh 0vw 0vh 4vw;
+}
+
+h1 {
+    color: white;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    .submit-button{
+        width: 100%
+    }
+}
+
+.ticker-form, .currentPrice {
+    margin-bottom: 50px;
+}
+
+.currentPrice > h1 {
+    font-size: 4vw;
+}
+
+.stats {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: 1.7vw;
+}
+
+.makeshift-tab-component{
+    display: flex;
+    flex-direction: column;
+    border: solid;
+    border-width: 1px;
+    border-color: white;
+
+    .graph-btns {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        margin-bottom: 4vh;
+        background-color: white;
+        border-radius: 0rem;
+
+        .button{
+            width: 100%;
+            border-radius: 0rem;
+        }
+    }
+
+    .graph-btns{
+        border: solid;
+        border-width: 0px 0px 2px 0px;
+        border-color: white;
+    }
+
+    .graph{
+        padding: 2vh 4vw 6vh 2vw;
+    }
+}
+
+.graph > h2 {
+    text-align: center;
+    font-weight: 800;
+}

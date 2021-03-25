@@ -17,7 +17,7 @@ function NavigationBar() {
             <Card.Header class="card-header" style={{ backgroundColor: 'white' }}>
                 <Card.Link href="/trade" style={{ color: '#2F2F31' }}>Trade</Card.Link>
             </Card.Header>
-            <Accordion>
+            <Accordion defaultActiveKey="0">
                 <Card>
                     <Accordion.Toggle as={Card.Header} eventKey="0" style={{ color: '#2F2F31', backgroundColor: 'white' }}>
                         Leagues
@@ -44,7 +44,7 @@ function NavigationBar() {
                 </Card>
             </Accordion>
             <Card.Header class="card-header" style={{ backgroundColor: 'white' }}>
-                <Card.Link href="#" style={{ color: '#2F2F31' }}>Symbol Lookup</Card.Link>
+                <Card.Link href="/lookup" style={{ color: '#2F2F31' }}>Symbol Lookup</Card.Link>
             </Card.Header>
             <Card.Header class="card-header" style={{ backgroundColor: 'white' }}>
                 <Card.Link href="#" style={{ color: '#2F2F31' }}>News</Card.Link>

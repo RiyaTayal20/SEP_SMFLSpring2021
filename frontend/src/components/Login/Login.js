@@ -31,12 +31,14 @@ function Login() {
             }),
         }).then((res) => {
             if (res.ok) {
+                console.log(res.json);
                 res.json().then((data) => {
                     console.log(data.token);
                     localStorage.setItem('token', data.token);
                     sessionStorage.setItem('username', data.username);
                     history.push('/home', { username: data.username });
-                });
+                })
+                    .catch(console.error);
             } else {
                 setShowError(true);
                 res.text().then((text) => {

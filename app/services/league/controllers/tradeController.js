@@ -1,18 +1,8 @@
-const fetch = require('node-fetch');
-
 const { Order } = require('../models/portfolioModel');
 const League = require('../models/leagueModel');
+const { getMarketPrice } = require('../utils/stockUtils');
 
 const MARKET_ORDERS = ['marketBuy', 'marketSell'];
-
-const getMarketPrice = async (ticker) => {
-    try {
-        const currPrice = await fetch(`${process.env.STOCK_URL}/equity/current/${ticker}`);
-        return currPrice;
-    } catch (err) {
-        console.error(err);
-    }
-};
 
 exports.trade = async (req, res) => {
     try {
@@ -29,7 +19,6 @@ exports.trade = async (req, res) => {
         if (!userPortfolio) throw Error('User portfolio not found');
         if (MARKET_ORDERS.includes(req.body.orderType)) { // Market order
             await getMarketPrice(req.body.tickerSymbol)
-                .then((response) => response.json())
                 .then((data) => {
                     currPrice = data.price;
                 })
@@ -58,20 +47,47 @@ exports.trade = async (req, res) => {
             });
             const prevQuantity = (currHolding) ? currHolding.quantity : 0;
             // Add order to portfolio
-            await League.findOneAndUpdate(
-                { _id: selectedLeague._id, 'portfolioList.owner': username },
-                {
-                    $addToSet: { 'portfolioList.$.orders': order },
-                    $set: { 'portfolioList.$.cash': (userPortfolio.cash - (currPrice * req.body.quantity)), 'portfolioList.$.currentHoldings': { ticker: req.body.tickerSymbol, quantity: prevQuantity + req.body.quantity } },
-                },
-                {
-                    upsert: true,
-                    new: true,
-                },
-                (err) => {
-                    if (err) throw err;
-                },
-            );
+            if (prevQuantity === 0) { // Does not currently have any shares, add entry to holdings
+                await League.findOneAndUpdate(
+                    { _id: selectedLeague._id, 'portfolioList.owner': username },
+                    {
+                        $addToSet: {
+                            'portfolioList.$.orders': order,
+                            'portfolioList.$.currentHoldings': { ticker: req.body.tickerSymbol, quantity: req.body.quantity },
+                        },
+                        $set: { 'portfolioList.$.cash': (userPortfolio.cash - (currPrice * req.body.quantity)) },
+                    },
+                    {
+                        upsert: true,
+                        new: true,
+                    },
+                    (err) => {
+                        if (err) throw err;
+                    },
+                );
+            } else { // Has holdings, can just update quantity
+                await League.findOneAndUpdate(
+                    { _id: selectedLeague._id },
+                    {
+                        $addToSet: { 'portfolioList.$[element0].orders': order },
+                        $set: {
+                            'portfolioList.$[element0].cash': (userPortfolio.cash - (currPrice * req.body.quantity)),
+                            'portfolioList.$[element0].currentHoldings.$[element1].quantity': prevQuantity + req.body.quantity,
+                        },
+                    },
+                    {
+                        upsert: true,
+                        new: true,
+                        arrayFilters: [
+                            { 'element0.owner': username },
+                            { 'element1.ticker': req.body.tickerSymbol },
+                        ],
+                    },
+                    (err) => {
+                        if (err) throw err;
+                    },
+                );
+            }
         } else { // Limit order: DEMO #2
             order = new Order({
                 orderType: req.body.orderType,

@@ -1,6 +1,7 @@
 const League = require('../models/leagueModel');
 const User = require('../models/userModel');
 const { Portfolio } = require('../models/portfolioModel');
+const { getMarketPrice } = require('../utils/stockUtils');
 
 const addPlayerToLeague = async (user, leagueID) => {
     const league = await League.findById(
@@ -37,6 +38,28 @@ const addPlayerToLeague = async (user, leagueID) => {
             },
         ),
     ]);
+};
+
+const calculatePortfolioValue = async (username, leagueID) => {
+    const league = await League.findById(
+        leagueID,
+        (err) => {
+            if (err) throw err;
+        },
+    );
+    let userPortfolio;
+    league.portfolioList.forEach((portfolio) => {
+        if (portfolio.owner === username) {
+            userPortfolio = portfolio;
+        }
+    });
+    if (!userPortfolio) throw Error('User portfolio not found');
+    // Calculate current value
+    // eslint-disable-next-line max-len
+    const prices = await Promise.all(userPortfolio.currentHoldings.map((holding) => getMarketPrice(holding.ticker)));
+    const quantities = userPortfolio.currentHoldings.map((holding) => holding.quantity);
+    // eslint-disable-next-line max-len
+    return prices.reduce((acc, price, i) => acc + ((price.price * quantities[i]) || 0), 0) + userPortfolio.cash;
 };
 
 exports.createLeague = async (req, res) => {
@@ -173,14 +196,49 @@ exports.disbandLeague = async (req, res) => {
         .catch((err) => res.status(422).send(`Cannot disband league cleanly. Unknown Error occurred. \n ${err}`));
 };
 
-exports.getPortfolio = (req, res) => {
-    const { username, league } = res.locals;
-    let userPortfolio;
-    league.portfolioList.forEach((portfolio) => {
-        if (portfolio.owner === username) {
-            userPortfolio = portfolio;
+exports.getPortfolio = async (req, res) => {
+    try {
+        const { username, league } = res.locals;
+        const currentValue = await calculatePortfolioValue(username, league._id);
+        // Update portfolio
+        await League.findOneAndUpdate(
+            { _id: league._id, 'portfolioList.owner': username },
+            {
+                $set: { 'portfolioList.$.currentNetWorth': currentValue },
+            },
+            {
+                new: true,
+            },
+            (err) => {
+                if (err) throw err;
+            },
+        );
+        // Return updated portfolio to user
+        const updatedLeague = await League.findOne(
+            { leagueName: req.body.leagueName },
+            (err) => {
+                if (err) throw err;
+            },
+        );
+        let portfolio;
+        updatedLeague.portfolioList.forEach((leaguePortfolio) => {
+            if (leaguePortfolio.owner === username) {
+                portfolio = leaguePortfolio;
+            }
+        });
+        if (portfolio) {
+            const responseInfo = {
+                currentNetWorth: portfolio.currentNetWorth,
+                cashAvailable: portfolio.cash,
+                holdings: portfolio.currentHoldings,
+                netWorth: portfolio.netWorth,
+            };
+            res.send(responseInfo);
+        } else {
+            throw Error('Portfolio not found');
         }
-    });
-    if (!userPortfolio) res.status(404).send('User portfolio not found');
-    res.send(userPortfolio);
+    } catch (err) {
+        console.log(err);
+        res.status(400).send(err.toString());
+    }
 };

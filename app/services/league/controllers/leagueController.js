@@ -111,7 +111,7 @@ const calculateCostBasis = (ticker, portfolio) => {
             numShares += order.quantity;
         }
     });
-    if (numShares <= 0) return 0; //Should not happen
+    if (numShares <= 0) return 0; // Should not happen
     return totalCost / numShares;
 };
 
@@ -272,7 +272,7 @@ exports.getPortfolio = async (req, res) => {
         const currentPrices = [];
         const statistics = [];
         for (let i = 0; i < portfolioInfo.holdings.length; i += 1) {
-            const { ticker, quantity } = portfolioInfo.holdings[i];
+            const { ticker } = portfolioInfo.holdings[i];
             // Start async calls for current price and statistics
             currentPrices.push(getMarketPrice(ticker));
             statistics.push(getStatistics(ticker));
@@ -296,7 +296,7 @@ exports.getPortfolio = async (req, res) => {
         const setNames = await Promise.all(statistics).then((result) => {
             // Get equity name
             for (let i = 0; i < portfolioInfo.holdings.length; i += 1) {
-                const { ticker, quantity } = portfolioInfo.holdings[i];
+                const { ticker } = portfolioInfo.holdings[i];
                 remapHoldings[ticker].equityName = result[i].equityName;
             }
         });

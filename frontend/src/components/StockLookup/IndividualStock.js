@@ -64,6 +64,18 @@ function IndividualStockPage() {
         axios.get(`http://localhost:3000/equity/statistics/${ticker}`)
             .then((response) => {
                 const { data } = response;
+                if (data.bidPrice == null || data.bidPrice === 0) {
+                    data.bidPrice = 'N/A';
+                }
+                if (data.askPrice == null || data.askPrice === 0) {
+                    data.askPrice = 'N/A';
+                }
+                if (data.dayLow == null) {
+                    data.dayLow = 'N/A';
+                }
+                if (data.dayHigh == null) {
+                    data.dayHigh = 'N/A';
+                }
                 setStatistics({
                     tickerSymbol: data.tickerSymbol,
                     equityName: data.equityName,
@@ -235,7 +247,7 @@ function IndividualStockPage() {
                                 <Row>
                                     <Col>
                                         <b>Bid:&nbsp;</b>
-                                        {statistics.bid}
+                                        {statistics.bidPrice}
                                     </Col>
                                     <Col>
                                         <b>PE Ratio:&nbsp;</b>

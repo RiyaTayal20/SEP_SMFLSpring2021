@@ -15,7 +15,7 @@ function NavigationBar() {
                 <Card.Link href="#" style={{ color: '#2F2F31' }}>Portfolio</Card.Link>
             </Card.Header>
             <Card.Header class="card-header" style={{ backgroundColor: 'white' }}>
-                <Card.Link href="#" style={{ color: '#2F2F31' }}>Trade</Card.Link>
+                <Card.Link href="/trade" style={{ color: '#2F2F31' }}>Trade</Card.Link>
             </Card.Header>
             <Accordion defaultActiveKey="0">
                 <Card>

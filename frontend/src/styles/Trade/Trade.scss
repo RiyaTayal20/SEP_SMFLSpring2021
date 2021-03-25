@@ -1,0 +1,250 @@
+@import '../Button.scss';
+
+.trade-page{
+    color: var(--white);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+.order-stock-component{
+    width: 35vw;
+    align-items: center;
+    padding-left: 3vw;
+
+}
+
+.order-title{
+    text-decoration:underline;
+}
+
+
+.league-section{
+    display: flex;
+    flex-direction: row;
+}
+
+
+
+.league-dropdown{
+    margin: 0vh 0vw 2vh 6.5vw;
+    .btn{
+        @include btn;
+        background-color: #FFFFFF;
+        border-color: #FFFFFF;
+        color: #495057;
+    }
+   
+}
+
+
+.stock-symbol-section{
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.stock-symbol{
+    margin: 0vh 0vw 2vh 2.6vw;
+    border: none;
+
+}
+
+
+.transaction-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.transaction-dropdown{
+    margin: 0vh 0vw 4vh 4.2vw;
+    .btn{
+        @include btn;
+        background-color: #FFFFFF;
+        border-color: #FFFFFF;
+        color: #495057;
+    }
+}
+
+
+
+.quantity-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.quantity-box{
+    margin: -1vh 0vw 0vh 5.5vw;
+}
+
+.price-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.radioBoxes{
+    display: flex;
+    flex-direction: column;
+}
+
+.duration-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.duration-dropdown{
+    margin: -1vh 0vw 0vh 5.9vw;
+    .btn{
+        @include btn;
+        background-color: #FFFFFF;
+        border-color: #FFFFFF;
+        color: #495057;
+    }
+    
+}
+
+.prev-order-button{
+    margin: 6vh 0vw 10vh 30vw;
+}
+
+.account-details-information{
+    width:35vw;
+    display:  flex;
+    flex-direction: column;
+    padding-left: 10vw;
+    padding-bottom:1vh;
+}
+
+.account-details{
+    text-decoration:underline;
+}
+
+.value-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.value-display{
+    margin: 0vh 0vw 2vh 2.1vw;
+    border-radius: 0.25rem;
+}
+
+.buying-power-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.buying-power-display{
+    margin: 0vh 0vw 2vh 1vw;
+    border-radius: 0.25rem;
+}
+
+.cash-section{
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 6vh;
+}
+
+.cash-display{
+    margin: 0vh 0vw 2vh 6vw;
+    border-radius: 0.25rem;
+}
+
+
+.stock-square{
+    margin: 0.5vh 0vw 0vh 0vw;
+    display : flex;
+    width: 35vw;
+    height: 35vh;
+    background-color:#EEEEEE;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.displayStock{
+    padding-top: 0.21vh;
+    padding-left: 0.1vw;
+}
+
+.stock-sym-box{
+    display: flex;
+    flex-direction: row;
+}
+
+.stock-text{
+    margin: -0.80vh 0vw 1vh 2vw;
+}
+.displayStock{
+    padding-top: 2vh;
+    padding-left: 1vw;
+}
+
+.last-box-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.last-price-display{
+    margin: 0vh 0vw 2vh 2vw;
+}
+
+.change-box-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.change-price-display{
+    margin: 0vh 0vw 2vh 2vw;
+}
+
+.percent-change-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.percent-change-display{
+    margin: 0vh 0vw 0.2vh 1vw;
+
+}
+
+.volume-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.volume-display{
+    margin: 0vh 0vw 2vh 2vw;
+}
+
+.day-high-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.day-high-display{
+    margin: 0vh 0vw 2vh 2vw;
+}
+
+.day-low-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.day-low-display{
+    margin: 0vh 0vw 2vh 2vw;
+}
+
+.StopForm{
+    display:flex;
+    flex-direction: row;
+}
+
+.LimitForm{
+    display:flex;
+    flex-direction: row;
+}
+
+.radioBoxes{
+    margin: 0vh 0vw 0vh 5.4vw;
+}

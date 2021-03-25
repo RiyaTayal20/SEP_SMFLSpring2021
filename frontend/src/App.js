@@ -39,6 +39,7 @@ function App() {
                             </Route>
                             <Route path="/league/join">
                                 <JoinLeaguePage />
+                            </Route>
                             <Route path="/stock">
                                 <IndividualStockPage />
                             </Route>

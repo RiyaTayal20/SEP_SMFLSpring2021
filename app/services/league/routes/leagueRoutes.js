@@ -20,6 +20,6 @@ router.get('/find/names', leagueController.getLeagueNames);
 
 router.get('/find/:leagueName', leagueController.getLeagueByName);
 
-router.get('/portfolio', leagueValidation.authValidation, leagueValidation.findValidLeague, leagueController.getPortfolio);
+router.get('/portfolio/:league', leagueValidation.authValidation, leagueController.getPortfolio);
 
 module.exports = router;

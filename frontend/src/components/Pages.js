@@ -6,6 +6,7 @@ import IndividualStockPage from './IndividualStock/IndividualStock';
 import TradePage from './Trade/Trade';
 import CurrentLeaguesPage from './CurrentLeagues/CurrentLeagues';
 import SymbolLookupPage from './SymbolLookup/SymbolLookup';
+import PortfolioPage from './Portfolio/Portfolio';
 
 export {
     RegistrationPage,
@@ -16,4 +17,5 @@ export {
     TradePage,
     CurrentLeaguesPage,
     SymbolLookupPage,
+    PortfolioPage,
 };

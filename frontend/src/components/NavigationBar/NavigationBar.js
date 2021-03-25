@@ -12,7 +12,7 @@ function NavigationBar() {
                 <Card.Link className="card-link" href="/home" style={{ color: '#2F2F31' }}>Home</Card.Link>
             </Card.Header>
             <Card.Header className="card-header" style={{ backgroundColor: 'white' }}>
-                <Card.Link href="#" style={{ color: '#2F2F31' }}>Portfolio</Card.Link>
+                <Card.Link href="/portfolio" style={{ color: '#2F2F31' }}>Portfolio</Card.Link>
             </Card.Header>
             <Card.Header className="card-header" style={{ backgroundColor: 'white' }}>
                 <Card.Link href="/trade" style={{ color: '#2F2F31' }}>Trade</Card.Link>

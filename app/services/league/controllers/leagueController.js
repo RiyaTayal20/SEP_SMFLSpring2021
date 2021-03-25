@@ -251,7 +251,15 @@ exports.disbandLeague = async (req, res) => {
 
 exports.getPortfolio = async (req, res) => {
     try {
-        const { username, league } = res.locals;
+        const { username } = res.locals;
+        // Need to check league since middleware only checks body
+        const league = await League
+            .findOne({
+                leagueName: req.params.league,
+            })
+            .then((result) => result)
+            .catch(() => null);
+        if (!league) return res.status(422).json('Error: League not found');
         // Get current net worth, cash, holdings, net worth history
         const portfolioInfo = await retrievePortfolioInfo(username, league);
         // eslint-disable-next-line max-len, no-return-assign, no-param-reassign, no-sequences

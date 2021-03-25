@@ -310,10 +310,10 @@ exports.getPortfolio = async (req, res) => {
         });
         await Promise.all([setPrices, setNames]).then(() => {
             const fullResponse = {
-                currentNetWorth: portfolioInfo.currentNetWorth,
-                cashAvailable: portfolioInfo.cashAvailable,
+                currentNetWorth: parseFloat(portfolioInfo.currentNetWorth).toFixed(2),
+                cashAvailable: parseFloat(portfolioInfo.cashAvailable).toFixed(2),
                 holdings: remapHoldings,
-                netWorth: portfolioInfo.netWorth,
+                netWorth: parseFloat(portfolioInfo.netWorth).toFixed(2),
             };
             res.json(fullResponse);
         });

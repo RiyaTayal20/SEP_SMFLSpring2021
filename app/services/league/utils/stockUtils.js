@@ -9,3 +9,13 @@ exports.getMarketPrice = async (ticker) => {
         console.error(err);
     }
 };
+
+exports.getStatistics = async (ticker) => {
+    try {
+        const statistics = await fetch(`${process.env.STOCK_URL}/equity/statistics/${ticker}`)
+            .then((response) => response.json());
+        return statistics;
+    } catch (err) {
+        console.error(err);
+    }
+};

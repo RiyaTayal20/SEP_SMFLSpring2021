@@ -72,15 +72,9 @@ function CreateLeague() {
             event.stopPropagation();
         }
         setValidated(true);
-        const league = createLeague();
-
-        // This part is not working yet
-        if (league != null) {
-            setShowSucc(true);
-            setShowError(false);
-            console.log(league);
-            // setSelectedLeague(league);
-        }
+        setShowSucc(true);
+        setShowError(false);
+        createLeague();
     };
 
     return (
@@ -93,7 +87,9 @@ function CreateLeague() {
                     {showSucc
                     && (
                         <Alert variant="success" onClose={() => setShowSucc(false)} dismissible>
-                            You successfully created the league!
+                            You successfully created the
+                            {leagueName}
+                            !
                         </Alert>
                     )}
                     {showError

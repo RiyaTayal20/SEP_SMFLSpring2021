@@ -22,6 +22,7 @@ function Trade() {
     const [showError, setShowError] = useState(false);
     const [showSucc, setShowSucc] = useState(false);
     const [errors, setErrors] = useState([]);
+    const [portfolio, setPortfolio] = useState();
 
     const getLeagues = async () => {
         const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/user/${username}/league`, {
@@ -34,6 +35,17 @@ function Trade() {
         const data = await response.json()
             .then((result) => setLeagueList(result));
         return data;
+    };
+
+    const getPortfolio = async () => {
+        const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/league/portfolio/${form.leagueName}`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
+        });
+        setPortfolio(await response.json());
     };
 
     const sendTrade = async () => fetch(`${process.env.REACT_APP_LAPI_URL}/trade/submit`, {
@@ -102,6 +114,14 @@ function Trade() {
     useEffect(() => {
         getLeagues();
     }, []);
+
+    useEffect(() => {
+        console.log('League changed');
+        if (form.leagueName !== '') {
+            getPortfolio();
+            console.log('Getting portfolio');
+        }
+    }, [form.leagueName]);
 
     return (
         <Container className="trade-page">
@@ -276,15 +296,17 @@ function Trade() {
                 </div>
                 <div className="value-section">
                     <div className="value-title">Value (USD):</div>
-                    {/* {Value} */}
-                </div>
-                <div className="buying-power-section">
-                    <div className="buying-power">Buying Power:</div>
-                    {/* {Buying Power} */}
+                    {portfolio
+                    && (
+                        <div>{portfolio.currentNetWorth}</div>
+                    )}
                 </div>
                 <div className="cash-section">
                     <div className="cash">Cash:</div>
-                    {/* {Cash} */}
+                    {portfolio
+                    && (
+                        <div>{portfolio.cashAvailable}</div>
+                    )}
                 </div>
                 <div className="stock-square">
                     <small>

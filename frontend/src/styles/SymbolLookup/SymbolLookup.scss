@@ -25,14 +25,6 @@
    // text-align: center;
 }
 
-.btn {
-    @include btn;
-    height: 45px;
-    width: 45px;
-    text-align: center;
-}
-
-
 .search{
     display: flex;
     background-color: #EEEEEE;

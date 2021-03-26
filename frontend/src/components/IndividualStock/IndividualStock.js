@@ -57,13 +57,13 @@ function IndividualStockPage() {
             .catch((err) => console.error(err));
     }
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/equity/current/${ticker}`)
+        axios.get(`${process.env.REACT_APP_SAPI_URL}/equity/current/${ticker}`)
             .then((response) => {
                 const { data } = response;
                 setcurrPrice(data.price);
             })
             .catch((err) => console.error(err));
-        axios.get(`${process.env.REACT_APP_API_URL}/equity/statistics/${ticker}`)
+        axios.get(`${process.env.REACT_APP_SAPI_URL}/equity/statistics/${ticker}`)
             .then((response) => {
                 const { data } = response;
                 if (data.bidPrice == null || data.bidPrice === 0) {

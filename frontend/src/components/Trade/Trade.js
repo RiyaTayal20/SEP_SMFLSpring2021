@@ -208,7 +208,7 @@ function Trade() {
                                         defaultValue="Choose..."
                                         onChange={(e) => {
                                             setField('orderType', e.target.value);
-                                            if (e.target.value === 'Limit' || e.target.value === 'Stop') {
+                                            if (e.target.value === 'limit' || e.target.value === 'stop') {
                                                 setShowPrice(true);
                                             } else {
                                                 setShowPrice(false);

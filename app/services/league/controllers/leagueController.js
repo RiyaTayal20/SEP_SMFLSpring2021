@@ -296,7 +296,7 @@ exports.getPortfolio = async (req, res) => {
                 remapHoldings[ticker].totalValue = (result[i].price * quantity).toFixed(2);
                 // Gain/loss
                 // eslint-disable-next-line max-len
-                remapHoldings[ticker].totalChange = ((remapHoldings[ticker].costBasis * quantity) - remapHoldings[ticker].totalValue).toFixed(2);
+                remapHoldings[ticker].totalChange = (remapHoldings[ticker].totalValue - (remapHoldings[ticker].costBasis * quantity)).toFixed(2);
                 // eslint-disable-next-line max-len
                 remapHoldings[ticker].percentChange = (remapHoldings[ticker].totalChange / (remapHoldings[ticker].costBasis * quantity)).toFixed(2);
             }

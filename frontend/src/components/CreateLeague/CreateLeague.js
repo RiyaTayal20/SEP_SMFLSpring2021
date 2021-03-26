@@ -27,7 +27,7 @@ function CreateLeague() {
 
     const [validated, setValidated] = useState(false);
 
-    const createLeague = () => fetch(`${process.env.REACT_APP_API_URL}/league/create`, {
+    const createLeague = () => fetch(`${process.env.REACT_APP_LAPI_URL}/league/create`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,

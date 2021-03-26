@@ -15,7 +15,7 @@ router.get('/tickers/:equityTicker', equityController.equityTickers);
 router.get('/statistics/:ticker', equityController.equityStatistics);
 
 router.get('*', (request, response) => {
-    response.send('This endpoint does not exist!');
+    response.status(404).send("This endpoint does not exist!");
 });
 
 module.exports = router;

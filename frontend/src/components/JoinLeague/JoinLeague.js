@@ -17,10 +17,9 @@ function JoinLeague() {
     const [error, setError] = useState('');
 
     const handleClose = () => setShowModal(false);
-    // const handleShow = () => setShow(true);
 
     const joinLeague = (league) => {
-        fetch(`${process.env.REACT_APP_API_URL}/league/join`, {
+        fetch(`${process.env.REACT_APP_LAPI_URL}/league/join`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -56,7 +55,7 @@ function JoinLeague() {
     };
 
     const getLeagues = async () => {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/league/find/all`, {
+        const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/league/find/all`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,

@@ -42,7 +42,7 @@ function IndividualStockPage() {
         setDate(input);
         setDays([]);
         setPrices([]);
-        axios.get(`${process.env.REACT_APP_SAPI_URL}/${ticker}?timeframe=${input}`)
+        axios.get(`${process.env.REACT_APP_SAPI_URL}/equity/historical/${ticker}?timeframe=${input}`)
             .then((response) => {
                 const { data } = response;
                 for (let i = 0; i < Object.keys(data).length; i += 1) {
@@ -78,7 +78,7 @@ function IndividualStockPage() {
                 }
                 if (data.dividend == null || data.dividend === 0) {
                     data.exDividend = 'N/A';
-                    data.dividend = 'N/A';
+                    data.dividend = 0;
                 }
                 setStatistics({
                     tickerSymbol: data.tickerSymbol,

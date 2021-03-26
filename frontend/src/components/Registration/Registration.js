@@ -6,8 +6,6 @@ import Container from 'react-bootstrap/Container';
 import '../../styles/Registration/Registration.scss';
 import { useHistory } from 'react-router-dom';
 
-require('dotenv').config();
-
 function Register() {
     const history = useHistory();
     const [registerUsername, setRegisterUsername] = useState('');
@@ -21,7 +19,7 @@ function Register() {
     };
 
     const register = () => {
-        fetch(`${process.env.REACT_APP_API_URL}/user/register`, {
+        fetch(`${process.env.REACT_APP_LAPI_URL}/user/register`, {
             method: 'POST',
             mode: 'cors',
             headers: {

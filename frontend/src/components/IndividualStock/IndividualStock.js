@@ -9,6 +9,8 @@ import {
 import '../../styles/IndividualStock/IndividualStock.scss';
 import { useHistory } from 'react-router-dom';
 
+require('dotenv').config();
+
 function IndividualStockPage() {
     const history = useHistory();
     const ticker = history.location.state.tickerSymbol;

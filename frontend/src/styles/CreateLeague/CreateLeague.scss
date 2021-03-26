@@ -35,13 +35,13 @@
     .btn {
         @include btn;
     }
-}
 
-.form-label{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    min-width: 300px;
+    .form-label{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        min-width: 300px;
+    }
 }
 
 .form-group{
@@ -56,4 +56,5 @@
 .form-content{
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
 }

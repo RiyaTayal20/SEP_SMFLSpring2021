@@ -18,6 +18,8 @@ import Header from './components/Header/Header';
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import './styles/global.scss';
 
+require('dotenv').config();
+
 function App() {
     return (
         <Router>

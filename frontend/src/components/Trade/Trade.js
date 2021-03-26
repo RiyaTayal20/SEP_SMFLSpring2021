@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import '../../styles/Trade/Trade.scss';
 import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import { InputGroup } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
@@ -24,7 +24,7 @@ function Trade() {
     const [errors, setErrors] = useState([]);
 
     const getLeagues = async () => {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/user/${username}/league`, {
+        const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/user/${username}/league`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -36,7 +36,7 @@ function Trade() {
         return data;
     };
 
-    const sendTrade = async () => fetch(`${process.env.REACT_APP_API_URL}/trade/submit`, {
+    const sendTrade = async () => fetch(`${process.env.REACT_APP_LAPI_URL}/trade/submit`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -104,231 +104,222 @@ function Trade() {
     }, []);
 
     return (
-        <div className="trade-page">
-            <Container>
-                <Row>
-                    <Col className="trade-form-container">
-                        <div className="trade-form-information">
-                            <div className="order-title">
-                                Order
+        <Container className="trade-page">
+            <div className="trade-form-information">
+                <div className="order-title">
+                    Order
+                </div>
+                {showSucc
+                && (
+                    <Alert variant="success" onClose={() => setShowSucc(false)} dismissible>
+                        Your order was placed!
+                    </Alert>
+                )}
+                {showError
+                    && (
+                        <Alert variant="danger" onClose={() => setShowError(false)} dismissible>
+                            <Alert.Heading>Alert</Alert.Heading>
+                            <ol>{errors.map((error) => <li>{error.msg}</li>)}</ol>
+                        </Alert>
+                    )}
+                <Form className="trade-form" noValidate validated={validated} onSubmit={handleSubmit}>
+                    <div className="form-content">
+                        <Form.Group controlId="formLeagueName">
+                            <Row>
+                                <Form.Label>League:</Form.Label>
+                                <Col>
+                                    <Form.Control
+                                        as="select"
+                                        required
+                                        onChange={(e) => setField('leagueName', e.target.value)}
+                                    >
+                                        <option value="" hidden>Choose a League</option>
+                                        {leagueList && leagueList.map((userLeague) => (
+                                            <option value={userLeague.leagueName} key={userLeague.leagueName}>{userLeague.leagueName}</option>
+                                        ))}
+                                    </Form.Control>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please choose a league.
+                                    </Form.Control.Feedback>
+                                </Col>
+                            </Row>
+                        </Form.Group>
+                        <Form.Group controlId="formStockSymbol">
+                            <Row>
+                                <Form.Label>Ticker:</Form.Label>
+                                <Col>
+                                    <Form.Control
+                                        type="text"
+                                        required
+                                        placeholder="Ex: GME"
+                                        onChange={(e) => setField('ticker', e.target.value)}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        Please input a ticker.
+                                    </Form.Control.Feedback>
+                                </Col>
+                            </Row>
+                        </Form.Group>
+                        <Form.Group controlId="formTransactionType">
+                            <Row>
+                                <Form.Label>Type:</Form.Label>
+                                <Col>
+                                    <Form.Control
+                                        as="select"
+                                        required
+                                        onChange={(e) => setField('transactionType', e.target.value)}
+                                    >
+                                        <option value="" hidden>Choose a Transaction Type</option>
+                                        <option value="Buy">Buy</option>
+                                        <option value="Sell">Sell</option>
+                                    </Form.Control>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please choose a transaction type.
+                                    </Form.Control.Feedback>
+                                </Col>
+                            </Row>
+                        </Form.Group>
+                        <Form.Group controlId="formQuanitity">
+                            <Row>
+                                <Form.Label>Quantity:</Form.Label>
+                                <Col>
+                                    <InputGroup>
+                                        <Form.Control
+                                            type="number"
+                                            required
+                                            min="0"
+                                            placeholder="Ex: 3"
+                                            onChange={(e) => setField('quantity', e.target.value)}
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            Please input a quantity.
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
+                                </Col>
+                            </Row>
+                        </Form.Group>
+                        <Form.Group controlId="formOrderType">
+                            <Row>
+                                <Form.Label>Price:</Form.Label>
+                                <Col>
+                                    <Form.Control
+                                        as="select"
+                                        required
+                                        defaultValue="Choose..."
+                                        onChange={(e) => {
+                                            setField('orderType', e.target.value);
+                                            if (e.target.value === 'Limit' || e.target.value === 'Stop') {
+                                                setShowPrice(true);
+                                            } else {
+                                                setShowPrice(false);
+                                            }
+                                        }}
+                                    >
+                                        <option value="" hidden>Set a price</option>
+                                        <option value="market">Market</option>
+                                        <option value="limit">Limit</option>
+                                        <option value="stop">Stop</option>
+                                    </Form.Control>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please choose an order type.
+                                    </Form.Control.Feedback>
+                                </Col>
+                            </Row>
+                        </Form.Group>
+                        {showPrice
+                        && (
+                            <Form.Group controlId="formPrice">
+                                <Row>
+                                    <Col>
+                                        <InputGroup>
+                                            <InputGroup.Prepend>
+                                                <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+                                            </InputGroup.Prepend>
+                                            <Form.Control
+                                                required
+                                                type="text"
+                                                placeholder="Enter price"
+                                                onChange={(e) => setField('price', e.target.value)}
+                                            />
+                                        </InputGroup>
+                                    </Col>
+                                </Row>
+                            </Form.Group>
+                        )}
+                        <Form.Group controlId="formDuration">
+                            <Row>
+                                <Form.Label>Duration:</Form.Label>
+                                <Col>
+                                    <Form.Control
+                                        as="select"
+                                        required
+                                        defaultValue="Choose..."
+                                        onChange={(e) => setField('duration', e.target.value)}
+                                    >
+                                        <option value="" hidden>Set duration</option>
+                                        <option value="GTC">Good Till Canceled</option>
+                                        <option value="DO">Day Order</option>
+                                    </Form.Control>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please select a duration.
+                                    </Form.Control.Feedback>
+                                </Col>
+                            </Row>
+                        </Form.Group>
+                    </div>
+                    <Button type="submit" size="lg">Submit</Button>
+                </Form>
+            </div>
+            <div className="account-details-information">
+                <div className="account-details-title">
+                    Account Details
+                </div>
+                <div className="value-section">
+                    <div className="value-title">Value (USD):</div>
+                    {/* {Value} */}
+                </div>
+                <div className="buying-power-section">
+                    <div className="buying-power">Buying Power:</div>
+                    {/* {Buying Power} */}
+                </div>
+                <div className="cash-section">
+                    <div className="cash">Cash:</div>
+                    {/* {Cash} */}
+                </div>
+                <div className="stock-square">
+                    <small>
+                        <div className="displayStock">
+                            <div className="stock-sym-box">
+                                <div>Stock Name</div>
                             </div>
-                            {showSucc
-                            && (
-                                <Alert variant="success" onClose={() => setShowSucc(false)} dismissible>
-                                    Your order was placed!
-                                </Alert>
-                            )}
-                            {showError
-                                && (
-                                    <Alert variant="danger" onClose={() => setShowError(false)} dismissible>
-                                        <Alert.Heading>Alert</Alert.Heading>
-                                        <ol>{errors.map((error) => <li>{error.msg}</li>)}</ol>
-                                    </Alert>
-                                )}
-                            <Form className="trade-form" noValidate validated={validated} onSubmit={handleSubmit}>
-                                <div className="form-content">
-                                    <Form.Group controlId="formLeagueName">
-                                        <Row>
-                                            <div>League:</div>
-                                            <Col>
-                                                <Form.Control
-                                                    as="select"
-                                                    required
-                                                    onChange={(e) => setField('leagueName', e.target.value)}
-                                                >
-                                                    <option value="" hidden>Choose a League</option>
-                                                    {leagueList && leagueList.map((userLeague) => (
-                                                        <option value={userLeague.leagueName} key={userLeague.leagueName}>{userLeague.leagueName}</option>
-                                                    ))}
-                                                </Form.Control>
-                                            </Col>
-                                        </Row>
-                                    </Form.Group>
-                                    <Form.Group controlId="formStockSymbol">
-                                        <Row>
-                                            <div>Ticker:</div>
-                                            <Col>
-                                                <InputGroup>
-                                                    <Form.Control
-                                                        type="text"
-                                                        required
-                                                        placeholder="Ex: GME"
-                                                        onChange={(e) => setField('ticker', e.target.value)}
-                                                    />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        Please input a ticker.
-                                                    </Form.Control.Feedback>
-                                                </InputGroup>
-                                            </Col>
-                                        </Row>
-                                    </Form.Group>
-                                    <Form.Group controlId="formTransactionType">
-                                        <Row>
-                                            <div>Transaction:</div>
-                                            <Col>
-                                                <Form.Control
-                                                    as="select"
-                                                    required
-                                                    onChange={(e) => setField('transactionType', e.target.value)}
-                                                >
-                                                    <option value="" hidden>Choose a Transaction Type</option>
-                                                    <option value="Buy">Buy</option>
-                                                    <option value="Sell">Sell</option>
-                                                </Form.Control>
-                                                <Form.Control.Feedback type="invalid">
-                                                    Please choose a transaction type.
-                                                </Form.Control.Feedback>
-                                            </Col>
-                                        </Row>
-                                    </Form.Group>
-                                    <Form.Group controlId="formQuanitity">
-                                        <Row>
-                                            <div>Quantity:</div>
-                                            <Col>
-                                                <InputGroup>
-                                                    <Form.Control
-                                                        type="number"
-                                                        required
-                                                        min="0"
-                                                        placeholder="Ex: 3"
-                                                        onChange={(e) => setField('quantity', e.target.value)}
-                                                    />
-                                                </InputGroup>
-                                                <Form.Control.Feedback type="invalid">
-                                                    Please input a quantity.
-                                                </Form.Control.Feedback>
-                                            </Col>
-                                        </Row>
-                                    </Form.Group>
-                                    <Form.Group controlId="formOrderType">
-                                        <Row>
-                                            <div>Price:</div>
-                                            <Col>
-                                                <Form.Control
-                                                    as="select"
-                                                    required
-                                                    defaultValue="Choose..."
-                                                    onChange={(e) => {
-                                                        setField('orderType', e.target.value);
-                                                        if (e.target.value === 'Limit' || e.target.value === 'Stop') {
-                                                            setShowPrice(true);
-                                                        } else {
-                                                            setShowPrice(false);
-                                                        }
-                                                    }}
-                                                >
-                                                    <option value="" hidden>Set a price</option>
-                                                    <option value="market">Market</option>
-                                                    <option value="limit">Limit</option>
-                                                    <option value="stop">Stop</option>
-                                                </Form.Control>
-                                                <Form.Control.Feedback type="invalid">
-                                                    Please choose an order type.
-                                                </Form.Control.Feedback>
-                                            </Col>
-                                        </Row>
-                                    </Form.Group>
-                                    {showPrice
-                                    && (
-                                        <Form.Group controlId="formPrice">
-                                            <Row>
-                                                <Col>
-                                                    <InputGroup>
-                                                        <InputGroup.Prepend>
-                                                            <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
-                                                        </InputGroup.Prepend>
-                                                        <Form.Control
-                                                            required
-                                                            type="text"
-                                                            placeholder="Enter price"
-                                                            onChange={(e) => setField('price', e.target.value)}
-                                                        />
-                                                    </InputGroup>
-                                                </Col>
-                                            </Row>
-                                        </Form.Group>
-                                    )}
-                                    <Form.Group controlId="formDuration">
-                                        <Row>
-                                            <div>Duration:</div>
-                                            <Col>
-                                                <Form.Control
-                                                    as="select"
-                                                    required
-                                                    defaultValue="Choose..."
-                                                    onChange={(e) => setField('duration', e.target.value)}
-                                                >
-                                                    <option value="" hidden>Set duration</option>
-                                                    <option value="GTC">Good Till Canceled</option>
-                                                    <option value="DO">Day Order</option>
-                                                </Form.Control>
-                                                <Form.Control.Feedback type="invalid">
-                                                    Please select a duration.
-                                                </Form.Control.Feedback>
-                                            </Col>
-                                        </Row>
-                                    </Form.Group>
-                                </div>
-                                <Button type="submit">Submit</Button>
-                            </Form>
-                        </div>
-                    </Col>
+                            <div className="last-box-section">
+                                <div>Last</div>
 
-                    <Col className="account-details-container">
-                        <div className="account-details-information">
-                            <div className="account-details-title">
-                                Account Details
                             </div>
-                            <div className="value-section">
-                                <div className="value-title">Value (USD):</div>
-                                {/* {Value} */}
+                            <div className="change-box-section">
+                                <div>Change</div>
+
                             </div>
+                            <div className="percent-change-section">
+                                <div>% Change</div>
 
-                            <div className="buying-power-section">
-                                <div className="buying-power">Buying Power:</div>
-                                {/* {Buying Power} */}
                             </div>
-                            <div className="cash-section">
-                                <div className="cash">Cash:</div>
-                                {/* {Cash} */}
+                            <div className="volume-section">
+                                <div>Volume</div>
+
                             </div>
-                            <div className="stock-square">
-                                <small>
-                                    <div className="displayStock">
-                                        <div className="stock-sym-box">
-                                            <div>Stock Name</div>
-                                        </div>
-                                        <div className="last-box-section">
-                                            <div>Last</div>
+                            <div className="day-high-section">
+                                <div>Day&apos;s High</div>
 
-                                        </div>
-                                        <div className="change-box-section">
-                                            <div>Change</div>
-
-                                        </div>
-                                        <div className="percent-change-section">
-                                            <div>% Change</div>
-
-                                        </div>
-                                        <div className="volume-section">
-                                            <div>Volume</div>
-
-                                        </div>
-                                        <div className="day-high-section">
-                                            <div>Day&apos;s High</div>
-
-                                        </div>
-                                        <div className="day-low-section">
-                                            <div>Day&apos;s Low</div>
-                                        </div>
-                                    </div>
-                                </small>
+                            </div>
+                            <div className="day-low-section">
+                                <div>Day&apos;s Low</div>
                             </div>
                         </div>
-                    </Col>
-                </Row>
-            </Container>
-        </div>
+                    </small>
+                </div>
+            </div>
+        </Container>
     );
 }
 

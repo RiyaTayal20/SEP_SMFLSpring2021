@@ -11,7 +11,7 @@ function CurrentLeagues() {
     const [leagues, setLeagues] = useState([]);
 
     const getLeagues = async () => {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/user/${username}/league`, {
+        const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/user/${username}/league`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -52,7 +52,7 @@ function CurrentLeagues() {
                                     console.log(portfolio);
                                     if (portfolio.owner === username) {
                                         console.log(portfolio.netWorth);
-                                        return (<p className="current-league-worth">{portfolio.cash}</p>);
+                                        return (<p className="current-league-worth">${portfolio.currentNetWorth}</p>);
                                     }
                                     console.log('NOne');
                                     return null;

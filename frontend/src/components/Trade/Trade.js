@@ -1,199 +1,185 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../styles/Trade/Trade.scss';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Dropdown from 'react-bootstrap/Dropdown';
+import Container from 'react-bootstrap/Container';
+import { InputGroup } from 'react-bootstrap';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 function Trade() {
-    const order = () => { };
+    /* eslint-disable max-len */
+    /* eslint-disable no-unused-vars */
+    // const order = () => { };
+    const [league, setLeague] = useState(null);
+    const [leagueList, setLeagueList] = useState();
+    const [showPrice, setShowPrice] = useState(false);
+
     return (
         <div className="trade-page">
-            <div className="order-stock-component">
-                <h2 className="order-title" style={{ fontSize: '2rem' }}>ORDER STOCK</h2>
-                <div className="league-section">
-                    <h3 className="league-title" style={{ fontSize: '1.25rem' }}>League:</h3>
-                    <Dropdown className="league-dropdown">
-                        <Dropdown.Toggle variant="success" id="dropdown-basic" background-color="#EEEEEE">
-                            League Name
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item href="#/action-1">League #1</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">League #2</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">League #3</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </div>
-
-                <div className="stock-symbol-section">
-                    <h3 className="stock-symbol-title" style={{ fontSize: '1.25rem' }}>Stock Symbol:</h3>
-                    <Form.Group className="stock-symbol" controlId="stockSymbol" style={{ border: 'none' }}>
-                        <Form.Control type="stock-symbol" placeholder="Enter Stock Symbol" style={{ border: 'none' }} />
-                    </Form.Group>
-                </div>
-
-                <div className="transaction-section">
-                    <h3 className="transaction-title" style={{ fontSize: '1.25rem' }}>Transaction:</h3>
-                    <Dropdown className="transaction-dropdown">
-                        <Dropdown.Toggle variant="success" id="dropdown-basic">
-                            Transaction Type
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item href="#/action-1">Buy</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">Sell</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </div>
-
-                <div className="quantity-section">
-                    <h3 className="quantity-title" style={{ fontSize: '1.25rem' }}>Quantity:</h3>
-                    <Form>
-                        <Form.Group className="quantity-box" controlId="quantity">
-                            <Form.Control type="quantity" placeholder="Enter Quantity" style={{ border: 'none' }} />
-                        </Form.Group>
-                    </Form>
-                </div>
-                <div className="price-section">
-                    <h3 className="price-title" style={{ fontSize: '1.25rem' }}>Price:</h3>
-                    <div className="radioBoxes">
-                        <form>
-                            <div className="form-check">
-                                <label className="market-label" htmlFor="flexRadioDefault1">
-                                    <input
-                                        className="form"
-                                        type="radio"
-                                        name="radioDefault"
-                                        value="option1"
-                                    />
-                                    Market $
-                                </label>
+            <Container>
+                <Row>
+                    <Col className="trade-form-container">
+                        <div className="trade-form-information">
+                            <div className="order-title">
+                                Order
                             </div>
-                            <div className="LimitForm">
-                                <div className="form-check">
-                                    <label className="limit-label" htmlFor="flexRadioDefault2">
-                                        <input
-                                            className="form"
-                                            type="radio"
-                                            name="radioDefault"
-                                            value="option2"
-                                        />
-                                        Limit $
-                                    </label>
-                                </div>
-                                <Form>
-                                    <Form.Group className="limit-box" controlId="limit">
-                                        <Form.Control type="limit" placeholder="Enter Limit Price" style={{ border: 'none' }} />
+                            <Form className="trade-form">
+                                <div className="form-content">
+                                    <Form.Group controlId="formLeagueName">
+                                        <Row>
+                                            <div>League:</div>
+                                            <Col>
+                                                <Form.Control as="select">
+                                                    <option>League options go here</option>
+                                                </Form.Control>
+                                            </Col>
+                                        </Row>
                                     </Form.Group>
-                                </Form>
-                            </div>
-                            <div className="StopForm">
-                                <div className="form-check">
-                                    <label className="stop-label" htmlFor="flexRadioDefault3">
-                                        <input
-                                            className="form"
-                                            type="radio"
-                                            name="radioDefault"
-                                            value="option3"
-                                        />
-                                        Stop $
-                                    </label>
-                                </div>
-                                <Form>
-                                    <Form.Group className="stop-box" controlId="stop">
-                                        <Form.Control type="stop" placeholder="Enter Stop Price" style={{ border: 'none' }} />
+                                    <Form.Group controlId="formStockSymbol">
+                                        <Row>
+                                            <div>Ticker:</div>
+                                            <Col>
+                                                <InputGroup>
+                                                    <Form.Control type="text" placeholder="Ex: GME" />
+                                                </InputGroup>
+                                            </Col>
+                                        </Row>
                                     </Form.Group>
-                                </Form>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div className="duration-section">
-                    <h3 className="duration-title" style={{ fontSize: '1.25rem' }}>Duration:</h3>
-                    <Dropdown className="duration-dropdown">
-                        <Dropdown.Toggle variant="success" id="dropdown-basic">
-                            Duration
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item href="#/action-1">Good Till Cancelled</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">Day Order</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </div>
-                <div className="prev-order-button">
-                    <Button className="previewOrder" onClick={order} style={{ backgroundColor: '#5367FC', borderColor: '#5367FC', width: '10vw' }}>
-                        <b>Preview Order</b>
-                    </Button>
-                </div>
-            </div>
-            <div className="account-details-information">
-                <h2 className="account-details" style={{ fontSize: '2rem' }}>ACCOUNT DETAILS</h2>
-                <div className="value-section">
-                    <h3 className="value-title" style={{ fontSize: '1.25rem' }}>Value (USD):</h3>
-                    <Form>
-                        <input className="value-display" type="text" placeholder="Value" readOnly style={{ border: 'none' }} />
-                    </Form>
-                </div>
+                                    <Form.Group controlId="formTransactionType">
+                                        <Row>
+                                            <div>Transaction:</div>
+                                            <Col>
+                                                <Form.Control as="select">
+                                                    <option>Buy</option>
+                                                    <option>Sell</option>
+                                                </Form.Control>
+                                            </Col>
+                                        </Row>
+                                    </Form.Group>
+                                    <Form.Group controlId="formQuanitity">
+                                        <Row>
+                                            <div>Quantity:</div>
+                                            <Col>
+                                                <InputGroup>
+                                                    <Form.Control type="text" placeholder="Ex: 3" />
+                                                </InputGroup>
+                                            </Col>
+                                        </Row>
+                                    </Form.Group>
+                                    <Form.Group controlId="formOrderType">
+                                        <Row>
+                                            <div>Price:</div>
+                                            <Col>
+                                                <Form.Control
+                                                    as="select"
+                                                    defaultValue="Choose..."
+                                                    onChange={(e) => {
+                                                        if (e.target.value === 'Limit' || e.target.value === 'Stop') {
+                                                            setShowPrice(true);
+                                                        } else {
+                                                            setShowPrice(false);
+                                                        }
+                                                    }}
+                                                >
+                                                    <option value="Market">Market</option>
+                                                    <option value="Limit">Limit</option>
+                                                    <option value="Stop">Stop</option>
+                                                </Form.Control>
+                                            </Col>
+                                        </Row>
+                                    </Form.Group>
+                                    {showPrice
+                                    && (
+                                        <Form.Group controlId="formPrice">
+                                            <Row>
+                                                <Col>
+                                                    <InputGroup>
+                                                        <InputGroup.Prepend>
+                                                            <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+                                                        </InputGroup.Prepend>
+                                                        <Form.Control
+                                                            required
+                                                            type="text"
+                                                            placeholder="Enter price"
+                                                        />
+                                                    </InputGroup>
+                                                </Col>
+                                            </Row>
+                                        </Form.Group>
+                                    )}
+                                    <Form.Group controlId="formDuration">
+                                        <Row>
+                                            <div>Duration:</div>
+                                            <Col>
+                                                <Form.Control
+                                                    as="select"
+                                                    defaultValue="Choose..."
+                                                >
+                                                    <option>Good Till Canceled</option>
+                                                    <option>Day Order</option>
+                                                </Form.Control>
+                                            </Col>
+                                        </Row>
+                                    </Form.Group>
+                                </div>
+                            </Form>
+                        </div>
+                    </Col>
 
-                <div className="buying-power-section">
-                    <h3 className="buying-power" style={{ fontSize: '1.25rem' }}>Buying Power:</h3>
-                    <Form>
-                        <input className="buying-power-display" type="text" placeholder="Buying Power" readOnly style={{ border: 'none' }} />
-                    </Form>
-                </div>
-                <div className="cash-section">
-                    <h3 className="cash" style={{ fontSize: '1.25rem' }}>Cash: </h3>
-                    <Form>
-                        <input className="cash-display" type="text" placeholder="Cash" readOnly style={{ border: 'none' }} />
-                    </Form>
-                </div>
-                <div className="stock-square">
-                    <small>
-                        <div className="displayStock">
-                            <div className="stock-sym-box">
-                                <Form>
-                                    <input className="stock-name-symbol" type="text" placeholder="SYMBOL" readOnly style={{ border: 'none' }} />
-                                </Form>
-                                <h3 className="stock-text" style={{ color: 'black', fontSize: '1.5rem' }}>Stock Name</h3>
+                    <Col className="account-details-container">
+                        <div className="account-details-information">
+                            <div className="account-details-title">
+                                Account Details
                             </div>
-                            <div className="last-box-section">
-                                <h3 style={{ color: 'black', fontSize: '1.25rem' }}>Last</h3>
-                                <Form>
-                                    <input className="last-price-display" type="text" placeholder="Last" readOnly style={{ border: 'none' }} />
-                                </Form>
+                            <div className="value-section">
+                                <div className="value-title">Value (USD):</div>
+                                {/* {Value} */}
                             </div>
-                            <div className="change-box-section">
-                                <h3 style={{ color: 'black', fontSize: '1.25rem' }}>Change</h3>
-                                <Form>
-                                    <input className="change-price-display" type="text" placeholder="Change" readOnly style={{ border: 'none' }} />
-                                </Form>
+
+                            <div className="buying-power-section">
+                                <div className="buying-power">Buying Power:</div>
+                                {/* {Buying Power} */}
                             </div>
-                            <div className="percent-change-section">
-                                <h3 style={{ color: 'black', fontSize: '1.25rem' }}>% Change</h3>
-                                <Form>
-                                    <input className="percent-change-display" type="text" placeholder="% Change" readOnly style={{ border: 'none' }} />
-                                </Form>
+                            <div className="cash-section">
+                                <div className="cash">Cash:</div>
+                                {/* {Cash} */}
                             </div>
-                            <div className="volume-section">
-                                <h3 style={{ color: 'black', fontSize: '1.25rem' }}>Volume</h3>
-                                <Form>
-                                    <input className="volume-display" type="text" placeholder="Volume" readOnly style={{ border: 'none' }} />
-                                </Form>
-                            </div>
-                            <div className="day-high-section">
-                                <h3 style={{ color: 'black', fontSize: '1.25rem' }}>Day&apos;s High</h3>
-                                <Form>
-                                    <input className="day-high-display" type="text" placeholder="High" readOnly style={{ border: 'none' }} />
-                                </Form>
-                            </div>
-                            <div className="day-low-section">
-                                <h3 style={{ color: 'black', fontSize: '1.25rem' }}>Day&apos;s Low</h3>
-                                <Form>
-                                    <input className="day-low-display" type="text" placeholder="Day's Low" readOnly style={{ border: 'none' }} />
-                                </Form>
+                            <div className="stock-square">
+                                <small>
+                                    <div className="displayStock">
+                                        <div className="stock-sym-box">
+                                            <div>Stock Name</div>
+                                        </div>
+                                        <div className="last-box-section">
+                                            <div>Last</div>
+
+                                        </div>
+                                        <div className="change-box-section">
+                                            <div>Change</div>
+
+                                        </div>
+                                        <div className="percent-change-section">
+                                            <div>% Change</div>
+
+                                        </div>
+                                        <div className="volume-section">
+                                            <div>Volume</div>
+
+                                        </div>
+                                        <div className="day-high-section">
+                                            <div>Day&apos;s High</div>
+
+                                        </div>
+                                        <div className="day-low-section">
+                                            <div>Day&apos;s Low</div>
+                                        </div>
+                                    </div>
+                                </small>
                             </div>
                         </div>
-                    </small>
-                </div>
-            </div>
+                    </Col>
+                </Row>
+            </Container>
         </div>
     );
 }

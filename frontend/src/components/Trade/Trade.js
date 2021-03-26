@@ -23,6 +23,8 @@ function Trade() {
     const [showSucc, setShowSucc] = useState(false);
     const [errors, setErrors] = useState([]);
     const [portfolio, setPortfolio] = useState();
+    const [equity, setEquity] = useState();
+    const [submitText, setSubmitText] = useState('Confirm');
 
     const getLeagues = async () => {
         const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/user/${username}/league`, {
@@ -46,6 +48,17 @@ function Trade() {
             },
         });
         setPortfolio(await response.json());
+    };
+
+    const getEquity = async () => {
+        const response = await fetch(`${process.env.REACT_APP_SAPI_URL}/equity/statistics/${form.tickerSymbol}`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
+        });
+        setEquity(await response.json());
     };
 
     const sendTrade = async () => fetch(`${process.env.REACT_APP_LAPI_URL}/trade/submit`, {
@@ -92,10 +105,13 @@ function Trade() {
         const subform = event.currentTarget;
         event.preventDefault();
         if (subform.checkValidity() === false) {
+            setValidated(false);
             event.stopPropagation();
+        } else {
+            setValidated(true);
         }
-        setValidated(true);
         if (validated) {
+            setSubmitText('Submit');
             // Set time
             const expDate = new Date();
             if (form.duration === 'GDT') {
@@ -105,8 +121,6 @@ function Trade() {
                 expDate.setHours(16, 0, 0, 0); // Set to 4pm
             }
             setExpiryDate(expDate);
-            console.log(validated);
-            console.log(expiryDate);
             sendTrade();
         }
     };
@@ -116,12 +130,16 @@ function Trade() {
     }, []);
 
     useEffect(() => {
-        console.log('League changed');
-        if (form.leagueName !== '') {
-            getPortfolio();
-            console.log('Getting portfolio');
-        }
+        if (form.leagueName !== '') getPortfolio();
     }, [form.leagueName]);
+
+    useEffect(() => {
+        console.log('Validated changed');
+        if (validated) {
+            getEquity();
+            console.log('Getting equity!');
+        }
+    }, [validated]);
 
     return (
         <Container className="trade-page">
@@ -308,41 +326,47 @@ function Trade() {
                         <div>{portfolio.cashAvailable}</div>
                     )}
                 </div>
-                <div className="stock-square">
-                    <small>
-                        <div className="displayStock">
-                            <div className="stock-sym-box">
-                                <div>Stock Name</div>
-                            </div>
-                            <div className="last-box-section">
-                                <div>Last</div>
-
-                            </div>
-                            <div className="change-box-section">
-                                <div>Change</div>
-
-                            </div>
-                            <div className="percent-change-section">
-                                <div>% Change</div>
-
-                            </div>
-                            <div className="volume-section">
-                                <div>Volume</div>
-
-                            </div>
-                            <div className="day-high-section">
-                                <div>Day&apos;s High</div>
-
-                            </div>
-                            <div className="day-low-section">
-                                <div>Day&apos;s Low</div>
-                            </div>
-                        </div>
-                    </small>
-                </div>
             </div>
         </Container>
     );
 }
+
+// Stock info - removed for demo 1
+/* <div className="stock-square">
+    <small>
+        <div className="displayStock">
+            <div className="stock-sym-box">
+                <div>Stock Name</div>
+                {equity
+                && (
+                    <div>{equity.tickerSymbol}</div>
+                )}
+            </div>
+            <div className="last-box-section">
+                <div>Last</div>
+
+            </div>
+            <div className="change-box-section">
+                <div>Change</div>
+
+            </div>
+            <div className="percent-change-section">
+                <div>% Change</div>
+
+            </div>
+            <div className="volume-section">
+                <div>Volume</div>
+
+            </div>
+            <div className="day-high-section">
+                <div>Day&apos;s High</div>
+
+            </div>
+            <div className="day-low-section">
+                <div>Day&apos;s Low</div>
+            </div>
+        </div>
+    </small>
+</div> */
 
 export default Trade;

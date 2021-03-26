@@ -6,6 +6,7 @@ import '../../../styles/Portfolio/Positions.scss';
 const Positions = (props) => {
     const { portfolio } = props;
     console.log(portfolio);
+    /* eslint-disable max-len */
 
     return (
         <Container className="portfolio-positions-container" style={{ width: '1500px' }}>
@@ -13,7 +14,7 @@ const Positions = (props) => {
                 && (
                     <div className="portfolio-header">
                         <h1>Portfolio value:</h1>
-                        <h2>{portfolio.currentNetWorth}</h2>
+                        <h2>{portfolio.currentNetWorth}({portfolio.currentNetWorth / 500 > 1 ? `+${parseFloat((portfolio.currentNetWorth / 500 - 1) * 100).toFixed(2)}%` : `-${parseFloat((1 - portfolio.currentNetWorth / 500) * 100).toFixed(2)}%` })</h2>
                     </div>
                 )}
             <Table striped bordered hover variant="light" className="positions-list">

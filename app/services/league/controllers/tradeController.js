@@ -72,7 +72,7 @@ exports.trade = async (req, res) => {
                         $addToSet: { 'portfolioList.$[element0].orders': order },
                         $set: {
                             'portfolioList.$[element0].cash': (userPortfolio.cash - (currPrice * req.body.quantity)),
-                            'portfolioList.$[element0].currentHoldings.$[element1].quantity': prevQuantity + req.body.quantity,
+                            'portfolioList.$[element0].currentHoldings.$[element1].quantity': parseInt(prevQuantity, 10) + parseInt(req.body.quantity, 10),
                         },
                     },
                     {

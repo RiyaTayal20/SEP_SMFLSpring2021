@@ -1,3 +1,5 @@
+/** @module controllers/leagueController */
+
 const League = require('../models/leagueModel');
 const User = require('../models/userModel');
 const { Portfolio } = require('../models/portfolioModel');

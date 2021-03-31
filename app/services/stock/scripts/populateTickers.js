@@ -1,3 +1,8 @@
+/**
+ * Populates database of valid tickers
+ * @module scripts/populateTickers
+ */
+
 const mongoose = require('mongoose');
 const fetch = require('node-fetch');
 

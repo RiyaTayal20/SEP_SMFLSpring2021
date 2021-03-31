@@ -1,3 +1,5 @@
+/** @module controllers/tradeController */
+
 const { Order } = require('../models/portfolioModel');
 const League = require('../models/leagueModel');
 const { getMarketPrice } = require('../utils/stockUtils');

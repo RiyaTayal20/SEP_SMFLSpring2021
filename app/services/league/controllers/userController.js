@@ -1,3 +1,5 @@
+/** @module controllers/userController */
+
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');

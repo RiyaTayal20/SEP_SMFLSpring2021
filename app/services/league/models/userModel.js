@@ -1,5 +1,11 @@
+/** @module models/userModel */
+
 const mongoose = require('mongoose');
 
+/**
+ * A user's credentials and leagues list
+ * @constructor User
+ */
 const userSchema = new mongoose.Schema({
     username: {
         type: String,

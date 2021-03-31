@@ -1,3 +1,5 @@
+/** @module controllers/equityControllers */
+
 const fetch = require('node-fetch');
 
 const { Equity, Ticker } = require('../models/equityModel');

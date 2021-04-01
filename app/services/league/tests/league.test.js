@@ -68,6 +68,40 @@ describe('League creation', () => {
         expect(res.body).toMatchObject(expectedResponse);
     });
 
+    it('should allow an authenticated user to create a private league', async () => {
+        const createLeagueReqBody = {
+            'leagueName': 'My Private Test League',
+            'leagueKey': 'myLeagueKey',
+            'settings': {
+                'balance': 500,
+                'aiPlayer': 0,
+                'endDate': '2022-04-23T18:25:43',
+                'maxPlayers': 5,
+                'public': false
+            }
+        };
+        const expectedResponse = {
+            'settings': {
+                'balance': 500,
+                'aiPlayer': 0,
+                'endDate': '2022-04-23T22:25:43.000Z',
+                'maxPlayers': 5,
+                'public': false
+            },
+            'leagueName': 'My Private Test League',
+            'leagueKey': 'myLeagueKey',
+            'leagueManager': 'user1'
+
+        };
+        const res = await request(app)
+            .post(`/league/create`)
+            .set('Content-Type', 'application/json')
+            .set('Authorization', `Bearer ${token}`)
+            .send(createLeagueReqBody);
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toMatchObject(expectedResponse);
+    });
+
     it('should allow not allow an unauthenticated user to create a league', async () => {
         const createLeagueReqBody = {
             'leagueName': 'My Test League',

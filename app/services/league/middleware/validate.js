@@ -131,6 +131,7 @@ exports.authValidation = [
         .withMessage('Authorization must be a string'),
     async (req, res, next) => {
         const errors = validationResult(req);
+        if (!req.headers.authorization) return res.status(401).json('Did not provide authorization');
         const spaceSplit = req.headers.authorization.split(' ');
         if (spaceSplit.length !== 2 || spaceSplit[0] !== 'Bearer') {
             return res.status(401).json('Bad Authorization ("Bearer <token>")');

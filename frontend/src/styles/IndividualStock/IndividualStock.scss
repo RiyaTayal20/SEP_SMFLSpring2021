@@ -19,18 +19,22 @@ h1 {
     }
 }
 
-.ticker-form, .currentPrice {
+.ticker-form, .header {
     margin-bottom: 50px;
 }
 
-.currentPrice > h1 {
+.header > h1 {
     font-size: 4vw;
+}
+
+.currentPrice > span {
+    display: inline-block;
 }
 
 .stats {
     margin-top: 50px;
     margin-bottom: 50px;
-    font-size: 1.7vw;
+    font-size: 1.5vw;
 }
 
 .makeshift-tab-component{

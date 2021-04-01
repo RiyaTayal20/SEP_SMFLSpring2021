@@ -54,7 +54,8 @@ describe('Get endpoints', () => {
         expect(res.body).toHaveProperty('exists');
     });
 
-    afterAll(() => {
+    afterAll(async () => {
+        await mongoose.connection.db.dropCollection('equities');
         mongoose.disconnect();
         done();
     });

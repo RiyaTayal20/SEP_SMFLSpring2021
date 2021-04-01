@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const fetch = require('node-fetch');
+const path = require('path');
 
 const { Ticker } = require('../models/equityModel');
 
-require('dotenv').config();
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const connectDB = async () => {
     try {

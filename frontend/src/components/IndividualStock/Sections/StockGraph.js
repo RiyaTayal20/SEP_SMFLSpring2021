@@ -57,7 +57,7 @@ const StockGraph = (props) => {
                                 fontSize: 15,
                                 fontColor: 'white',
                                 fontStyle: 'bold',
-                                labelString: 'Days',
+                                labelString: 'Date',
                             },
                             ticks: {
                                 fontColor: 'white',

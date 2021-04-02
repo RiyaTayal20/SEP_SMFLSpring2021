@@ -68,6 +68,10 @@ describe('League creation', () => {
             .send(createLeagueReqBody);
         expect(res.statusCode).toEqual(200);
         expect(res.body).toMatchObject(expectedResponse);
+        const league = await League.findOne(
+            { leagueName: 'My Test League' },
+        );
+        expect(league).not.toBeNull();
     });
 
     it('should allow an authenticated user to create a private league', async () => {
@@ -102,6 +106,10 @@ describe('League creation', () => {
             .send(createLeagueReqBody);
         expect(res.statusCode).toEqual(200);
         expect(res.body).toMatchObject(expectedResponse);
+        const league = await League.findOne(
+            { leagueName: 'My Private Test League' },
+        );
+        expect(league).not.toBeNull();
     });
 
     it('should allow not allow an unauthenticated user to create a league', async () => {

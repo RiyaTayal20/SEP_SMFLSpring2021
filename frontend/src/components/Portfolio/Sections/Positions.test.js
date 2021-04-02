@@ -11,4 +11,7 @@ describe('<Positions />', () => {
     it('should render the portfolio positions container', () => {
         expect(wrapper.find('.portfolio-positions-container').exists()).toEqual(true);
     });
+    it('should render the Positions List table', () => {
+        expect(wrapper.find('.positions-list').exists()).toEqual(true);
+    });
 });

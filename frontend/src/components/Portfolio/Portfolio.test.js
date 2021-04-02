@@ -12,9 +12,8 @@ describe('<Portfolio />', () => {
     const setLeague = jest.fn();
     const setLeagueList = jest.fn();
     const setPortfolio = jest.fn();
-    const getLeagues = jest.fn();
     beforeEach(() => {
-        jest.spyOn(React, 'useEffect').mockImplementation(f => f());
+        jest.spyOn(React, 'useEffect').mockImplementationOnce(f => f());
         useStateMock.mockImplementationOnce(f => ['league1', setLeague]);
         useStateMock.mockImplementationOnce(f => [['league1', 'league2'], setLeagueList]);
         useStateMock.mockImplementationOnce(f => ['portfolio', setPortfolio]);
@@ -28,8 +27,5 @@ describe('<Portfolio />', () => {
     });
     it('should render the dropdown', () => {
         expect(wrapper.exists('DropdownButton')).toEqual(true);
-    });
-    it('should call the getLeagues function', () => {
-        expect(getLeagues).toHaveBeenCalled();
     });
 });

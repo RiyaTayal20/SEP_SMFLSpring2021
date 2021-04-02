@@ -3,8 +3,18 @@ const app = require('./server');
 
 require('dotenv').config();
 
+/**
+ * The port to expose the endpoints on
+ * @constant
+ * @type {number}
+ */
 const PORT = process.env.PORT || 3000;
 
+/**
+ * Connect to the database
+ * @async
+ * @function
+ */
 const connectDB = async () => {
     try {
         await mongoose.connect(process.env.DB_URL, {

@@ -1,5 +1,11 @@
+/** @module models/portfolioModel */
+
 const mongoose = require('mongoose');
 
+/**
+ * Trade order
+ * @constructor Order
+ */
 const orderSchema = new mongoose.Schema({
     orderType: {
         type: String,
@@ -43,6 +49,10 @@ const orderSchema = new mongoose.Schema({
     },
 });
 
+/**
+ * Stores a player's holdings
+ * @constructor Portfolio
+ */
 const portfolioSchema = new mongoose.Schema({
     owner: {
         type: String,

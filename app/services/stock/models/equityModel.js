@@ -1,7 +1,13 @@
+/** @module models/equityModel */
+
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
+/**
+ * Equity containing prices and statistics
+ * @constructor Equity
+ */
 const EquitySchema = new Schema({
     tickerSymbol: {
         type: String,
@@ -128,6 +134,10 @@ const EquitySchema = new Schema({
     },
 });
 
+/**
+ * Ticker consisting of only equity ticker
+ * @Constructor Ticker
+ */
 const TickerSchema = new Schema({
     ticker: {
         type: String,

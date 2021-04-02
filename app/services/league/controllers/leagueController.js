@@ -1,8 +1,18 @@
+/** @module controllers/leagueController */
+
 const League = require('../models/leagueModel');
 const User = require('../models/userModel');
 const { Portfolio } = require('../models/portfolioModel');
 const { getMarketPrice, getStatistics } = require('../utils/stockUtils');
 
+/**
+ * Add a user to a specified league and create an associated portfolio
+ * @async
+ * @function
+ * @param {String} user The username of the target user
+ * @param {ObjectId} leagueID The _id for the league
+ * @returns {Promise}
+ */
 const addPlayerToLeague = async (user, leagueID) => {
     const league = await League.findById(
         leagueID,
@@ -40,6 +50,14 @@ const addPlayerToLeague = async (user, leagueID) => {
     ]);
 };
 
+/**
+ * Gather current equity prices and calculate the current value of the specified portfolio.
+ * @async
+ * @function
+ * @param {String} username The username of the user
+ * @param {ObjectId} leagueID The _id of the league the portfolio is in
+ * @returns {number} Current value of the portfolio
+ */
 const calculatePortfolioValue = async (username, leagueID) => {
     const league = await League.findById(
         leagueID,
@@ -62,6 +80,14 @@ const calculatePortfolioValue = async (username, leagueID) => {
     return prices.reduce((acc, price, i) => acc + ((price.price * quantities[i]) || 0), 0) + userPortfolio.cash;
 };
 
+/**
+ * Gather net worth, cash, holdings, and historical net worth for a portfolio
+ * @async
+ * @function
+ * @param {String} username The username of the user
+ * @param {ObjectId} league The _id of the league the portfolio is in
+ * @returns {Object} Returns object with keys for each field
+ */
 const retrievePortfolioInfo = async (username, league) => {
     const currentValue = await calculatePortfolioValue(username, league._id);
     // Update portfolio
@@ -102,6 +128,13 @@ const retrievePortfolioInfo = async (username, league) => {
     throw Error('Portfolio not found');
 };
 
+/**
+ * Calculate the average cost basis for a specific equity in a user's portfolio
+ * @function
+ * @param {String} ticker The ticker symbol of the specified equity
+ * @param {Object} portfolio The portfolio to check
+ * @returns {number} The average cost basis
+ */
 const calculateCostBasis = (ticker, portfolio) => {
     let totalCost = 0;
     let numShares = 0;
@@ -115,6 +148,14 @@ const calculateCostBasis = (ticker, portfolio) => {
     return totalCost / numShares;
 };
 
+/**
+ * Create a league with the specified parameters in the request body
+ * @async
+ * @function
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @returns {Object}
+ */
 exports.createLeague = async (req, res) => {
     const user = res.locals.username;
 
@@ -142,6 +183,14 @@ exports.createLeague = async (req, res) => {
     }
 };
 
+/**
+ * Add a user to a requested league
+ * @async
+ * @function
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @returns {Object}
+ */
 exports.joinLeague = async (req, res) => {
     const { _id } = res.locals.league;
     const { username } = res.locals;
@@ -158,6 +207,14 @@ exports.joinLeague = async (req, res) => {
         .catch((err) => res.status(422).send(`{${err}}`));
 };
 
+/**
+ * Remove a user for a league they are a part of
+ * @async
+ * @function
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @returns {Object}
+ */
 exports.leaveLeague = async (req, res) => {
     const { _id } = res.locals.league;
     const { username } = res.locals;
@@ -197,6 +254,14 @@ exports.leaveLeague = async (req, res) => {
         .catch((err) => res.status(422).send(`{${err}}`));
 };
 
+/**
+ * Get all current leagues
+ * @async
+ * @function
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @returns {Object} All current leagues
+ */
 exports.getLeagues = async (req, res) => {
     await League.find({}, (err, result) => {
         if (err) throw err;
@@ -204,6 +269,14 @@ exports.getLeagues = async (req, res) => {
     });
 };
 
+/**
+ * Get the names of all current leagues
+ * @async
+ * @function
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @returns {Object} Names of all current leagues
+ */
 exports.getLeagueNames = async (req, res) => {
     await League.find({}, 'leagueName', (err, result) => {
         if (err) throw err;
@@ -211,6 +284,13 @@ exports.getLeagueNames = async (req, res) => {
     });
 };
 
+/**
+ * Retrieve a league given the name
+ * @async
+ * @function
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ */
 exports.getLeagueByName = async (req, res) => {
     await League.findOne({ leagueName: req.params.leagueName }, (err, result) => {
         if (err) throw err;
@@ -219,6 +299,14 @@ exports.getLeagueByName = async (req, res) => {
     });
 };
 
+/**
+ * Disband a league when requested by league manager
+ * @async
+ * @function
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @returns {Object}
+ */
 exports.disbandLeague = async (req, res) => {
     const { _id, leagueManager: manager } = res.locals.league;
     const { username } = res.locals;
@@ -249,6 +337,12 @@ exports.disbandLeague = async (req, res) => {
         .catch((err) => res.status(422).send(`Cannot disband league cleanly. Unknown Error occurred. \n ${err}`));
 };
 
+/**
+ * Retrieve a portfolio for user in a specified league
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @returns {Object}
+ */
 exports.getPortfolio = async (req, res) => {
     try {
         const { username } = res.locals;

@@ -1,3 +1,5 @@
+/** @module controllers/userController */
+
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
@@ -6,6 +8,13 @@ const League = require('../models/leagueModel');
 require('../config/passportConfig')(passport);
 require('dotenv').config();
 
+/**
+ * Register a user into the system and create a user entity
+ * @async
+ * @function
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ */
 exports.register = async (req, res) => {
     const user = new User({
         username: req.body.username,
@@ -20,6 +29,14 @@ exports.register = async (req, res) => {
     }
 };
 
+/**
+ * Log a user in and return a JWT to manage the session
+ * @async
+ * @function
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @param {Function} next
+ */
 exports.login = async (req, res, next) => {
     passport.authenticate('local', (err, user) => {
         if (err) return next(err);
@@ -34,20 +51,20 @@ exports.login = async (req, res, next) => {
     })(req, res, next);
 };
 
-exports.findUserById = async (req, res) => {
-    await User.findById(req.body._id, (err, user) => {
-        if (err) throw err;
-        res.send(user);
-    });
-};
+// exports.findUserById = async (req, res) => {
+//     await User.findById(req.body._id, (err, user) => {
+//         if (err) throw err;
+//         res.send(user);
+//     });
+// };
 
-exports.findUserById = async (req, res) => {
-    await User.findById(req.body._id, (err, user) => {
-        if (err) throw err;
-        res.send(user);
-    });
-};
-
+/**
+ * Retrieve a league, given a portfolio in that league
+ * @async
+ * @function
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ */
 exports.getLeagueByUser = async (req, res) => {
     await League.find({ 'portfolioList.owner': req.params.username }, (err, result) => {
         if (err) throw err;

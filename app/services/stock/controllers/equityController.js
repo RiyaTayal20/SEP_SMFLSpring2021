@@ -1,22 +1,56 @@
+/** @module controllers/equityControllers */
+
 const fetch = require('node-fetch');
 
 const { Equity, Ticker } = require('../models/equityModel');
 
-// Number of minutes that a stock is considered recent - won't update price unless longer than this
+/**
+ * Number of minutes that a stock is considered recent - won't update price unless longer than this
+ * @constant
+ * @type {number}
+ */
 const CACHE_TIME = 1;
+
+/**
+ * The time frames that are able to be searched for historical data
+ * @constant
+ * @type {Array<String>}
+ */
 const AVAILABLE_TIME_FRAMES = ['5d', '1m', '6m', 'ytd', '1y', '5y'];
 
-// Format intraday price data into an object of <minute>:<average_price>
-// eslint-disable-next-line no-return-assign, max-len, no-param-reassign, no-sequences
+/* eslint-disable no-return-assign, max-len, no-param-reassign, no-sequences */
+
+/**
+ * Format intraday price data into an object of <minute>:<average_price>
+ * @function
+ * @param {Array<Object>} priceArray Full price object from IEX cloud
+ * @returns {Object} Average price for every minute
+ */
 const extractIntraday = (priceArray) => priceArray.reduce((obj, { minute, average }) => (obj[minute] = average, obj), {});
 
-// Format historical price data into an object of <date>:<close_price>
-// eslint-disable-next-line no-return-assign, max-len, no-param-reassign, no-sequences
+/**
+ * Format historical price data into an object of <date>:<close_price>
+ * @function
+ * @param {Array<Object>} priceArray Full price object from IEX cloud
+ * @returns {Object} Closing price for every day
+ */
 const extractHistorical = (priceArray) => priceArray.reduce((obj, { date, close }) => (obj[date] = close, obj), {});
 
-// Get just the last available intraday price
+/**
+ * Get just the last available intraday price
+ * @function
+ * @param {Array<Object>} priceArray Full price object from IEX cloud
+ * @returns {number} Last available intraday price
+ */
 const extractCurrent = (priceArray) => priceArray.slice(-1)[0].close;
 
+/**
+ * Get statistics from the specified equity and update cache
+ * @async
+ * @function
+ * @param {String} ticker Ticker symbol for the specified equity
+ * @returns {Object} The statistics for the equity
+ */
 const getStatistics = async (ticker) => {
     try {
         const equity = await Equity.findOne({ tickerSymbol: ticker });
@@ -75,6 +109,13 @@ const getStatistics = async (ticker) => {
     }
 };
 
+/**
+ * Get the intraday prices for the specified equity and update cache
+ * @async
+ * @function
+ * @param {String} equityTicker The ticker symbol for the specified equity
+ * @returns {Object} The intraday prices for every minute
+ */
 const getIntraday = async (equityTicker) => {
     try {
         const existingEntry = await Equity.findOne(
@@ -108,8 +149,14 @@ const getIntraday = async (equityTicker) => {
     }
 };
 
-// Get historical price data
-// Available time frames: 5d, 1m, 6m, ytd, 1y, 5y
+/**
+ * Get the historical price data for a specified equity and timeframe
+ * @async
+ * @function
+ * @param {String} equityTicker The ticker for the specified equity
+ * @param {String} timeFrame The timeframe to search, must be in: 5d, 1m, 6m, ytd, 1y, 5y
+ * @returns {Object}
+ */
 const getHistorical = async (equityTicker, timeFrame) => {
     try {
         const existingEntry = await Equity.findOne(
@@ -144,6 +191,13 @@ const getHistorical = async (equityTicker, timeFrame) => {
     }
 };
 
+/**
+ * Get the intraday prices
+ * @async
+ * @function
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ */
 exports.equityIntraday = async (req, res) => {
     const { equityTicker } = req.params;
     console.log(`${equityTicker} intraday prices requested`);
@@ -157,6 +211,14 @@ exports.equityIntraday = async (req, res) => {
     res.send(intraday);
 };
 
+/**
+ * Get the historical prices
+ * @async
+ * @function
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @returns {Object}
+ */
 exports.equityHistorical = async (req, res) => {
     const { equityTicker } = req.params;
     const { timeframe } = req.query;
@@ -175,6 +237,13 @@ exports.equityHistorical = async (req, res) => {
     res.send(historical);
 };
 
+/**
+ * Get the current price
+ * @async
+ * @function
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ */
 exports.equityCurrent = async (req, res) => {
     const { equityTicker } = req.params;
     console.log(`${equityTicker} current prices requested`);
@@ -188,6 +257,13 @@ exports.equityCurrent = async (req, res) => {
     res.send({ price: current });
 };
 
+/**
+ * Get a list of all tracked tickers
+ * @async
+ * @function
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ */
 exports.equityTickers = async (req, res) => {
     const { equityTicker } = req.params;
     console.log(`Checking if ${equityTicker.toUpperCase()} is a valid ticker`);
@@ -202,6 +278,13 @@ exports.equityTickers = async (req, res) => {
     });
 };
 
+/**
+ * Get the statistics of an equity
+ * @async
+ * @function
+ * @param {Express.Request} request
+ * @param {Express.Response} response
+ */
 exports.equityStatistics = async (request, response) => {
     const statistics = await getStatistics(request.params.ticker)
         .catch((err) => {

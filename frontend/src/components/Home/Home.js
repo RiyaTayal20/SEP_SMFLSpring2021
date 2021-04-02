@@ -12,7 +12,6 @@ function Home() {
     if (!localStorage.getItem('token')) {
         return <Redirect to="/user/login" />;
     }
-    console.log(history);
     // Pass this token into auth header when making requests
     // const token = localStorage.getItem('token');
 

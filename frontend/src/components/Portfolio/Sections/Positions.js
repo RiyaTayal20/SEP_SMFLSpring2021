@@ -1,4 +1,4 @@
-import { React } from 'react';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
 import '../../../styles/Portfolio/Positions.scss';

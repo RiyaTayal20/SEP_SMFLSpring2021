@@ -21,6 +21,7 @@ const addPlayerToLeague = async (user, leagueID) => {
                         league: leagueID,
                         cash: league.settings.balance,
                         netWorth: league.settings.balance,
+                        currentNetWorth: league.settings.balance,
                     }),
                 },
             },

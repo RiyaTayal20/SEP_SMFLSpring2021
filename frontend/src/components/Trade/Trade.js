@@ -109,8 +109,6 @@ function Trade() {
             event.stopPropagation();
         } else {
             setValidated(true);
-        }
-        if (validated) {
             setSubmitText('Submit');
             // Set time
             const expDate = new Date();

@@ -28,7 +28,7 @@ router.post('/login', userController.login);
  * @function
  * @name get/find
  */
-router.get('/find', userController.findUserById);
+// router.get('/find', userController.findUserById);
 
 /**
  * Route handling query of user leagues

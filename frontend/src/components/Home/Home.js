@@ -9,6 +9,7 @@ import graphIcon from '../../icons/graph-icon.png';
 
 function Home() {
     const history = useHistory();
+    console.log(history);
     if (!localStorage.getItem('token')) {
         return <Redirect to="/user/login" />;
     }

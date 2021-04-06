@@ -127,7 +127,7 @@ const retrievePortfolioInfo = async (username, league) => {
             },
         },
         {
-            new: true, upsert: true
+            new: true
         },
         (err) => {
             if (err) throw err;

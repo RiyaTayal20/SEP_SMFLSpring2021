@@ -14,8 +14,7 @@ mongoose.connect(process.env.DB_URL, {
 
 app.listen(process.env.PORT, () => console.log(`Running on port ${process.env.PORT}`));
 
-// checkOrders();
-
 cron.schedule('* * * * *', () => {
+    console.log('Checking orders');
     checkOrders();
 });

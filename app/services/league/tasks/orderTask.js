@@ -16,10 +16,14 @@ exports.checkOrders = async () => {
         for (portfolio of league.portfolioList) {
             const openOrders = portfolio.orders.filter((order) => order.activeLimitOrder);
             await Promise.all(openOrders.map(async (order) => {
-                const currPrice = await getMarketPrice(order.tickerSymbol);
+                const currPrice = await getMarketPrice(order.tickerSymbol).then((data) => data.price);
                 switch (order.orderType) {
                     case 'limitBuy':
-                        if (order.pricePerShare <= currPrice) {
+                        console.log('Found it');
+                        console.log(currPrice);
+                        console.log(order.pricePerShare);
+                        if (currPrice <= order.pricePerShare) {
+                            console.log('In here');
                             let currHolding;
                             portfolio.currentHoldings.forEach((holding) => {
                                 if (holding.ticker === order.tickerSymbol) {
@@ -27,18 +31,27 @@ exports.checkOrders = async () => {
                                 }
                             });
                             const prevQuantity = (currHolding) ? currHolding.quantity : 0;
+                            console.log(prevQuantity);
                             if (prevQuantity === 0) { // Does not currently have any shares, add entry to holdings
                                 await League.findOneAndUpdate(
-                                    { _id: league._id, 'portfolioList.owner': portfolio.username },
+                                    { _id: league._id, 'portfolioList.owner': portfolio.owner },
                                     {
                                         $addToSet: {
-                                            'portfolioList.$.currentHoldings': { ticker: order.tickerSymbol, quantity: order.quantity },
+                                            'portfolioList.$[element0].currentHoldings': { ticker: order.tickerSymbol, quantity: order.quantity },
                                         },
-                                        $set: { 'portfolioList.$.cash': (portfolio.cash - (currPrice * order.quantity)) },
+                                        $set: {
+                                            'portfolioList.$[element0].cash': (portfolio.cash - (currPrice * order.quantity)),
+                                            'portfolioList.$[element0].orders.$[element1].executed': true,
+                                            'portfolioList.$[element0].orders.$[element1].activeLimitOrder': false,
+                                        },
                                     },
                                     {
                                         upsert: true,
                                         new: true,
+                                        arrayFilters: [
+                                            { 'element0.owner': portfolio.owner },
+                                            { 'element1._id': order._id },
+                                        ]
                                     },
                                     (err) => {
                                         if (err) throw err;
@@ -46,19 +59,22 @@ exports.checkOrders = async () => {
                                 );
                             } else { // Has holdings, can just update quantity
                                 await League.findOneAndUpdate(
-                                    { _id: selectedLeague._id },
+                                    { _id: league._id },
                                     {
                                         $set: {
                                             'portfolioList.$[element0].cash': (portfolio.cash - (currPrice * order.quantity)),
                                             'portfolioList.$[element0].currentHoldings.$[element1].quantity': prevQuantity + order.quantity,
+                                            'portfolioList.$[element0].orders.$[element2].executed': true,
+                                            'portfolioList.$[element0].orders.$[element2].activeLimitOrder': false,
                                         },
                                     },
                                     {
                                         upsert: true,
                                         new: true,
                                         arrayFilters: [
-                                            { 'element0.owner': username },
+                                            { 'element0.owner': portfolio.owner },
                                             { 'element1.ticker': order.tickerSymbol },
+                                            { 'element2._id': order._id },
                                         ],
                                     },
                                     (err) => {

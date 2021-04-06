@@ -1,6 +1,7 @@
 :root {
     --mint: #3FC380;
     --dark-scale-grey: #2F2F31;
+    --purple: #5367FC;
   }
   
   html, body {
@@ -10,12 +11,24 @@
     width: 100%;
     background-color: var(--dark-scale-grey);
     font-family: 'Rajdhani', sans-serif;
-
   }
-  
+
   *, *:before, *:after {
     box-sizing: inherit;
     font-family: inherit;
+  }
+
+  .site-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .site-content {
+    width: 100%;
+    margin-right: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   %flex-center {
@@ -27,5 +40,5 @@
   .container {
     height: 80vh;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
   }

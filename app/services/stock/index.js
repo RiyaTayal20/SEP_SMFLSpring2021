@@ -1,19 +1,26 @@
-const express = require('express');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const app = require('./server');
 
 require('dotenv').config();
 
-const app = express();
+/**
+ * The port to expose the endpoints on
+ * @constant
+ * @type {number}
+ */
 const PORT = process.env.PORT || 3000;
 
-app.use(bodyParser.json());
-
+/**
+ * Connect to the database
+ * @async
+ * @function
+ */
 const connectDB = async () => {
     try {
         await mongoose.connect(process.env.DB_URL, {
             useUnifiedTopology: true,
             useNewUrlParser: true,
+            useFindAndModify: false,
         });
         console.log('Successfully connected to database');
     } catch (err) {

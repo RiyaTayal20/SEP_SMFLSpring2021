@@ -71,6 +71,10 @@ const portfolioSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    closePercentChange: {
+        type: Number,
+        required: true,
+    },
     netWorth: [{
         date: Date,
         worth: Number,

@@ -93,18 +93,19 @@ exports.trade = async (req, res) => {
         } else { // Limit order: DEMO #2
             order = new Order({
                 orderType: req.body.orderType,
-                portfolioId: req.body.portfolioId,
+                portfolioId: userPortfolio._id,
                 tickerSymbol: req.body.tickerSymbol,
                 quantity: req.body.quantity,
                 pricePerShare: req.body.pricePerShare,
                 expiryDate: req.body.expiryDate, // Maybe add function to handle common intervals
                 executed: false,
                 activeLimitOrder: true,
+                totalPrice: req.body.quantity * req.body.pricePerShare,
             });
             // Add order to portfolio
             await League.findOneAndUpdate(
                 { _id: selectedLeague._id, 'portfolioList.owner': username },
-                { $addToSet: { 'portfolioList.$.orders': order }, $set: { 'portfolioList.$.cash': userPortfolio.cash - (currPrice * req.body.quantity) } },
+                { $addToSet: { 'portfolioList.$.orders': order } },
                 {
                     upsert: true,
                     new: true,

@@ -19,11 +19,7 @@ exports.checkOrders = async () => {
                 const currPrice = await getMarketPrice(order.tickerSymbol).then((data) => data.price);
                 switch (order.orderType) {
                     case 'limitBuy':
-                        console.log('Found it');
-                        console.log(currPrice);
-                        console.log(order.pricePerShare);
                         if (currPrice <= order.pricePerShare) {
-                            console.log('In here');
                             let currHolding;
                             portfolio.currentHoldings.forEach((holding) => {
                                 if (holding.ticker === order.tickerSymbol) {
@@ -31,7 +27,6 @@ exports.checkOrders = async () => {
                                 }
                             });
                             const prevQuantity = (currHolding) ? currHolding.quantity : 0;
-                            console.log(prevQuantity);
                             if (prevQuantity === 0) { // Does not currently have any shares, add entry to holdings
                                 await League.findOneAndUpdate(
                                     { _id: league._id, 'portfolioList.owner': portfolio.owner },

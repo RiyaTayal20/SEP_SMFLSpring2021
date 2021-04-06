@@ -65,18 +65,8 @@ const Portfolio = () => {
                     && (
                         <div className="header">
                             <h1>
-                                Portfolio for&nbsp;
-                                <b>{league}</b>
+                                Portfolio for <b>{league}</b>
                             </h1>
-                            <h3>
-                                <b>Account Value:&nbsp;</b>
-                                $
-                                {portfolio.currentNetWorth}
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <b>Buying Power:&nbsp;</b>
-                                $
-                                {portfolio.cashAvailable}
-                            </h3>
                             <PortfolioGraph portfolio={portfolio} />
                             <Positions portfolio={portfolio} />
                         </div>

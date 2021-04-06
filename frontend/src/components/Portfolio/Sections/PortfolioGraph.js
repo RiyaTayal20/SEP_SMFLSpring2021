@@ -7,17 +7,25 @@ const PortfolioGraph = (props) => {
     const { portfolio } = props;
     let dates = '';
     let prices = '';
-    /* eslint-disable max-len */
     if (portfolio && portfolio.netWorth) {
         dates = Object.keys(portfolio.netWorth).map((i) => portfolio.netWorth[i].date.slice(0, portfolio.netWorth[i].date.lastIndexOf('T')));
         prices = Object.keys(portfolio.netWorth).map((j) => portfolio.netWorth[j].worth);
     }
+
     return (
         <Container className="portfolio-graph-container">
             {portfolio && portfolio.currentNetWorth
                 && (
                     <div className="portfolio-header">
-                        <h2>{portfolio.currentNetWorth}({portfolio.currentNetWorth / 500 > 1 ? `+${parseFloat((portfolio.currentNetWorth / 500 - 1) * 100).toFixed(2)}%` : `-${parseFloat((1 - portfolio.currentNetWorth / 500) * 100).toFixed(2)}%` })</h2>
+                        <h3>
+                            <b>Account Value: </b>
+                            ${portfolio.currentNetWorth}&emsp;&emsp;
+                            <b>Buying Power: </b>
+                            ${portfolio.cashAvailable}&emsp;&emsp;
+                            <b>Total Return: </b>
+                            ${(portfolio.currentNetWorth - 500).toFixed(2)}
+                            ({portfolio.currentNetWorth / 500 > 1 ? `+${parseFloat((portfolio.currentNetWorth / 500 - 1) * 100).toFixed(2)}%` : `-${parseFloat((1 - portfolio.currentNetWorth / 500) * 100).toFixed(2)}` })
+                        </h3>
                     </div>
                 )}
             {portfolio && portfolio.netWorth
@@ -27,7 +35,7 @@ const PortfolioGraph = (props) => {
                             labels: dates, // all x values
                             datasets: [
                                 {
-                                    label: 'Price',
+                                    label: 'Portfolio Value',
                                     data: prices, // all y values
                                     borderColor: 'rgba(98, 252, 3, 1)',
                                     hoverBackgroundColor: 'blue',
@@ -56,7 +64,7 @@ const PortfolioGraph = (props) => {
                                         fontSize: 15,
                                         fontColor: 'white',
                                         fontStyle: 'bold',
-                                        labelString: '$',
+                                        labelString: 'Value',
                                     },
                                     ticks: {
                                         fontColor: 'white',

@@ -13,7 +13,7 @@ const Positions = (props) => {
             {portfolio && portfolio.holdings && (
                 <div>
                     <div className="positions-header">
-                        <h1>Positions:</h1>
+                        <h1>Positions</h1>
                     </div>
                     <Table striped bordered hover variant="light" className="positions-list">
                         <thead>

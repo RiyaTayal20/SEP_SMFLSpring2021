@@ -4,6 +4,7 @@ const League = require('../models/leagueModel');
 const User = require('../models/userModel');
 const { Portfolio } = require('../models/portfolioModel');
 const { getMarketPrice, getStatistics } = require('../utils/stockUtils');
+const { getNews } = require('../utils/newsUtils');
 
 /**
  * Add a user to a specified league and create an associated portfolio
@@ -127,6 +128,22 @@ const retrievePortfolioInfo = async (username, league) => {
         return responseInfo;
     }
     throw Error('Portfolio not found');
+};
+
+const getPortfolioHoldings = async (username, league) => {
+    const queriedLeague = await League.findOne(
+        { leagueName: league },
+        (err) => {
+            if (err) throw err;
+        },
+    );
+    let portfolio;
+    queriedLeague.portfolioList.forEach((leaguePortfolio) => {
+        if (leaguePortfolio.owner === username) {
+            portfolio = leaguePortfolio;
+        }
+    });
+    return portfolio.currentHoldings;
 };
 
 /**
@@ -412,6 +429,22 @@ exports.getPortfolio = async (req, res) => {
             };
             res.json(fullResponse);
         });
+    } catch (err) {
+        console.log(err);
+        res.status(400).send(err.toString());
+    }
+};
+
+exports.getPortfolioNews = async (req, res) => {
+    try {
+        const { username } = res.locals;
+        const portfolioHoldings = await getPortfolioHoldings(username, req.params.league);
+        // Get news for all holdings
+        const allNews = await Promise.all(portfolioHoldings.map(async (holding) => {
+            return await getNews(holding.ticker);
+        }));
+        const sortedNews = allNews.flat().sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
+        res.json(sortedNews);
     } catch (err) {
         console.log(err);
         res.status(400).send(err.toString());

@@ -12,13 +12,12 @@ const getNews = async (ticker) => {
         const extractedArticles = newsData.map((article) => {
             return {
                 headline: article.headline,
+                summary: article.summary,
                 image: article.image,
                 url: article.url,
                 date: new Date(article.datetime),
             }
         });
-
-        console.log(extractedArticles);
 
         const updatedNews = await News.findOneAndUpdate(
             { tickerSymbol: ticker },
@@ -33,6 +32,7 @@ const getNews = async (ticker) => {
                 upsert: true,
             },
         );
+        return extractedArticles;
     } catch (err) {
         console.error(err);
         return err;

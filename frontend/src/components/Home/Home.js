@@ -3,12 +3,12 @@ import '../../styles/Home/Home.scss';
 import Form from 'react-bootstrap/Form';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Icon from '../../icons/user-profile.png';
 import graphIcon from '../../icons/graph-icon.png';
 
 function Home() {
-    const history = useHistory();
+    // const history = useHistory();
     if (!localStorage.getItem('token')) {
         return <Redirect to="/user/login" />;
     }

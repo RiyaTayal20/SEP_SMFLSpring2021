@@ -25,7 +25,7 @@ const Positions = (props) => {
                         <th>Quantity</th>
                         <th>Current Price</th>
                         <th>Total Value</th>
-                        <th>Average Cost Basis</th>
+                        <th>Cost Basis</th>
                         <th>Total Change</th>
                     </tr>
                 </thead>

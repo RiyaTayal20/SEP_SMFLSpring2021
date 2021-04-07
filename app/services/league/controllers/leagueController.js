@@ -164,7 +164,7 @@ const retrievePortfolioInfo = async (username, league) => {
  * @function
  * @param {String} ticker The ticker symbol of the specified equity
  * @param {Object} portfolio The portfolio to check
- * @returns {number} The average cost basis
+ * @returns {number} The average cost baosis
  */
 const calculateCostBasis = (ticker, portfolio) => {
     let totalCost = 0;
@@ -450,13 +450,13 @@ exports.getPortfolio = async (req, res) => {
     }
 };
 
-/* exports.compareIndex = async (req, res) => {
+exports.compareIndex = async (req, res) => {
+    const indexName = req.params.indexName;
     try {
-        const indexStatistics = [];
+        const indexStats = await getStatistics(indexName);
 
     } catch (err) {
         console.log(err);
         res.status(400).send(err.toString());
     }
-}
- */
+};

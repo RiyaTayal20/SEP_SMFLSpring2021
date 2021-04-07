@@ -1,0 +1,33 @@
+@import '../root.scss';
+
+.portfolio-title{
+    color: white;
+    font-size: 35px;
+    margin-left: 15px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.portfolio-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.portfolio-dropdown{
+    margin-left: 15px;
+    .btn{
+        color: black;
+        background-color: white;
+        border-color: white;
+        &:hover, &:focus, &:active{
+            color: black;
+            background-color: white;
+            border-color: white;
+        }
+        &:not(:disabled):not(.disabled) {
+            background: white;
+            color: black;
+        }
+    }
+}

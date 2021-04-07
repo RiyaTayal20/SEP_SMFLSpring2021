@@ -6,8 +6,6 @@ import Container from 'react-bootstrap/Container';
 import '../../styles/Login/Login.scss';
 import { useHistory } from 'react-router-dom';
 
-require('dotenv').config();
-
 function Login() {
     const history = useHistory();
     const [loginUsername, setLoginUsername] = useState('');
@@ -20,7 +18,7 @@ function Login() {
     };
 
     const login = () => {
-        fetch(`${process.env.REACT_APP_API_URL}/user/login`, {
+        fetch(`${process.env.REACT_APP_LAPI_URL}/user/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -31,11 +29,15 @@ function Login() {
             }),
         }).then((res) => {
             if (res.ok) {
+                console.log(res.json);
                 res.json().then((data) => {
                     console.log(data.token);
                     localStorage.setItem('token', data.token);
-                });
-                history.push('/home');
+                    sessionStorage.setItem('username', data.username);
+                    history.push('/home', { username: data.username });
+                    history.go(0);
+                })
+                    .catch(console.error);
             } else {
                 setShowError(true);
                 res.text().then((text) => {
@@ -48,10 +50,10 @@ function Login() {
 
     return (
         <div>
-            <div>
-                <div className="login-form-title">Sign into your account here!</div>
-            </div>
-            <Container>
+            <Container className="login-container">
+                <div>
+                    <div className="login-form-title">Sign into your account here!</div>
+                </div>
                 <Form className="login-form">
                     {showError
                         && (

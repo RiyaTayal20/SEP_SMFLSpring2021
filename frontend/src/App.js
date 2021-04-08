@@ -13,6 +13,7 @@ import {
     CurrentLeaguesPage,
     SymbolLookupPage,
     PortfolioPage,
+    NewsPage,
 } from './components/Pages';
 import Header from './components/Header/Header';
 import NavigationBar from './components/NavigationBar/NavigationBar';
@@ -58,6 +59,9 @@ function App() {
                             </Route>
                             <Route path="/lookup">
                                 <SymbolLookupPage />
+                            </Route>
+                            <Route path="/news">
+                                <NewsPage />
                             </Route>
                         </Switch>
                     </div>

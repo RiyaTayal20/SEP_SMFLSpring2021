@@ -12,7 +12,7 @@ const getNews = async (ticker) => {
         const extractedArticles = newsData.map((article) => {
             return {
                 headline: article.headline,
-                summary: article.summary,
+                source: article.source,
                 image: article.image,
                 url: article.url,
                 date: new Date(article.datetime),

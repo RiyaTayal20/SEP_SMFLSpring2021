@@ -35,6 +35,7 @@ function Login() {
                     localStorage.setItem('token', data.token);
                     sessionStorage.setItem('username', data.username);
                     history.push('/home', { username: data.username });
+                    history.go(0);
                 })
                     .catch(console.error);
             } else {

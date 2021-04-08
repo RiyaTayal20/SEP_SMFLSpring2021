@@ -408,7 +408,7 @@ exports.getPortfolio = async (req, res) => {
                 currentNetWorth: parseFloat(portfolioInfo.currentNetWorth).toFixed(2),
                 cashAvailable: parseFloat(portfolioInfo.cashAvailable).toFixed(2),
                 holdings: remapHoldings,
-                netWorth: parseFloat(portfolioInfo.netWorth).toFixed(2),
+                netWorth: portfolioInfo.netWorth,
             };
             res.json(fullResponse);
         });

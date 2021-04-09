@@ -8,6 +8,7 @@ import TradePage from './Trade/Trade';
 import CurrentLeaguesPage from './CurrentLeagues/CurrentLeagues';
 import SymbolLookupPage from './SymbolLookup/SymbolLookup';
 import PortfolioPage from './Portfolio/Portfolio';
+import NewsPage from './News/News';
 
 export {
     RegistrationPage,
@@ -20,4 +21,5 @@ export {
     CurrentLeaguesPage,
     SymbolLookupPage,
     PortfolioPage,
+    NewsPage,
 };

@@ -6,7 +6,6 @@ const userRoute = require('./routes/userRoutes');
 const tradeRoute = require('./routes/tradeRoutes');
 const leagueRoute = require('./routes/leagueRoutes');
 
-
 const app = express();
 
 app.use(bodyParser.json());

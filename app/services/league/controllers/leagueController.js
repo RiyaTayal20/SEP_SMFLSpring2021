@@ -82,6 +82,31 @@ const calculatePortfolioValue = async (username, leagueID) => {
     return prices.reduce((acc, price, i) => acc + ((price.price * quantities[i]) || 0), 0) + userPortfolio.cash;
 };
 
+const calculatePortfolioPercentChange = async (username, leagueID) => {
+    const league = await League.findById(
+        leagueID,
+        (err) => {
+            if(err) throw err;
+        },
+    );
+    let userPortfolio;
+    league.portfolioList.forEach((portfolio) => {
+        if (portfolio.owner === username) {
+            userPortfolio = portfolio;
+        }
+    });
+    if (!userPortfolio) throw Error('User Portfolio not found');
+    const holdingStats = await Promise.all(userPortfolio.currentHoldings.map((holding) => getStatistics(holding.ticker)));
+    const currMarketPrices = await Promise.all(userPortfolio.currentHoldings.map((holding) => getMarketPrice(holding.ticker)));
+    const holdingQuantities = userPortfolio.currentHoldings.map((holding) => holding.quantity);
+    const holdingWeights = currMarketPrices.map((share, i) => (share.price * holdingQuantities[i]) / userPortfolio.currentNetWorth);
+    let portfolioPercentChange = 0;
+    for (i = 0; i < holdingWeights.length; i++) {
+        portfolioPercentChange += holdingWeights[i] * holdingStats[i].percentChange;
+    };
+    return portfolioPercentChange;
+};
+
 /**
  * Gather net worth, cash, holdings, and historical net worth for a portfolio
  * @async
@@ -92,14 +117,18 @@ const calculatePortfolioValue = async (username, leagueID) => {
  */
 const retrievePortfolioInfo = async (username, league) => {
     const currentValue = await calculatePortfolioValue(username, league._id);
+    const currentPercentChange = await calculatePortfolioPercentChange(username, league._id);
     // Update portfolio
     await League.findOneAndUpdate(
         { _id: league._id, 'portfolioList.owner': username },
         {
-            $set: { 'portfolioList.$.currentNetWorth': currentValue },
+            $set: {
+                'portfolioList.$.currentNetWorth': currentValue,
+                'portfolioList.$.closePercentChange': currentPercentChange
+            },
         },
         {
-            new: true,
+            new: true
         },
         (err) => {
             if (err) throw err;
@@ -121,6 +150,7 @@ const retrievePortfolioInfo = async (username, league) => {
     if (portfolio) {
         const responseInfo = {
             currentNetWorth: portfolio.currentNetWorth,
+            closePercentChange: portfolio.closePercentChange,
             cashAvailable: portfolio.cash,
             holdings: portfolio.currentHoldings,
             netWorth: portfolio.netWorth,
@@ -418,14 +448,16 @@ exports.getPortfolio = async (req, res) => {
             for (let i = 0; i < portfolioInfo.holdings.length; i += 1) {
                 const { ticker } = portfolioInfo.holdings[i];
                 remapHoldings[ticker].equityName = result[i].equityName;
+                remapHoldings[ticker].closePercentChange = (result[i].percentChange * 100).toFixed(2);
             }
         });
         await Promise.all([setPrices, setNames]).then(() => {
             const fullResponse = {
                 currentNetWorth: parseFloat(portfolioInfo.currentNetWorth).toFixed(2),
                 cashAvailable: parseFloat(portfolioInfo.cashAvailable).toFixed(2),
+                closePercentChange: (parseFloat(portfolioInfo.closePercentChange) * 100).toFixed(2),
                 holdings: remapHoldings,
-                netWorth: parseFloat(portfolioInfo.netWorth).toFixed(2),
+                netWorth: portfolioInfo.netWorth,
             };
             res.json(fullResponse);
         });

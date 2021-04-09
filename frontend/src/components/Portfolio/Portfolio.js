@@ -4,9 +4,11 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Modal from 'react-bootstrap/Modal';
 import Container from 'react-bootstrap/Container';
 import Positions from './Sections/Positions';
+import PortfolioGraph from './Sections/PortfolioGraph';
 import '../../styles/Portfolio/Portfolio.scss';
 
 const Portfolio = () => {
+    /* eslint-disable max-len */
     const username = sessionStorage.getItem('username');
 
     const [league, setLeague] = useState(null);
@@ -65,15 +67,26 @@ const Portfolio = () => {
                 </Modal>
                 {leagueList
                     && (
-                        <DropdownButton title={league || 'Choose League'} className="portfolio-dropdown" size="lg">
-                            {leagueList && leagueList.map((userLeague) => (
-                                <Dropdown.Item onClick={(() => setLeague(userLeague.leagueName))}>
-                                    {userLeague.leagueName}
-                                </Dropdown.Item>
-                            ))}
-                        </DropdownButton>
+                        <div>
+                            <DropdownButton title={league || 'Choose League'} className="portfolio-dropdown" size="lg">
+                                {leagueList && leagueList.map((userLeague) => (
+                                    <Dropdown.Item onClick={(() => setLeague(userLeague.leagueName))}>
+                                        {userLeague.leagueName}
+                                    </Dropdown.Item>
+                                ))}
+                            </DropdownButton>
+                        </div>
                     )}
-                <Positions portfolio={portfolio} />
+                {league
+                    && (
+                        <div className="header">
+                            <h1>
+                                Portfolio for <b>{league}</b>
+                            </h1>
+                            <PortfolioGraph portfolio={portfolio} />
+                            <Positions portfolio={portfolio} />
+                        </div>
+                    )}
             </Container>
         </div>
     );

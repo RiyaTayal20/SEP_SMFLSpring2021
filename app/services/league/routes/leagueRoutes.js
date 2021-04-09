@@ -55,7 +55,7 @@ router.get('/find/names', leagueController.getLeagueNames);
  * @function
  * @name get/find/:leagueName
  */
-router.get('/find/:leagueName', leagueController.getLeagueByName);
+// router.get('/find/:leagueName', leagueController.getLeagueByName);
 
 /**
  * Route handling query of user's portfolio in specified league
@@ -63,5 +63,7 @@ router.get('/find/:leagueName', leagueController.getLeagueByName);
  * @name get/portfolio/:league
  */
 router.get('/portfolio/:league', leagueValidation.authValidation, leagueController.getPortfolio);
+
+router.get('/news/:league', leagueValidation.authValidation, leagueController.getPortfolioNews);
 
 module.exports = router;

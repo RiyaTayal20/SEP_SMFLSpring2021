@@ -1,27 +1,18 @@
-@import '../root.scss';
-
-.portfolio-title{
+.news-title{
+    color: white;
     font-size: 35px;
     margin-left: 15px;
     padding-top: 30px;
     padding-bottom: 30px;
 }
 
-.portfolio-container{
+.news-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    color: white;
-    .header {
-        padding-top: 30px;
-        text-align: center;
-        h1 {
-            font-size: 60px;
-        }
-    }
 }
 
-.portfolio-dropdown{
+.news-dropdown {
     margin-left: 15px;
     .btn{
         color: black;
@@ -37,4 +28,22 @@
             color: black;
         }
     }
+}
+
+.articles-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.article {
+    padding: 50px;
+    width: 500px;
+    height: 400px;
+}
+
+.article-headline {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; 
 }

@@ -47,7 +47,7 @@ function NavigationBar() {
                 <Card.Link href="/lookup" style={{ color: '#2F2F31' }}>Symbol Lookup</Card.Link>
             </Card.Header>
             <Card.Header className="card-header" style={{ backgroundColor: 'white' }}>
-                <Card.Link href="#" style={{ color: '#2F2F31' }}>News</Card.Link>
+                <Card.Link href="/news" style={{ color: '#2F2F31' }}>News</Card.Link>
             </Card.Header>
             <Card.Header className="card-header" style={{ backgroundColor: 'white' }}>
                 <Card.Link href="#" style={{ color: '#2F2F31' }}>Settings</Card.Link>

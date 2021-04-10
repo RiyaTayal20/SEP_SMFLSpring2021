@@ -42,7 +42,7 @@ const extractHistorical = (priceArray) => priceArray.reduce((obj, { date, close 
  * @param {Array<Object>} priceArray Full price object from IEX cloud
  * @returns {number} Last available intraday price
  */
-const extractCurrent = (priceArray) => priceArray.slice(-1)[0].close;
+const extractCurrent = (priceArray) => priceArray.filter(x => x.close != null).slice(-1)[0].close;
 
 /**
  * Get statistics from the specified equity and update cache
@@ -248,12 +248,17 @@ exports.equityCurrent = async (req, res) => {
     const { equityTicker } = req.params;
     console.log(`${equityTicker} current prices requested`);
     // eslint-disable-next-line max-len
-    const current = await getIntraday(equityTicker)
+    let current = await getIntraday(equityTicker)
         .then((intradayStockData) => extractCurrent(intradayStockData.prices))
         .catch((err) => {
             console.error(err);
             res.status(400).json({ error: err.message });
         });
+    if (!current) {
+        const stats = await getStatistics(equityTicker)
+            .then((statistics) => statistics.openPrice);
+        current = stats;
+    }
     res.send({ price: current });
 };
 

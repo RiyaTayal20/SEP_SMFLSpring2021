@@ -29,6 +29,13 @@ const userSchema = new mongoose.Schema({
         type: Array,
         default: [],
     },
+    isBot: {
+        type: Boolean,
+        default: false
+    },
+    algorithm: {
+        type: String,
+    }
 });
 
 module.exports = mongoose.model('User', userSchema);

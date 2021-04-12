@@ -5,9 +5,15 @@ import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+import { Check } from 'react-bootstrap-icons';
 import '../../styles/JoinLeague/JoinLeague.scss';
 
 function JoinLeague() {
+    /* eslint-disable max-len */
+    const username = sessionStorage.getItem('username');
+
     const [leagues, setLeagues] = useState([]);
     const [selectedLeague, setSelectedLeague] = useState('');
     const [showModal, setShowModal] = useState(false);
@@ -109,7 +115,22 @@ function JoinLeague() {
                         <tbody>
                             {leagues && leagues.map((league) => (
                                 <tr>
-                                    <td>{league.leagueName}</td>
+                                    <td>{(() => {
+                                        if (league.playerList.includes(username)) {
+                                            return (
+                                                <div>
+                                                    {league.leagueName}
+                                                    <OverlayTrigger overlay={<Tooltip>You are already in this league.</Tooltip>}>
+                                                        <Check />
+                                                    </OverlayTrigger>
+                                                </div>
+                                            );
+                                        }
+                                        console.log('success');
+                                        return league.leagueName;
+                                    }
+                                    )()}
+                                    </td>
                                     <td>
                                         {`${new Date(league.settings.endDate).getMonth() + 1
                                         }/${new Date(league.settings.endDate).getDate() + 1}/${new Date(league.settings.endDate).getFullYear()}`}

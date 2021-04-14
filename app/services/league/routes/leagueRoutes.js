@@ -41,7 +41,14 @@ router.post('/disband', leagueValidation.authValidation, leagueValidation.findVa
  * @function
  * @name post/kick
  */
- router.post('/:league/kick', leagueValidation.authValidation, leagueController.kickPlayer);
+router.post('/:league/kick', leagueValidation.authValidation, leagueController.kickPlayer);
+
+/**
+ * Route handling league manager adding money to player's portfolio
+ * @function
+ * @name post/donate
+ */
+ router.post('/:league/donate', leagueValidation.authValidation, leagueController.addMoneyToPlayer);
 
 /**
  * Route handling query of all leagues

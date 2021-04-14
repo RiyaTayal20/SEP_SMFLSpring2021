@@ -426,7 +426,11 @@ exports.kickPlayer = async (req, res) => {
         await League
         .findOneAndUpdate(
             {leagueName: league.leagueName},
-            { $pull: {playerList: playerToKick} },
+            { $pull: {
+                playerList: playerToKick,
+                portfolioList: {owner: playerToKick}
+                },
+            },
             {},
             (err) => {
                 if(err) throw err;
@@ -447,6 +451,8 @@ exports.kickPlayer = async (req, res) => {
         .then(()=> res.send(`Successfully kicked player ${playerToKick} from ${league.leagueName}!`))
         .catch((err) => res.status(422).json(`Cannot kick player cleanly. Unknown Error occurred. \n ${err}`));
 }
+
+
 
 /**
  * Retrieve a portfolio for user in a specified league

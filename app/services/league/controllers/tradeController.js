@@ -114,7 +114,7 @@ exports.trade = async (req, res) => {
                     activeLimitOrder: false,
                     totalPrice: -1 * currPrice * req.body.quantity,
                 });
-                const newQuantity = currentHolding.quantity - req.body.quantity;
+                const newQuantity = currHolding.quantity - req.body.quantity;
                 // Add order to portfolio
                 if (newQuantity === 0) { // Sold all shares, remove from holdings list
                     await League.findOneAndUpdate(

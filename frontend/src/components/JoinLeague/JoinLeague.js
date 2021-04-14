@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+// eslint-disable-next-line import/no-unresolved
 import { Check } from 'react-bootstrap-icons';
 import '../../styles/JoinLeague/JoinLeague.scss';
 

@@ -79,6 +79,67 @@ exports.checkOrders = async () => {
                             }
                         }
                         break;
+                    case "limitSell":
+                        if (currPrice <= order.pricePerShare) {
+                            let currHolding;
+                            portfolio.currentHoldings.forEach((holding) => {
+                                if (holding.ticker === order.tickerSymbol) {
+                                    currHolding = holding;
+                                }
+                            });
+                            const currQuantity = (currHolding) ? currHolding.quantity : 0;
+                            if (currQuantity === order.quantity) { // Selling all shares
+                                await League.findOneAndUpdate(
+                                    { _id: league._id, 'portfolioList.owner': portfolio.owner },
+                                    {
+                                        $pull: {
+                                            'portfolioList.$[element0].currentHoldings': { ticker: order.tickerSymbol },
+                                        },
+                                        $set: {
+                                            'portfolioList.$[element0].cash': (portfolio.cash + (currPrice * order.quantity)),
+                                            'portfolioList.$[element0].orders.$[element1].executed': true,
+                                            'portfolioList.$[element0].orders.$[element1].activeLimitOrder': false,
+                                        },
+                                    },
+                                    {
+                                        upsert: true,
+                                        new: true,
+                                        arrayFilters: [
+                                            { 'element0.owner': portfolio.owner },
+                                            { 'element1._id': order._id },
+                                        ]
+                                    },
+                                    (err) => {
+                                        if (err) throw err;
+                                    },
+                                );
+                            } else if (currQuantity > order.quantity) { // Has holdings remaining after selling
+                                await League.findOneAndUpdate(
+                                    { _id: league._id },
+                                    {
+                                        $set: {
+                                            'portfolioList.$[element0].cash': (portfolio.cash + (currPrice * order.quantity)),
+                                            'portfolioList.$[element0].currentHoldings.$[element1].quantity': currQuantity - order.quantity,
+                                            'portfolioList.$[element0].orders.$[element2].executed': true,
+                                            'portfolioList.$[element0].orders.$[element2].activeLimitOrder': false,
+                                        },
+                                    },
+                                    {
+                                        upsert: true,
+                                        new: true,
+                                        arrayFilters: [
+                                            { 'element0.owner': portfolio.owner },
+                                            { 'element1.ticker': order.tickerSymbol },
+                                            { 'element2._id': order._id },
+                                        ],
+                                    },
+                                    (err) => {
+                                        if (err) throw err;
+                                    },
+                                );
+                            }
+                        }
+                        break;
                     default:
                         // throw new Error('Invalid order type');
                 }

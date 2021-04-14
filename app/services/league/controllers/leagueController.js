@@ -181,7 +181,7 @@ const getPortfolioHoldings = async (username, league) => {
  * @function
  * @param {String} ticker The ticker symbol of the specified equity
  * @param {Object} portfolio The portfolio to check
- * @returns {number} The average cost basis
+ * @returns {number} The average cost baosis
  */
 const calculateCostBasis = (ticker, portfolio) => {
     let totalCost = 0;

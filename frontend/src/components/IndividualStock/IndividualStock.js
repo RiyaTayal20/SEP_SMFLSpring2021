@@ -19,16 +19,11 @@ function IndividualStockPage() {
         tickerSymbol: '',
         equityName: '',
         peRatio: '',
-        askPrice: '',
         avgVolume: '',
         beta: '',
         dividend: '',
-        bidPrice: '',
-        dayHigh: '',
-        dayLow: '',
         earningsDate: '',
         eps: '',
-        exDividend: '',
         openPrice: '',
         volume: '',
         week52High: '',
@@ -75,19 +70,7 @@ function IndividualStockPage() {
             },
         });
         const data = await response.json();
-        if (data.bidPrice == null || data.bidPrice === 0) {
-            data.bidPrice = 'N/A';
-        }
-        if (data.askPrice == null || data.askPrice === 0) {
-            data.askPrice = 'N/A';
-        }
-        if (data.dayLow == null) {
-            data.dayLow = 'N/A';
-        }
-        if (data.dayHigh == null) {
-            data.dayHigh = 'N/A';
-        }
-        if (data.dividend == null || data.dividend === 0) {
+        if (data.dividend == null) {
             data.dividend = 0;
         }
         if (data.openPrice == null) {
@@ -96,23 +79,15 @@ function IndividualStockPage() {
         if (data.earningsDate == null) {
             data.earningsDate = 'N/AT';
         }
-        if (data.exDividend == null) {
-            data.exDividend = 'N/AT';
-        }
         setStatistics({
             tickerSymbol: data.tickerSymbol,
             equityName: data.equityName,
-            peRatio: data.peRatio.toFixed(3),
-            askPrice: data.askPrice,
+            peRatio: data.peRatio.toFixed(2),
             avgVolume: data.avgVolume,
-            beta: data.beta.toFixed(3),
-            dividend: data.dividend.toFixed(3),
-            bidPrice: data.bidPrice,
-            dayHigh: data.dayHigh,
-            dayLow: data.dayLow,
+            beta: data.beta.toFixed(2),
+            dividend: data.dividend.toFixed(2),
             earningsDate: data.earningsDate.slice(0, data.earningsDate.lastIndexOf('T')),
             eps: data.eps,
-            exDividend: data.exDividend.slice(0, data.exDividend.lastIndexOf('T')),
             openPrice: data.openPrice,
             volume: data.volume,
             week52High: data.week52High,

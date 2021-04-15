@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import '../../styles/SymbolLookup/SymbolLookup.scss';
 import { useHistory } from 'react-router-dom';
-import Icon from '../../icons/magnifier-icon.png';
+import Icon from '../../assets/icons/magnifier-icon.png';
 
 function SymbolLookup() {
     const history = useHistory();

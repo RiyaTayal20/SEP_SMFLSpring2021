@@ -29,18 +29,8 @@ const StockStatistics = (props) => {
             </Row>
             <Row>
                 <Col>
-                    <b>Bid:&nbsp;</b>
-                    {statistics.bidPrice}
-                </Col>
-                <Col>
                     <b>PE Ratio:&nbsp;</b>
                     {statistics.peRatio}
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <b>Ask:&nbsp;</b>
-                    {statistics.askPrice}
                 </Col>
                 <Col>
                     <b>EPS:&nbsp;</b>
@@ -49,19 +39,7 @@ const StockStatistics = (props) => {
             </Row>
             <Row>
                 <Col>
-                    <b>Day Range:&nbsp;</b>
-                    {statistics.dayLow}
-                    &nbsp;-&nbsp;
-                    {statistics.dayHigh}
-                </Col>
-                <Col>
-                    <b>Earnings Date:&nbsp;</b>
-                    {statistics.earningsDate}
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <b>52 Week Range:&nbsp;</b>
+                    <b>Year Range:&nbsp;</b>
                     {statistics.week52Low}
                     &nbsp;-&nbsp;
                     {statistics.week52High}
@@ -77,14 +55,14 @@ const StockStatistics = (props) => {
                     {statistics.volume}
                 </Col>
                 <Col>
-                    <b>Ex Dividend Date:&nbsp;</b>
-                    {statistics.exDividend}
+                    <b>Average Volume:&nbsp;</b>
+                    {statistics.avgVolume}
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <b>Average Volume:&nbsp;</b>
-                    {statistics.avgVolume}
+                    <b>Earnings Date:&nbsp;</b>
+                    {statistics.earningsDate}
                 </Col>
             </Row>
         </Container>

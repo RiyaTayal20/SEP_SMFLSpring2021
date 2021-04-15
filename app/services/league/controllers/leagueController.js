@@ -5,6 +5,7 @@ const User = require('../models/userModel');
 const { Portfolio } = require('../models/portfolioModel');
 const { getMarketPrice, getStatistics } = require('../utils/stockUtils');
 const { getNews } = require('../utils/newsUtils');
+const bcrypt = require('bcryptjs');
 
 /**
  * Add a user to a specified league and create an associated portfolio
@@ -210,7 +211,7 @@ const createAIplayer = async (count, leagueID) => {
     const bot = new User({
         username: `bot-${count}`,
         email: `bot@bot.com`,
-        password: 'xxxxxxx',
+        password: bcrypt.hashSync('xxxxxxx',8),
         leagues: leagueID,
         isBot: true,
         algorithm: algorithm,
@@ -379,6 +380,21 @@ exports.getLeagueNames = async (req, res) => {
     await League.find({}, 'leagueName', (err, result) => {
         if (err) throw err;
         res.send(result);
+    });
+};
+
+/**
+ * Retrieve a league name given id
+ * @async
+ * @function
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ */
+ exports.getLeagueByID = async (req, res) => {
+    await League.findOne({ _id: req.params.id }, 'leagueName', (err, result) => {
+        if (err) throw err;
+        if (!result) res.status(404).send('League(s) not found');
+        else res.send(result);
     });
 };
 

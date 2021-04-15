@@ -37,4 +37,11 @@ router.post('/login', userController.login);
  */
 router.get('/:username/league', userController.getLeagueByUser);
 
+/**
+ * Route handling query of ai bots
+ * @function
+ * @name get/ai
+ */
+ router.get('/ai', userController.getAI);
+
 module.exports = router;

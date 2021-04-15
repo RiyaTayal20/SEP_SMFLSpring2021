@@ -482,3 +482,106 @@ exports.getPortfolioNews = async (req, res) => {
         res.status(400).send(err.toString());
     }
 };
+
+const getLastFriday = (day) => {
+    const t = day.getDate() + (6 - day.getDay() - 1) - 7;
+    let lastFriday = new Date();
+    lastFriday.setDate(t);
+    return lastFriday;
+};
+
+const getMonday = (d) => {
+    d = new Date(d);
+    var day = d.getDay(),
+        diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+    return new Date(d.setDate(diff));
+}
+
+const getPercentChange = (start, end) => {
+    if (end > start) {
+        percentChange = (end - start) / start * 100;   
+    } else {
+        percentChange = (end - start) / end * 100;
+    }
+    return percentChange;
+}
+
+exports.getSummary = async (req, res) => {
+    const { username } = res.locals;
+    let startPortfolioTotals = 0;
+    let endPortfolioTotals = 0;
+    let startWorth;
+    let endWorth;
+    let personalReturn;
+    let leagueReturn;
+    let startWeek = new Date(req.query.week);
+    const lastFriday = getLastFriday(startWeek);
+    let endDay = new Date();
+    const pastMonday = getMonday(endDay);
+    startWeek.setHours(0,0,0,0);
+    lastFriday.setHours(0,0,0,0);
+    endDay.setHours(0,0,0,0);
+    pastMonday.setHours(0,0,0,0);
+    if (startWeek < pastMonday) {
+        endDay.setDate(lastFriday.getDate() + 7);
+    } else {
+        if (new Date().getHours() < 16) {
+            endDay.setDate(endDay.getDate() - 1);
+        }
+    }
+
+    const leagueInfo = await League.findOne({ leagueName: req.params.leagueName }, (err, result) => {
+        if (err) throw err;
+        if (!result) res.status(404).send('League(s) not found');
+        else return result;
+    });
+
+    leagueInfo.portfolioList.forEach((portfolio) => {
+        portfolio.netWorth.forEach((day) => {
+            date = new Date(day.date);
+            date.setHours(0,0,0,0);
+            if (date.getTime() === lastFriday.getTime()) {
+                
+                if (portfolio.owner === username) startWorth = day.worth;
+                else startPortfolioTotals += day.worth;
+            }
+            if (date.getTime() === endDay.getTime()) {
+                if (portfolio.owner === username) endWorth = day.worth;
+                else endPortfolioTotals += day.worth;
+            }
+        });
+    });
+
+    const startAverage = startPortfolioTotals / ((leagueInfo.portfolioList).length - 1);
+    const endAverage = endPortfolioTotals / ((leagueInfo.portfolioList).length - 1);
+    personalReturn = getPercentChange(startWorth, endWorth);
+    leagueReturn = getPercentChange(startAverage, endAverage);
+
+    const fullResponse = {
+        startAverage: parseFloat(startAverage).toFixed(2),
+        endAverage: parseFloat(endAverage).toFixed(2),
+        leaguePercentageReturn: parseFloat(leagueReturn).toFixed(2),
+        leagueDollarReturn: parseFloat(endAverage - startAverage).toFixed(2),
+        personalStartWorth: parseFloat(startWorth).toFixed(2),
+        personalEndWorth: parseFloat(endWorth).toFixed(2),
+        personalPercentageReturn: parseFloat(personalReturn).toFixed(2),
+        personalDollarReturn: parseFloat(endWorth - startWorth).toFixed(2)
+    };
+    res.json(fullResponse);
+};
+
+exports.insertNetWorth = async (req, res) => {
+    const { username } = res.locals;
+    const currentNetWorth = {
+        date: req.body.date,
+        worth: req.body.worth
+    }
+    await League.findOneAndUpdate(
+        { _id: '605e1f48b3eb5120b7b43ecd', 'portfolioList.owner':  username},
+        { $addToSet: { 'portfolioList.$.netWorth': currentNetWorth } },
+        { new: true },
+        (err) => {
+            if (err) throw err;
+        },
+    );
+};

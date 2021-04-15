@@ -484,9 +484,10 @@ exports.getPortfolioNews = async (req, res) => {
 };
 
 const getLastFriday = (day) => {
-    const t = day.getDate() + (6 - day.getDay() - 1) - 7;
-    let lastFriday = new Date();
-    lastFriday.setDate(t);
+    let lastFriday = new Date(day);
+    while (lastFriday.getDay() !=5 ) {
+        lastFriday.setDate(lastFriday.getDate() - 1);
+    }
     return lastFriday;
 };
 
@@ -516,19 +517,24 @@ exports.getSummary = async (req, res) => {
     let leagueReturn;
     let startWeek = new Date(req.query.week);
     const lastFriday = getLastFriday(startWeek);
+    let tempDate = new Date(lastFriday);
     let endDay = new Date();
     const pastMonday = getMonday(endDay);
     startWeek.setHours(0,0,0,0);
     lastFriday.setHours(0,0,0,0);
-    endDay.setHours(0,0,0,0);
     pastMonday.setHours(0,0,0,0);
     if (startWeek < pastMonday) {
-        endDay.setDate(lastFriday.getDate() + 7);
+        tempDate.setDate(tempDate.getDate() + 7);
+        endDay = new Date(tempDate);
+        console.log(`tempDate: ${tempDate}`);
+        console.log(`endDay: ${endDay}`);
     } else {
         if (new Date().getHours() < 16) {
             endDay.setDate(endDay.getDate() - 1);
         }
     }
+
+    endDay.setHours(0,0,0,0);
 
     const leagueInfo = await League.findOne({ leagueName: req.params.leagueName }, (err, result) => {
         if (err) throw err;
@@ -540,8 +546,7 @@ exports.getSummary = async (req, res) => {
         portfolio.netWorth.forEach((day) => {
             date = new Date(day.date);
             date.setHours(0,0,0,0);
-            if (date.getTime() === lastFriday.getTime()) {
-                
+            if (date.getTime() === lastFriday.getTime()) {        
                 if (portfolio.owner === username) startWorth = day.worth;
                 else startPortfolioTotals += day.worth;
             }

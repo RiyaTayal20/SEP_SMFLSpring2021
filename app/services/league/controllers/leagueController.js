@@ -452,6 +452,132 @@ exports.disbandLeague = async (req, res) => {
 };
 
 /**
+ * Kick a player when requested by league manager
+ * @async
+ * @function
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @returns {Object}
+ */
+exports.kickPlayer = async (req, res) => {
+    const { username } = res.locals;
+    const playerToKick = req.body.username;
+
+    const league = await League
+        .findOne({
+            leagueName: req.params.league,
+        })
+        .then((result) => result)
+        .catch(() => null);
+    if (!league) return res.status(404).json('Error: League not found');
+
+    const manager = league.leagueManager;
+    if (manager !== username) {
+        return res.status(401).send('Cannot kick player. User is not the league manager');
+    }
+    if(manager === playerToKick){
+        return res.status(401).send('Cannot kick the league manager from league');
+    }
+    if(!league.playerList.includes(playerToKick)) {
+        return res.status(404).json('Error: Player to Kick not found');
+    }
+
+    /* At this point, we know:
+    *    The league manager made the request
+    *    The league exists
+    *    The player to be kicked is in the league
+    *    The player to kick is not the league manager
+    */
+    const kickPlayerReq = Promise.all([
+        await League
+        .findOneAndUpdate(
+            {leagueName: league.leagueName},
+            { $pull: {
+                playerList: playerToKick,
+                portfolioList: {owner: playerToKick}
+                },
+            },
+            {},
+            (err) => {
+                if(err) throw err;
+            },
+        ),
+        await User
+        .findOneAndUpdate(
+            {username: playerToKick},
+            { $pull: { leagues: league._id } },
+            {},
+            (err) => {
+                if (err) throw err;
+            },
+        ),
+    ]);
+
+    kickPlayerReq
+        .then(()=> res.send(`Successfully kicked player ${playerToKick} from ${league.leagueName}!`))
+        .catch((err) => res.status(400).json(`Cannot kick player cleanly. Unknown Error occurred. \n ${err}`));
+}
+
+/**
+ * Add money to a player's portfolio when requested by league manager
+ * @async
+ * @function
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @returns {Object}
+ */
+ exports.addMoneyToPlayer = async (req, res) => {
+    const { username } = res.locals;
+    const playerToDonate = req.body.username;
+
+    const league = await League
+        .findOne({
+            leagueName: req.params.league,
+        })
+        .then((result) => result)
+        .catch(() => null);
+    if (!league) return res.status(404).json('Error: League not found');
+
+    const manager = league.leagueManager;
+    if (manager !== username) {
+        return res.status(401).send('Cannot add money to player. User is not the league manager');
+    }
+    if(!league.playerList.includes(playerToDonate)) {
+        return res.status(404).json('Error: Recipient player not found');
+    }
+
+    /* At this point, we know:
+    *    The league manager made the request
+    *    The league exists
+    *    The recipient player is in the league
+    */
+    let cash;
+    league.portfolioList.forEach((portfolio) => {
+        if(portfolio.owner === playerToDonate){
+            cash = portfolio.cash;
+        }
+    });
+
+    const addMoneyToPlayerReq = League
+        .findOneAndUpdate(
+            {
+                leagueName: league.leagueName,
+                'portfolioList.owner': playerToDonate,
+            },
+            { $set: {'portfolioList.$.cash' : (parseInt(cash) + parseInt(req.body.cash)) },},
+            {},
+            (err) => {
+                if(err) throw err;
+            },
+        );
+
+    addMoneyToPlayerReq
+        .then(()=> res.send(`Successfully gave $${req.body.cash} to player ${playerToDonate} in ${league.leagueName}!`))
+        .catch((err) => res.status(422).json(`Cannot give money to player. Unknown Error occurred. \n ${err}`));
+}
+
+
+/**
  * Retrieve a portfolio for user in a specified league
  * @param {Express.Request} req
  * @param {Express.Response} res

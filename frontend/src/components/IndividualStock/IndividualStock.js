@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import { Lightbulb } from 'react-bootstrap-icons';
 import StockStatistics from './Sections/StockStatistics';
 import StockGraph from './Sections/StockGraph';
 import '../../styles/IndividualStock/IndividualStock.scss';
@@ -96,6 +97,9 @@ function IndividualStockPage() {
             marketCap: data.marketCap,
         });
     };
+    const ai = () => {
+        history.push('/ai');
+    };
     useEffect(() => {
         getCurrentPrice();
         getHistoricalData('1m');
@@ -111,6 +115,9 @@ function IndividualStockPage() {
                     &nbsp;&nbsp;&nbsp;
                     <span><b><h5 style={{ color: difference > 0 ? 'green' : 'red' }}>{difference}&nbsp;({percentChange}%)</h5></b></span>
                 </div>
+                <Button className="lightbulb-button" onClick={ai} style={{ backgroundColor: 'Transparent' }} size="lg">
+                    <Lightbulb />
+                </Button>
             </div>
             <div className="makeshift-tab-component">
                 <div className="graph-btns">

@@ -6,7 +6,7 @@ import datetime as dt
 from dateutil.relativedelta import relativedelta
 import matplotlib.pyplot as plt
 
-tickers = ['SPCE', 'QS', 'PLUG', 'TV', 'BBBY']
+tickers = ['EDIT', 'SPCE', 'HMBL', 'PCRX', 'TV']
 
 # Get last 3 months of data
 now = dt.datetime.now()
@@ -83,6 +83,4 @@ for t in tickers:
         print('Sell')
     else:
         print('Hold')
-
-
-
+        

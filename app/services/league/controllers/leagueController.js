@@ -493,10 +493,10 @@ const getLastFriday = (day) => {
 
 const getMonday = (d) => {
     d = new Date(d);
-    var day = d.getDay(),
-        diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+    let day = d.getDay(),
+        diff = d.getDate() - day + (day == 0 ? -6:1);
     return new Date(d.setDate(diff));
-}
+};
 
 const getPercentChange = (start, end) => {
     if (end > start) {
@@ -507,8 +507,18 @@ const getPercentChange = (start, end) => {
     return percentChange;
 }
 
+const getIndexJSON = (array, username) => {
+    let index;
+    for (i = 0; i < array.length; i++) {
+        if (array[i].username && array[i].username === username) index = i;
+    }
+    return index + 1;
+};
+
 exports.getSummary = async (req, res) => {
     const { username } = res.locals;
+    let percentageReturnRankings = [];
+    let dollarReturnRankings = [];
     let startPortfolioTotals = 0;
     let endPortfolioTotals = 0;
     let startWorth;
@@ -543,24 +553,50 @@ exports.getSummary = async (req, res) => {
     });
 
     leagueInfo.portfolioList.forEach((portfolio) => {
+        let playerStartWorth;
+        let playerEndWorth;
         portfolio.netWorth.forEach((day) => {
             date = new Date(day.date);
             date.setHours(0,0,0,0);
-            if (date.getTime() === lastFriday.getTime()) {        
-                if (portfolio.owner === username) startWorth = day.worth;
-                else startPortfolioTotals += day.worth;
+            if (date.getTime() === lastFriday.getTime()) {     
+                playerStartWorth = day.worth;   
+                if (portfolio.owner === username) {
+                    startWorth = day.worth;
+                } else {
+                    startPortfolioTotals += day.worth;
+                }
             }
             if (date.getTime() === endDay.getTime()) {
-                if (portfolio.owner === username) endWorth = day.worth;
-                else endPortfolioTotals += day.worth;
+                playerEndWorth = day.worth;
+                if (portfolio.owner === username) {
+                    endWorth = day.worth;
+                } else {
+                    endPortfolioTotals += day.worth;
+                }
             }
         });
+        dollarReturnRankings.push({
+            username: portfolio.owner,
+            dollarReturn: parseFloat(playerEndWorth - playerStartWorth).toFixed(2)
+        });
+        percentageReturnRankings.push({
+            username: portfolio.owner,
+            percentageReturn: parseFloat(getPercentChange(playerStartWorth, playerEndWorth)).toFixed(2)
+        });
     });
+
+    console.log(dollarReturnRankings);
+    console.log(percentageReturnRankings);
 
     const startAverage = startPortfolioTotals / ((leagueInfo.portfolioList).length - 1);
     const endAverage = endPortfolioTotals / ((leagueInfo.portfolioList).length - 1);
     personalReturn = getPercentChange(startWorth, endWorth);
     leagueReturn = getPercentChange(startAverage, endAverage);
+    dollarReturnRankings.sort((a, b) => parseFloat(b.dollarReturn) - parseFloat(a.dollarReturn));
+    percentageReturnRankings.sort((a, b) => parseFloat(b.percentageReturn) - parseFloat(a.percentageReturn));
+    dollarReturnPlace = getIndexJSON(dollarReturnRankings, username);
+    percentageReturnPlace = getIndexJSON(percentageReturnRankings, username);
+    console.log(dollarReturnPlace);
 
     const fullResponse = {
         startAverage: parseFloat(startAverage).toFixed(2),
@@ -570,7 +606,11 @@ exports.getSummary = async (req, res) => {
         personalStartWorth: parseFloat(startWorth).toFixed(2),
         personalEndWorth: parseFloat(endWorth).toFixed(2),
         personalPercentageReturn: parseFloat(personalReturn).toFixed(2),
-        personalDollarReturn: parseFloat(endWorth - startWorth).toFixed(2)
+        personalDollarReturn: parseFloat(endWorth - startWorth).toFixed(2),
+        dollarReturnRankings: dollarReturnRankings,
+        percentageReturnRankings: percentageReturnRankings,
+        dollarReturnPlace: dollarReturnPlace,
+        percentageReturnPlace: percentageReturnPlace
     };
     res.json(fullResponse);
 };

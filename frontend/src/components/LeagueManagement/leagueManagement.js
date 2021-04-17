@@ -5,69 +5,104 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import InputGroup from 'react-bootstrap/InputGroup';
-import '../../styles/CreateLeague/CreateLeague.scss';
+import '../../styles/LeagueManagement/LeagueManagement.scss';
 
 function LeagueManagement(){
 
-return (
+const [leagues,setLeagues]=useState([]);
+const [selectedLeague, setSelectedLeague]=useState('');
+const [showModal, setShowModal] = useState(false);
+const [leagueKey, setLeagueKey] = useState('');
+const [showAlert, setShowAlert] = useState(false);
+const [showError, setShowError] = useState(false);
+const [error, setError] = useState('');
 
-<Form>
-  <Form.Group controlId="LeagueSelection">
-    <Form.Label>Select League to Manage</Form.Label>
-    <Form.Control as="select" htmlSize={3} custom>
-      <option>League 1</option>
-      <option>League 2</option>
-      <option>League 3</option>
-      <option>League 4</option>
-      <option>League 5</option>
-    </Form.Control>
-  </Form.Group>
-   <Table striped bordered variant="light">
-     <thead>
-       <tr>
-         <th>Player Name</th>
-         <th>Action</th>
-       </tr>
-     </thead>
-     <tbody>
-       <tr>
-         <td>
-           Player 1
-         </td>
-         <td>
-           <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> or
-           <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Give Money</Button>
-         </td>
-       </tr>
-       <tr>
-         <td>
-           Player 2
-         </td>
-         <td>
-           <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> or
-           <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Give Money</Button>
-         </td>
-       </tr>
-       <tr>
-         <td>
-           Player 3
-         </td>
-         <td>
-           <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> or
-           <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Give Money</Button>
-         </td>
-       </tr>
-       <tr>
-         <td>
-           Player 4
-         </td>
-         <td>
-           <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> or
-           <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Give Money</Button>
-         </td>
-       </tr>
-     </tbody>
-   </Table>
-</Form>
+const getLeagues = async () => {
+  const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/league/find/all`, {
+      method: 'GET',
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json',
+      },
+  });
+  const data = await response.json();
+  return data;
+};
+
+const loadLeagues = async () => {
+  setLeagues(await getLeagues());
+  console.log(leagues);
+};
+
+useEffect(() => {
+  loadLeagues();
+}, []);
+
+return (
+  <div>
+    <Container className="manage-league-container">
+      <div className="manage-league-form-title">
+        Manage Leagues
+      </div>
+      <Form>
+        <Form.Group controlId="LeagueSelection">
+          <Form.Label>Select League to Manage</Form.Label>
+          <Form.Control as="select" htmlSize={3} custom>
+            <option>League 1</option>
+            <option>League 2</option>
+            <option>League 3</option>
+            <option>League 4</option>
+            <option>League 5</option>
+          </Form.Control>
+        </Form.Group>
+        <Table striped bordered variant="light">
+          <thead>
+            <tr>
+              <th>Player Name</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                Player 1
+              </td>
+              <td>
+                <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> or
+                <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Give Money</Button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Player 2
+              </td>
+              <td>
+                <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> or
+                <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Give Money</Button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Player 3
+              </td>
+              <td>
+                <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> or
+                <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Give Money</Button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Player 4
+              </td>
+              <td>
+                <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> or
+                <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Give Money</Button>
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </Form>
+    </Container>
+  </div>
   )
 }

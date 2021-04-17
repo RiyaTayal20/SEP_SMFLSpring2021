@@ -517,12 +517,16 @@ const getIndexJSON = (array, username) => {
 
 exports.getSummary = async (req, res) => {
     const { username } = res.locals;
+    let SPHistorical = await getStatistics('SPY');
+    SPHistorical = SPHistorical['6m'].prices;
     let percentageReturnRankings = [];
     let dollarReturnRankings = [];
     let startPortfolioTotals = 0;
     let endPortfolioTotals = 0;
     let startWorth;
     let endWorth;
+    let SPStartWorth;
+    let SPEndWorth;
     let personalReturn;
     let leagueReturn;
     let startWeek = new Date(req.query.week);
@@ -558,7 +562,7 @@ exports.getSummary = async (req, res) => {
         portfolio.netWorth.forEach((day) => {
             date = new Date(day.date);
             date.setHours(0,0,0,0);
-            if (date.getTime() === lastFriday.getTime()) {     
+            if (date.getTime() === lastFriday.getTime()) {
                 playerStartWorth = day.worth;   
                 if (portfolio.owner === username) {
                     startWorth = day.worth;
@@ -585,8 +589,21 @@ exports.getSummary = async (req, res) => {
         });
     });
 
-    console.log(dollarReturnRankings);
-    console.log(percentageReturnRankings);
+    console.log(SPHistorical);
+    SPHistorical.forEach((day) => {
+        date = new Date(day.date);
+        date.setHours(0,0,0,0);
+        date.setDate(date.getDate() + 1);
+        if (date.getTime() === lastFriday.getTime()) {
+            SPStartWorth = day.close;
+        }
+        if (date.getTime() === endDay.getTime()) {
+            SPEndWorth = day.close;
+        }
+    });
+
+    console.log(`lastFriday: ${lastFriday}`);
+    console.log(`endDay: ${endDay}`);
 
     const startAverage = startPortfolioTotals / ((leagueInfo.portfolioList).length - 1);
     const endAverage = endPortfolioTotals / ((leagueInfo.portfolioList).length - 1);
@@ -596,7 +613,7 @@ exports.getSummary = async (req, res) => {
     percentageReturnRankings.sort((a, b) => parseFloat(b.percentageReturn) - parseFloat(a.percentageReturn));
     dollarReturnPlace = getIndexJSON(dollarReturnRankings, username);
     percentageReturnPlace = getIndexJSON(percentageReturnRankings, username);
-    console.log(dollarReturnPlace);
+    const SPPercentageReturn = getPercentChange(SPStartWorth, SPEndWorth);
 
     const fullResponse = {
         startAverage: parseFloat(startAverage).toFixed(2),
@@ -610,7 +627,9 @@ exports.getSummary = async (req, res) => {
         dollarReturnRankings: dollarReturnRankings,
         percentageReturnRankings: percentageReturnRankings,
         dollarReturnPlace: dollarReturnPlace,
-        percentageReturnPlace: percentageReturnPlace
+        percentageReturnPlace: percentageReturnPlace,
+        SPPercentageReturn: parseFloat(SPPercentageReturn).toFixed(2),
+        SPReturnDifference: parseFloat(personalReturn - SPPercentageReturn).toFixed(2),
     };
     res.json(fullResponse);
 };
@@ -622,7 +641,7 @@ exports.insertNetWorth = async (req, res) => {
         worth: req.body.worth
     }
     await League.findOneAndUpdate(
-        { _id: '605e1f48b3eb5120b7b43ecd', 'portfolioList.owner':  username},
+        { _id: req.body.leagueID, 'portfolioList.owner':  username},
         { $addToSet: { 'portfolioList.$.netWorth': currentNetWorth } },
         { new: true },
         (err) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../styles/Header/Header.scss';
-import Icon from '../../icons/diamondHandsLogo.png';
+import Icon from '../../assets/icons/diamondHandsLogo.png';
 
 function Header() {
     return (

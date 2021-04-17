@@ -1,7 +1,13 @@
+/** @module models/leagueModel */
+
 const mongoose = require('mongoose');
 
 const { portfolioSchema } = require('./portfolioModel');
 
+/**
+ * League containing settings, players, and portfolios
+ * @constructor League
+ */
 const leagueSchema = new mongoose.Schema({
     leagueName: {
         type: String,
@@ -24,6 +30,7 @@ const leagueSchema = new mongoose.Schema({
     settings: {
         balance: {
             type: Number,
+            default: 10000,
         },
         aiPlayer: {
             type: Number,

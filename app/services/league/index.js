@@ -1,13 +1,9 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-
-const app = express();
 const mongoose = require('mongoose');
+const app = require('./server');
+const cron = require('node-cron');
 
-const userRoute = require('./routes/userRoutes');
-const tradeRoute = require('./routes/tradeRoutes');
-const leagueRoute = require('./routes/leagueRoutes');
+const { checkOrders } = require('./tasks/orderTask');
+const { addNetWorth }  = require('./tasks/netWorthTask');
 
 require('dotenv').config();
 
@@ -17,11 +13,14 @@ mongoose.connect(process.env.DB_URL, {
     useFindAndModify: false,
 }, () => console.log('connected to db'));
 
-app.use(bodyParser.json());
-app.use(cors());
-
-app.use('/user', userRoute);
-app.use('/trade', tradeRoute);
-app.use('/league', leagueRoute);
-
 app.listen(process.env.PORT, () => console.log(`Running on port ${process.env.PORT}`));
+
+
+cron.schedule('* * * * *', () => {
+    console.log('Checking orders');
+    checkOrders();
+});
+
+cron.schedule('0 16 * * 1-5', () => {
+    addNetWorth(); 
+});

@@ -1,164 +1,188 @@
-import React, { useEffect, useState } from 'react';
-import '../../styles/JoinLeague/JoinLeague.scss';
-import Form from 'react-bootstrap/Form';
-// import Container from 'react-bootstrap/Container';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import Table from 'react-bootstrap/Table';
-// import InputGroup from 'react-bootstrap/InputGroup';
+import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
+import Container from 'react-bootstrap/Container';
+import Modal from 'react-bootstrap/Modal';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+// eslint-disable-next-line import/no-unresolved
+import { Check } from 'react-bootstrap-icons';
+import '../../styles/JoinLeague/JoinLeague.scss';
 
 function JoinLeague() {
-    const [validated, setValidated] = useState(false);
-
-    const handleSubmit = (event) => {
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-
-        setValidated(true);
-    };
+    /* eslint-disable max-len */
+    const username = sessionStorage.getItem('username');
 
     const [leagues, setLeagues] = useState([]);
+    const [selectedLeague, setSelectedLeague] = useState('');
+    const [showModal, setShowModal] = useState(false);
+    const [leagueKey, setLeagueKey] = useState('');
+    const [showAlert, setShowAlert] = useState(false);
+    const [showError, setShowError] = useState(false);
+    const [error, setError] = useState('');
 
-    const getLeagues = () => {
-        fetch(`${process.env.REACT_APP_API_URL}/league/find/all`, {
-            method: 'GET',
+    const handleClose = () => setShowModal(false);
+
+    const joinLeague = (league) => {
+        fetch(`${process.env.REACT_APP_LAPI_URL}/league/join`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                leagueName: league.leagueName,
+                leagueKey,
+            }),
         }).then((res) => {
             if (res.ok) {
+                setShowAlert(true);
+                setShowModal(false);
                 res.json().then((data) => {
                     console.log(data);
-                    setLeagues(data);
                 });
             } else {
+                setShowError(true);
+                setShowModal(false);
                 res.text().then((text) => {
                     console.log(text);
+                    setError(text);
                 });
             }
         }).catch((err) => console.log(err));
     };
 
+    const handleJoin = (league) => {
+        console.log(league);
+        setSelectedLeague(league);
+        if (league.settings.public) joinLeague(league);
+        else setShowModal(true);
+    };
+
+    const getLeagues = async () => {
+        const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/league/find/all`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
+        });
+        const data = await response.json();
+        return data;
+    };
+
+    const loadLeagues = async () => {
+        setLeagues(await getLeagues());
+        console.log(leagues);
+    };
+
     useEffect(() => {
-        getLeagues();
-    });
-    console.log('Final Leagues: \n');
-    console.log(leagues);
+        loadLeagues();
+    }, []);
 
     return (
         <div>
-            <div>
-                <div className="join-league-form-title" noValidate validated={validated} onSubmit={handleSubmit} />
-                <Row>
-                    <Col>
-                        <h2 className="order-title">Join a League</h2>
-                    </Col>
-                    <Col sm={2}>
-                        <Button type="submit" onClick={getLeagues}>Refresh</Button>
-                    </Col>
-                </Row>
-            </div>
+            <Container className="join-league-container">
+                <div className="join-league-form-title">
+                    Join a League
+                </div>
+                {showAlert
+                    && (
+                        <Alert variant="success" onClose={() => setShowAlert(false)} dismissible>
+                            You successfully joined&nbsp;
+                            {selectedLeague.leagueName}
+                            !
+                        </Alert>
+                    )}
+                {showError
+                    && (
+                        <Alert variant="danger" onClose={() => setShowError(false)} dismissible>
+                            {error}
+                        </Alert>
+                    )}
+                <Form className="join-league-form">
+                    <Table striped bordered variant="light">
+                        <thead>
+                            <tr>
+                                <th>League Name</th>
+                                <th>End Date</th>
+                                <th>Members</th>
+                                <th>Type</th>
+                                <th>Join</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {leagues && leagues.map((league) => {
+                                const alreadyJoined = league.playerList.includes(username);
+                                return (
+                                    <tr>
+                                        <td>{(() => {
+                                            if (alreadyJoined) {
+                                                return (
+                                                    <div>
+                                                        {league.leagueName}
+                                                        <OverlayTrigger overlay={<Tooltip>You are already in this league.</Tooltip>}>
+                                                            <Check />
+                                                        </OverlayTrigger>
+                                                    </div>
+                                                );
+                                            }
+                                            console.log('success');
+                                            return league.leagueName;
+                                        }
+                                        )()}
+                                        </td>
+                                        <td>
+                                            {`${new Date(league.settings.endDate).getMonth() + 1
+                                            }/${new Date(league.settings.endDate).getDate() + 1}/${new Date(league.settings.endDate).getFullYear()}`}
+                                        </td>
+                                        <td>
+                                            {league.playerList.length}
+                                            /
+                                            {league.settings.maxPlayers}
+                                        </td>
+                                        {league.settings.public
+                                            ? <td>Public</td>
+                                            : <td>Private</td>}
+                                        <td>{(() => {
+                                            if (alreadyJoined) {
+                                                return (
+                                                    <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Joined</Button>
+                                                );
+                                            }
+                                            return (
+                                                <Button onClick={() => handleJoin(league)}>
+                                                    Join League
+                                                </Button>
+                                            );
+                                        }
+                                        )()}
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </Table>
+                </Form>
+                <Modal show={showModal} onHide={handleClose} centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{selectedLeague.leagueName}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form className="private-league-form">
+                            <Form.Group controlId="formBasicUsername">
+                                <Form.Label>Private Key:</Form.Label>
+                                <Form.Control type="password" placeholder="Enter league key..." onChange={(e) => setLeagueKey(e.target.value)} />
+                            </Form.Group>
 
-            <Form className="join-league-form">
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>League Name</th>
-                            <th>End Date</th>
-                            <th>Members</th>
-                            <th> Join</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            leagues.map((item) => (
-                                <tr>
-                                    <td>
-                                        {item.leagueName}
-                                    </td>
-                                    <td>
-                                        {new Date(item.settings.endDate).toLocaleDateString('en-US')}
-                                    </td>
-                                    <td>
-                                        {item.playerList.length}
-                                        /
-                                        {item.settings.maxPlayers}
-                                    </td>
-                                    <td>
-                                        <Button type="submit">Join League</Button>
-                                    </td>
-                                </tr>
-                            ))
-                        }
-                        {/* <tr>
-                            <td>League Name 1</td>
-                            <td> 10/21 </td>
-                            <td> 10 </td>
-                            <td>
-                                <Button type="submit">Join League</Button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>League Name 2</td>
-                            <td>3/20</td>
-                            <td> 7 </td>
-                            <td>
-                                <Button type="submit">Join League</Button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>League Name 3</td>
-                            <td>8/24</td>
-                            <td> 12 </td>
-                            <td>
-                                <Button type="submit">Join League</Button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>League Name 4</td>
-                            <td>6/12</td>
-                            <td> 13 </td>
-                            <td>
-                                <Button type="submit">Join League</Button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>League Name 5</td>
-                            <td>9/30</td>
-                            <td> 12 </td>
-                            <td>
-                                <Button type="submit">Join League</Button>
-                            </td>
-                        </tr> */}
-                    </tbody>
-                </Table>
-
-                <Form.Group controlId="Private Key">
-                    <Row>
-                        <Form.Label>
-                            Private Key:
-                        </Form.Label>
-                        <Col>
-                            <Form.Control type="text" placeholder="Enter League Name here..." required />
-                            <Form.Control.Feedback type="invalid">
-                                Please provide a League Name.
-                            </Form.Control.Feedback>
-                        </Col>
-                        <Col>
-                            <Form.Control type="text" placeholder="Enter private key here" required />
-                            <Form.Control.Feedback type="invalid">
-                                Please provide a Private Key.
-                            </Form.Control.Feedback>
-                        </Col>
-                        <Col>
-                            <Button type="submit">Join League</Button>
-                        </Col>
-                    </Row>
-                </Form.Group>
-            </Form>
+                            <Button onClick={() => joinLeague(selectedLeague)}>Join</Button>
+                        </Form>
+                    </Modal.Body>
+                </Modal>
+            </Container>
         </div>
-
     );
 }
 

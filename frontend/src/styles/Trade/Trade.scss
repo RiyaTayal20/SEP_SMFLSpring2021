@@ -1,0 +1,59 @@
+@import '../root.scss';
+@import '../Button.scss';
+
+.trade-page{
+    color: white;
+    display: flex;
+    flex-direction: row;
+}
+
+.order-title{
+    font-size: 35px;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    margin-left: -15px;
+}
+
+.account-details-title{
+    font-size: 35px;
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+.trade-form { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 18px;
+    .form-control{
+        width: 150px;
+    }
+    .form-group {
+        color: white;
+    }
+
+    .form-label{
+        min-width: 150px;
+    }
+
+    .btn {
+        @include btn;
+    }
+}
+
+.trade-form-information{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-left: 150px;
+}
+
+.account-details-information{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-size: 18px;
+    margin-left: 250px;
+}

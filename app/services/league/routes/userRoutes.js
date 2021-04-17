@@ -1,3 +1,5 @@
+/** @module routes/userRoutes */
+
 const express = require('express');
 const passport = require('passport');
 
@@ -7,12 +9,32 @@ const userController = require('../controllers/userController');
 const userValidation = require('../middleware/validate');
 require('../config/jwtConfig')(passport);
 
+/**
+ * Route handling user registration
+ * @function
+ * @name post/register
+ */
 router.post('/register', userValidation.signup, userController.register);
 
+/**
+ * Route handling user login
+ * @function
+ * @name post/login
+ */
 router.post('/login', userController.login);
 
-router.get('/find', userController.findUserById);
+/**
+ * Route handling query for user
+ * @function
+ * @name get/find
+ */
+// router.get('/find', userController.findUserById);
 
+/**
+ * Route handling query of user leagues
+ * @function
+ * @name get/:username/league
+ */
 router.get('/:username/league', userController.getLeagueByUser);
 
 module.exports = router;

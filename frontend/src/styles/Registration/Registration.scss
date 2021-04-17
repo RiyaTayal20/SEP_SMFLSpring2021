@@ -1,8 +1,8 @@
 @import '../root.scss';
 @import '../Button.scss';
 
-.container{
-    height: auto; 
+.testing{
+    justify-content: inherit;
 }
 
 .registration-form-title{
@@ -21,7 +21,7 @@
     @extend %flex-center;
     border-style: solid;
     border-color: white;
-    margin: 80px; 
+    margin: 80px auto; 
     padding: 0px 130px;
     .form-group {
         @extend %flex-center;

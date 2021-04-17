@@ -1,15 +1,25 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+    BrowserRouter as Router, Switch, Route,
+} from 'react-router-dom';
 import {
     RegistrationPage,
     LoginPage,
     HomePage,
     CreateLeaguePage,
     JoinLeaguePage,
+    IndividualStockPage,
+    TradePage,
+    CurrentLeaguesPage,
+    SymbolLookupPage,
+    PortfolioPage,
+    NewsPage,
 } from './components/Pages';
 import Header from './components/Header/Header';
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import './styles/global.scss';
+
+require('dotenv').config();
 
 function App() {
     return (
@@ -34,6 +44,24 @@ function App() {
                             </Route>
                             <Route path="/league/join">
                                 <JoinLeaguePage />
+                            </Route>
+                            <Route path="/stock">
+                                <IndividualStockPage />
+                            </Route>
+                            <Route path="/trade">
+                                <TradePage />
+                            </Route>
+                            <Route path="/league/view">
+                                <CurrentLeaguesPage />
+                            </Route>
+                            <Route path="/portfolio">
+                                <PortfolioPage />
+                            </Route>
+                            <Route path="/lookup">
+                                <SymbolLookupPage />
+                            </Route>
+                            <Route path="/news">
+                                <NewsPage />
                             </Route>
                         </Switch>
                     </div>

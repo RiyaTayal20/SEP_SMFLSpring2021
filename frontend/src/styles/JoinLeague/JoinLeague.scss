@@ -1,72 +1,34 @@
 @import '../root.scss';
 @import '../Button.scss';
 
-.container{
-    height: auto; 
-    color:white;
+.join-league-form-title{
+    font-size: 35px;
+    color: white;
+    padding: 30px;
+}
+
+.table {
+    background-color: var(--light-scale-grey);
 }
 
 .join-league-container{
-    font-size: 18px;
-    color:white;
-}
-
-.join-league-form-title {
-    padding-top: 5%;
-    color:white;
-    text-align: center;
-    height: 0px;
-    font-size: 200%;
-    .h2 {
-        color:white;
-        text-align: center;
-    }
-}
-
-
-
-.join-league-form { 
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 10%; 
-    .table{
-        color:white;
-    }
-    .form-group {
-        @extend %flex-center;
-        color: white;
-    }
-    .text-register {
-        &:hover {
-            text-decoration: underline;
-        }
-    }
+    font-size: 18px;
+}
 
+.join-league-form{
+    min-width: 800px;
+    overflow: auto;
+    margin-bottom: 100px;
     .btn {
         @include btn;
     }
 }
 
-.form-label{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    min-width: 20%;
+.private-league-form{
+    .btn {
+        @include btn;
+    }
 }
-
-.form-group{
-    font-weight: bold;
-    margin:5%
-    //padding: 10%;
-}
-
-.form-control{
-    min-width: 100%;
-}
-
-.form-content{
-    display: flex;
-    flex-direction: column;
-}
-

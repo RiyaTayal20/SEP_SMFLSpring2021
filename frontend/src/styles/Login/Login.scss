@@ -11,18 +11,22 @@
     text-align: center;
     height: 0px;
     font-size: 35px;
+    margin-left: 250px;
 }
 
 .login-container{
-    margin-left: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center
 }
 
 .login-form{ 
     @extend %flex-center;
     border-style: solid;
     border-color: white;
-    margin: 90px; 
-    padding: 0px 110px;
+    margin: 90px auto;
+    margin-left: 250px;
+    padding: 110px 110px;
     .form-group {
         @extend %flex-center;
         color: white;

@@ -9,6 +9,7 @@ import {
     CreateLeaguePage,
     JoinLeaguePage,
     IndividualStockPage,
+    LeagueManagementPage,
     TradePage,
     CurrentLeaguesPage,
     SymbolLookupPage,
@@ -44,6 +45,9 @@ function App() {
                             </Route>
                             <Route path="/league/join">
                                 <JoinLeaguePage />
+                            </Route>
+                            <Route path="/league/manage">
+                                <LeagueManagementPage />
                             </Route>
                             <Route path="/stock">
                                 <IndividualStockPage />

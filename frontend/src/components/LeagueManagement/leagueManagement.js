@@ -9,6 +9,8 @@ import Table from 'react-bootstrap/Table';
 import '../../styles/LeagueManagement/LeagueManagement.scss';
 
 function LeagueManagement() {
+    const username = sessionStorage.getItem('username');
+
     const [leagues, setLeagues] = useState([]);
     // const [selectedLeague, setSelectedLeague] = useState('');
     // const [showModal, setShowModal] = useState(false);
@@ -18,7 +20,7 @@ function LeagueManagement() {
     // const [error, setError] = useState('');
 
     const getLeagues = async () => {
-        const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/league/find/all`, {
+        const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/user/${username}/league`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -48,11 +50,12 @@ function LeagueManagement() {
                     <Form.Group controlId="LeagueSelection">
                         <Form.Label>Select League to Manage</Form.Label>
                         <Form.Control as="select" htmlSize={3} custom>
-                            <option>League 1</option>
-                            <option>League 2</option>
-                            <option>League 3</option>
-                            <option>League 4</option>
-                            <option>League 5</option>
+                            {leagues && leagues.map((league) => {
+                                if (league.leagueManager === username) {
+                                    return (<option>{league.leagueName}</option>);
+                                }
+                                return null;
+                            })}
                         </Form.Control>
                     </Form.Group>
                     <Table striped bordered variant="light">
@@ -68,7 +71,7 @@ function LeagueManagement() {
                                     Player 1
                                 </td>
                                 <td>
-                                    <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> or
+                                    <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> &nbsp;&nbsp;&nbsp;
                                     <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Give Money</Button>
                                 </td>
                             </tr>
@@ -77,7 +80,7 @@ function LeagueManagement() {
                                     Player 2
                                 </td>
                                 <td>
-                                    <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> or
+                                    <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> &nbsp;&nbsp;&nbsp;
                                     <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Give Money</Button>
                                 </td>
                             </tr>
@@ -86,7 +89,7 @@ function LeagueManagement() {
                                     Player 3
                                 </td>
                                 <td>
-                                    <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> or
+                                    <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> &nbsp;&nbsp;&nbsp;
                                     <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Give Money</Button>
                                 </td>
                             </tr>

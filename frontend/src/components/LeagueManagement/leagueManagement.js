@@ -1,3 +1,16 @@
+import React, { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import InputGroup from 'react-bootstrap/InputGroup';
+import '../../styles/CreateLeague/CreateLeague.scss';
+
+function LeagueManagement(){
+
+return (
+
 <Form>
   <Form.Group controlId="LeagueSelection">
     <Form.Label>Select League to Manage</Form.Label>
@@ -56,3 +69,5 @@
      </tbody>
    </Table>
 </Form>
+  )
+}

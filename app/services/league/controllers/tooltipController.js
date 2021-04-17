@@ -2,7 +2,7 @@ const cheerio = require('cheerio');
 const fetch = require('node-fetch');
 const Tooltip = require('../models/tooltipModel');
 
-exports.scrapeWebsite = async () => {
+exports.scrapeWebsite = async (req, res) => {
     const terms = ['previousclose', 'openingprice', 'volume', 'averagedailytradingvolume', 'marketcapitalization', 'beta', 'price-earningsratio', 'eps', 'earnings-announcement', 'costbasis'];
     
     for (const term of terms) {
@@ -16,10 +16,27 @@ exports.scrapeWebsite = async () => {
 
         const tooltip = new Tooltip({
             term: term,
-            definition: definition,
+            definition: definition.trim(),
             url: url,
         });
 
-        return tooltip;
+        await tooltip.save();
     }
+
+    res.send('Successfully saved tooltips.');
+}
+
+exports.getTooltip = async(req, res) => {
+    await Tooltip.findOne({ term: req.params.term }, (err, result) => {
+        if (err) throw err;
+        if (!result) res.status(404).send('Tooltip not found');
+        else res.send(result);
+    });  
+};
+
+exports.getTooltips = async (req, res) => {
+    await Tooltip.find({}, (err, result) => {
+        if (err) throw err;
+        else res.send(result);
+    });
 }

@@ -7,6 +7,8 @@ import Row from 'react-bootstrap/Row';
 import InputGroup from 'react-bootstrap/InputGroup';
 import '../../styles/CreateLeague/CreateLeague.scss';
 
+function LeagueManagement(){
+
 return (
 
 <Form>
@@ -68,3 +70,4 @@ return (
    </Table>
 </Form>
   )
+}

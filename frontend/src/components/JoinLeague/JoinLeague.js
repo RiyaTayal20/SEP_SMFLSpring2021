@@ -24,20 +24,43 @@ function JoinLeague() {
     const [error, setError] = useState('');
 
     const [showFilter, setShowFilter] = useState(false);
+    const [useFilter, setUseFilter] = useState(false);
     const [nameFilter, setNameFilter] = useState('');
     const [visFilter, setVisFilter] = useState('Both');
-    const [minBalanceFilter, setMinBalanceFilter] = useState(0);
-    const [maxBalanceFilter, setMaxBalanceFilter] = useState(0);
+    const [minTradeLimitFilter, setMinTradeLimitFilter] = useState(null);
+    const [maxTradeLimitFilter, setMaxTradeLimitFilter] = useState(null);
+    const [minBalanceFilter, setMinBalanceFilter] = useState(null);
+    const [maxBalanceFilter, setMaxBalanceFilter] = useState(null);
     const [earlyStartFilter, setEarlyStartFilter] = useState('');
     const [lateStartFilter, setLateStartFilter] = useState('');
     const [earlyEndFilter, setEarlyEndFilter] = useState('');
     const [lateEndFilter, setLateEndFilter] = useState('');
+    const [hideFull, setHideFull] = useState(false);
 
     const [ascending, setReversed] = useState(false);
     const [currentSort, setCurrentSort] = useState('');
 
     const handleClose = () => setShowModal(false);
     const handleFilterClose = () => setShowFilter(false);
+
+    const resetFilter = () => {
+        setShowFilter(false);
+        setUseFilter(false);
+        setNameFilter('');
+        setVisFilter('Both');
+
+        setMinTradeLimitFilter(null);
+        setMaxTradeLimitFilter(null);
+        setMinBalanceFilter(null);
+        setMaxBalanceFilter(null);
+
+        setEarlyStartFilter('');
+        setLateStartFilter('');
+        setEarlyEndFilter('');
+        setLateEndFilter('');
+
+        setHideFull(false);
+    };
 
     const joinLeague = (league) => {
         fetch(`${process.env.REACT_APP_LAPI_URL}/league/join`, {
@@ -242,6 +265,11 @@ function JoinLeague() {
                     Set Filters
                 </Button>
             </div>
+            <div>
+                <Button onClick={() => resetFilter()}>
+                    Reset Filters
+                </Button>
+            </div>
             <Container style={{ marginLeft: '8vw' }} className="join-league-container">
                 <div className="join-league-form-title">
                     Join a League
@@ -397,52 +425,68 @@ function JoinLeague() {
                         <Form className="filter-form">
                             <Form.Group controlId="formLeagueName">
                                 <Form.Label>League Name</Form.Label>
-                                <Form.Control type="text" placeholder="Name" onChange={(e) => setNameFilter(e.target.value)} />
+                                <Form.Control type="text" placeholder="Name" defaultValue={nameFilter} onChange={(e) => setNameFilter(e.target.value)} />
                             </Form.Group>
                             <Form.Group controlId="formVisibility">
                                 <Form.Label>Visibility</Form.Label>
-                                <Form.Control as="select" onChange={(e) => setVisFilter(e.target.value)}>
+                                <Form.Control as="select" defaultValue={visFilter} onChange={(e) => setVisFilter(e.target.value)}>
                                     <option value="both">Both</option>
                                     <option value="public">Public</option>
                                     <option value="private">Private</option>
                                 </Form.Control>
                             </Form.Group>
-
+                            <Form.Group controlId="formTradeLimit">
+                                <Form.Label>Trade Limit Range</Form.Label>
+                                <Form.Control type="number" placeholder="0" defaultValue={minTradeLimitFilter} onChange={(e) => setMinTradeLimitFilter(e.target.value)} />
+                                to
+                                <Form.Control type="number" placeholder="0" defaultValue={maxTradeLimitFilter} onChange={(e) => setMaxTradeLimitFilter(e.target.value)} />
+                            </Form.Group>
                             <Form.Group controlId="formBalance">
                                 <Form.Label>Start Balance Range</Form.Label>
-                                <Form.Control type="number" placeholder="500" onChange={(e) => setMinBalanceFilter(e.target.value)} />
+                                <Form.Control type="number" placeholder="500" defaultValue={minBalanceFilter} onChange={(e) => setMinBalanceFilter(e.target.value)} />
                                 to
-                                <Form.Control type="number" placeholder="500" onChange={(e) => setMaxBalanceFilter(e.target.value)} />
+                                <Form.Control type="number" placeholder="500" defaultValue={maxBalanceFilter} onChange={(e) => setMaxBalanceFilter(e.target.value)} />
                             </Form.Group>
                             <Form.Group controlId="formStart">
                                 <Form.Label>Start Date Range</Form.Label>
                                 <div className="range">
-                                    <Form.Control type="date" placeholder="01/01/2021" onChange={(e) => setEarlyStartFilter(e.target.value)} />
+                                    <Form.Control type="date" placeholder="01/01/2021" defaultValue={earlyStartFilter} onChange={(e) => setEarlyStartFilter(e.target.value)} />
                                     to
-                                    <Form.Control type="date" placeholder="01/01/2021" onChange={(e) => setLateStartFilter(e.target.value)} />
+                                    <Form.Control type="date" placeholder="01/01/2021" defaultValue={lateStartFilter} onChange={(e) => setLateStartFilter(e.target.value)} />
                                 </div>
                             </Form.Group>
-                            <Form.Group controlId="formEarlyEnd">
+                            <Form.Group controlId="formEnd">
                                 <Form.Label>End Date Range</Form.Label>
                                 <div className="range">
-                                    <Form.Control type="date" placeholder="01/01/2021" onChange={(e) => setEarlyEndFilter(e.target.value)} />
+                                    <Form.Control type="date" placeholder="01/01/2021" defaultValue={earlyEndFilter} onChange={(e) => setEarlyEndFilter(e.target.value)} />
                                     to
-                                    <Form.Control type="date" placeholder="01/01/2021" onChange={(e) => setLateEndFilter(e.target.value)} />
+                                    <Form.Control type="date" placeholder="01/01/2021" defaultValue={lateEndFilter} onChange={(e) => setLateEndFilter(e.target.value)} />
                                 </div>
                             </Form.Group>
 
-                            <Button onClick={() => {
-                                console.log(nameFilter);
-                                console.log(visFilter);
-                                console.log(minBalanceFilter);
-                                console.log(maxBalanceFilter);
-                                console.log(earlyStartFilter);
-                                console.log(lateStartFilter);
-                                console.log(earlyEndFilter);
-                                console.log(lateEndFilter);
-                            }}
-                            >Save
-                            </Button>
+                            <Form.Group controlId="formHide">
+                                <Form.Check type="checkbox" label="Hide Full Leagues" defaultChecked={hideFull} onChange={() => setHideFull(!hideFull)} />
+                            </Form.Group>
+
+                            <center>
+                                <Button onClick={() => {
+                                    setUseFilter(true);
+                                    console.log(nameFilter);
+                                    console.log(useFilter);
+                                    console.log(visFilter);
+                                    console.log(minBalanceFilter);
+                                    console.log(maxBalanceFilter);
+                                    console.log(earlyStartFilter);
+                                    console.log(lateStartFilter);
+                                    console.log(earlyEndFilter);
+                                    console.log(lateEndFilter);
+                                    console.log(hideFull);
+                                    console.log(minTradeLimitFilter);
+                                    console.log(maxTradeLimitFilter);
+                                }}
+                                >Set New Filter
+                                </Button>
+                            </center>
                         </Form>
                     </Modal.Body>
                 </Modal>

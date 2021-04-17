@@ -33,8 +33,8 @@ function JoinLeague() {
     const [earlyEndFilter, setEarlyEndFilter] = useState('');
     const [lateEndFilter, setLateEndFilter] = useState('');
 
-    const [reversed, setReversed] = useState(false);
-    const [currentSort, setCurrentSort] = useState('name');
+    const [ascending, setReversed] = useState(false);
+    const [currentSort, setCurrentSort] = useState('');
 
     const handleClose = () => setShowModal(false);
     const handleFilterClose = () => setShowFilter(false);
@@ -96,7 +96,14 @@ function JoinLeague() {
         loadLeagues();
     }, []);
 
-    const nameSort = (reverse) => {
+    const nameSort = () => {
+        if (currentSort === 'name') {
+            setReversed(!ascending);
+        } else {
+            setReversed(false);
+            setCurrentSort('name');
+        }
+
         if (leagues) {
             leagues.sort((a, b) => {
                 if (a.leagueName.toLowerCase() > b.leagueName.toLowerCase()) {
@@ -105,20 +112,20 @@ function JoinLeague() {
                 return -1;
             });
 
-            if (reverse) {
+            if (ascending) {
                 leagues.reverse();
             }
         }
-
-        if (currentSort === 'name') {
-            setReversed(!reversed);
-        } else {
-            setReversed(false);
-            setCurrentSort('name');
-        }
     };
 
-    const startingBalanceSort = (reverse) => {
+    const startingBalanceSort = () => {
+        if (currentSort === 'balance') {
+            setReversed(!ascending);
+        } else {
+            setReversed(false);
+            setCurrentSort('balance');
+        }
+
         if (leagues) {
             leagues.sort((a, b) => {
                 if (a.settings.balance > b.settings.balance) {
@@ -127,20 +134,20 @@ function JoinLeague() {
                 return -1;
             });
 
-            if (reverse) {
+            if (ascending) {
                 leagues.reverse();
             }
         }
-
-        if (currentSort === 'balance') {
-            setReversed(!reversed);
-        } else {
-            setReversed(false);
-            setCurrentSort('balance');
-        }
     };
 
-    const tradeLimitSort = (reverse) => {
+    const tradeLimitSort = () => {
+        if (currentSort === 'trade') {
+            setReversed(!ascending);
+        } else {
+            setReversed(false);
+            setCurrentSort('trade');
+        }
+
         if (leagues) {
             leagues.sort((a, b) => {
                 if (a.settings.tradeLimit > b.settings.tradeLimit) {
@@ -149,20 +156,20 @@ function JoinLeague() {
                 return -1;
             });
 
-            if (reverse) {
+            if (ascending) {
                 leagues.reverse();
             }
         }
-
-        if (currentSort === 'trade') {
-            setReversed(!reversed);
-        } else {
-            setReversed(false);
-            setCurrentSort('trade');
-        }
     };
 
-    const startDateSort = (reverse) => {
+    const startDateSort = () => {
+        if (currentSort === 'startDate') {
+            setReversed(!ascending);
+        } else {
+            setReversed(false);
+            setCurrentSort('startDate');
+        }
+
         if (leagues) {
             leagues.sort((a, b) => {
                 if (a.settings.startDate > b.settings.startDate) {
@@ -171,20 +178,20 @@ function JoinLeague() {
                 return -1;
             });
 
-            if (reverse) {
+            if (ascending) {
                 leagues.reverse();
             }
         }
-
-        if (currentSort === 'startDate') {
-            setReversed(!reversed);
-        } else {
-            setReversed(false);
-            setCurrentSort('startDate');
-        }
     };
 
-    const endDateSort = (reverse) => {
+    const endDateSort = () => {
+        if (currentSort === 'endDate') {
+            setReversed(!ascending);
+        } else {
+            setReversed(false);
+            setCurrentSort('endDate');
+        }
+
         if (leagues) {
             leagues.sort((a, b) => {
                 if (a.settings.endDate > b.settings.endDate) {
@@ -193,20 +200,20 @@ function JoinLeague() {
                 return -1;
             });
 
-            if (reverse) {
+            if (ascending) {
                 leagues.reverse();
             }
         }
-
-        if (currentSort === 'endDate') {
-            setReversed(!reversed);
-        } else {
-            setReversed(false);
-            setCurrentSort('endDate');
-        }
     };
 
-    const visibilitySort = (reverse) => {
+    const visibilitySort = () => {
+        if (currentSort === 'vis') {
+            setReversed(!ascending);
+        } else {
+            setReversed(false);
+            setCurrentSort('vis');
+        }
+
         if (leagues) {
             leagues.sort((a, b) => {
                 if (a.settings.public > b.settings.public) {
@@ -215,22 +222,18 @@ function JoinLeague() {
                 return -1;
             });
 
-            if (reverse) {
+            if (ascending) {
                 leagues.reverse();
             }
         }
-
-        if (currentSort === 'vis') {
-            setReversed(!reversed);
-        } else {
-            setReversed(false);
-            setCurrentSort('vis');
-        }
     };
 
-    // visibilitySort(true);
-    // startingBalanceSort(reversed);
-    // nameSort(reversed);
+    if (currentSort === '') {
+        nameSort();
+    }
+
+    console.log(currentSort);
+    console.log(ascending);
 
     return (
         <div>
@@ -262,35 +265,35 @@ function JoinLeague() {
                         <thead>
                             <tr>
                                 <th>League Name
-                                    <Button onClick={() => nameSort(reversed)} className="filter-button">
+                                    <Button onClick={() => nameSort()} className="filter-button">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--dark-grey-scale)" className="filter" viewBox="0 0 16 16">
                                             <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
                                         </svg>
                                     </Button>
                                 </th>
                                 <th>Starting Balance
-                                    <Button onClick={() => startingBalanceSort(reversed)} className="filter-button">
+                                    <Button onClick={() => startingBalanceSort()} className="filter-button">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--dark-grey-scale)" className="filter" viewBox="0 0 16 16">
                                             <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
                                         </svg>
                                     </Button>
                                 </th>
                                 <th>Trade Limit
-                                    <Button onClick={() => tradeLimitSort(reversed)} className="filter-button">
+                                    <Button onClick={() => tradeLimitSort()} className="filter-button">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--dark-grey-scale)" className="filter" viewBox="0 0 16 16">
                                             <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
                                         </svg>
                                     </Button>
                                 </th>
                                 <th>Start Date
-                                    <Button onClick={() => startDateSort(reversed)} className="filter-button">
+                                    <Button onClick={() => startDateSort()} className="filter-button">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--dark-grey-scale)" className="filter" viewBox="0 0 16 16">
                                             <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
                                         </svg>
                                     </Button>
                                 </th>
                                 <th>End Date
-                                    <Button onClick={() => endDateSort(reversed)} className="filter-button">
+                                    <Button onClick={() => endDateSort()} className="filter-button">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--dark-grey-scale)" className="filter" viewBox="0 0 16 16">
                                             <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
                                         </svg>
@@ -298,7 +301,7 @@ function JoinLeague() {
                                 </th>
                                 <th>Members</th>
                                 <th>Type
-                                    <Button onClick={() => visibilitySort(reversed)} className="filter-button">
+                                    <Button onClick={() => visibilitySort()} className="filter-button">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--dark-grey-scale)" className="filter" viewBox="0 0 16 16">
                                             <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
                                         </svg>

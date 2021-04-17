@@ -261,8 +261,12 @@ function JoinLeague() {
     return (
         <div>
             <div>
-                <Button onClick={() => setShowFilter(true)}>
-                    Set Filters
+                <Button onClick={() => {
+                    setShowFilter(true);
+                    setUseFilter(false);
+                }}
+                >
+                    Set New Filters
                 </Button>
             </div>
             <div>

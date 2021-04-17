@@ -19,12 +19,19 @@
 }
 
 .join-league-form{
-    min-width: 800px;
+   // min-width: 800px;
     overflow: auto;
     margin-bottom: 100px;
     .btn {
         @include btn;
     }
+}
+
+.filter-button{
+    background-color: white !important;
+    border: none !important;
+    margin-left: 0.5vw;
+    padding: 0.10rem 0.25rem !important;
 }
 
 .private-league-form{

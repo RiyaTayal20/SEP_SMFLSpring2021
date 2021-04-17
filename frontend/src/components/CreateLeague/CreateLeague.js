@@ -253,13 +253,12 @@ function CreateLeague() {
                                         <Form.Control
                                             type="number"
                                             min="1"
-                                            max="12"
                                             placeholder="Enter max players"
                                             required
                                             onChange={(e) => setMaxPlayers(e.target.value)}
                                         />
                                         <Form.Control.Feedback type="invalid">
-                                            Please provide a number between 1 and 12
+                                            Please provide a number greater than 0
                                         </Form.Control.Feedback>
                                     </InputGroup>
                                 </Col>

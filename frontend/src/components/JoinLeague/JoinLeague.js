@@ -23,7 +23,21 @@ function JoinLeague() {
     const [showError, setShowError] = useState(false);
     const [error, setError] = useState('');
 
+    const [showFilter, setShowFilter] = useState(false);
+    const [nameFilter, setNameFilter] = useState('');
+    const [visFilter, setVisFilter] = useState('Both');
+    const [minBalanceFilter, setMinBalanceFilter] = useState(0);
+    const [maxBalanceFilter, setMaxBalanceFilter] = useState(0);
+    const [earlyStartFilter, setEarlyStartFilter] = useState('');
+    const [lateStartFilter, setLateStartFilter] = useState('');
+    const [earlyEndFilter, setEarlyEndFilter] = useState('');
+    const [lateEndFilter, setLateEndFilter] = useState('');
+
+    const [reversed, setReversed] = useState(false);
+    const [currentSort, setCurrentSort] = useState('name');
+
     const handleClose = () => setShowModal(false);
+    const handleFilterClose = () => setShowFilter(false);
 
     const joinLeague = (league) => {
         fetch(`${process.env.REACT_APP_LAPI_URL}/league/join`, {
@@ -82,9 +96,150 @@ function JoinLeague() {
         loadLeagues();
     }, []);
 
+    const nameSort = (reverse) => {
+        if (leagues) {
+            leagues.sort((a, b) => {
+                if (a.leagueName.toLowerCase() > b.leagueName.toLowerCase()) {
+                    return 1;
+                }
+                return -1;
+            });
+
+            if (reverse) {
+                leagues.reverse();
+            }
+        }
+
+        if (currentSort === 'name') {
+            setReversed(!reversed);
+        } else {
+            setReversed(false);
+            setCurrentSort('name');
+        }
+    };
+
+    const startingBalanceSort = (reverse) => {
+        if (leagues) {
+            leagues.sort((a, b) => {
+                if (a.settings.balance > b.settings.balance) {
+                    return 1;
+                }
+                return -1;
+            });
+
+            if (reverse) {
+                leagues.reverse();
+            }
+        }
+
+        if (currentSort === 'balance') {
+            setReversed(!reversed);
+        } else {
+            setReversed(false);
+            setCurrentSort('balance');
+        }
+    };
+
+    const tradeLimitSort = (reverse) => {
+        if (leagues) {
+            leagues.sort((a, b) => {
+                if (a.settings.tradeLimit > b.settings.tradeLimit) {
+                    return 1;
+                }
+                return -1;
+            });
+
+            if (reverse) {
+                leagues.reverse();
+            }
+        }
+
+        if (currentSort === 'trade') {
+            setReversed(!reversed);
+        } else {
+            setReversed(false);
+            setCurrentSort('trade');
+        }
+    };
+
+    const startDateSort = (reverse) => {
+        if (leagues) {
+            leagues.sort((a, b) => {
+                if (a.settings.startDate > b.settings.startDate) {
+                    return 1;
+                }
+                return -1;
+            });
+
+            if (reverse) {
+                leagues.reverse();
+            }
+        }
+
+        if (currentSort === 'startDate') {
+            setReversed(!reversed);
+        } else {
+            setReversed(false);
+            setCurrentSort('startDate');
+        }
+    };
+
+    const endDateSort = (reverse) => {
+        if (leagues) {
+            leagues.sort((a, b) => {
+                if (a.settings.endDate > b.settings.endDate) {
+                    return 1;
+                }
+                return -1;
+            });
+
+            if (reverse) {
+                leagues.reverse();
+            }
+        }
+
+        if (currentSort === 'endDate') {
+            setReversed(!reversed);
+        } else {
+            setReversed(false);
+            setCurrentSort('endDate');
+        }
+    };
+
+    const visibilitySort = (reverse) => {
+        if (leagues) {
+            leagues.sort((a, b) => {
+                if (a.settings.public > b.settings.public) {
+                    return 1;
+                }
+                return -1;
+            });
+
+            if (reverse) {
+                leagues.reverse();
+            }
+        }
+
+        if (currentSort === 'vis') {
+            setReversed(!reversed);
+        } else {
+            setReversed(false);
+            setCurrentSort('vis');
+        }
+    };
+
+    // visibilitySort(true);
+    // startingBalanceSort(reversed);
+    // nameSort(reversed);
+
     return (
         <div>
-            <Container className="join-league-container">
+            <div>
+                <Button onClick={() => setShowFilter(true)}>
+                    Set Filters
+                </Button>
+            </div>
+            <Container style={{ marginLeft: '8vw' }} className="join-league-container">
                 <div className="join-league-form-title">
                     Join a League
                 </div>
@@ -102,14 +257,53 @@ function JoinLeague() {
                             {error}
                         </Alert>
                     )}
-                <Form className="join-league-form">
+                <Form className="join-league-form" style={{ width: '75vw' }}>
                     <Table striped bordered variant="light">
                         <thead>
                             <tr>
-                                <th>League Name</th>
-                                <th>End Date</th>
+                                <th>League Name
+                                    <Button onClick={() => nameSort(reversed)} className="filter-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--dark-grey-scale)" className="filter" viewBox="0 0 16 16">
+                                            <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
+                                        </svg>
+                                    </Button>
+                                </th>
+                                <th>Starting Balance
+                                    <Button onClick={() => startingBalanceSort(reversed)} className="filter-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--dark-grey-scale)" className="filter" viewBox="0 0 16 16">
+                                            <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
+                                        </svg>
+                                    </Button>
+                                </th>
+                                <th>Trade Limit
+                                    <Button onClick={() => tradeLimitSort(reversed)} className="filter-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--dark-grey-scale)" className="filter" viewBox="0 0 16 16">
+                                            <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
+                                        </svg>
+                                    </Button>
+                                </th>
+                                <th>Start Date
+                                    <Button onClick={() => startDateSort(reversed)} className="filter-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--dark-grey-scale)" className="filter" viewBox="0 0 16 16">
+                                            <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
+                                        </svg>
+                                    </Button>
+                                </th>
+                                <th>End Date
+                                    <Button onClick={() => endDateSort(reversed)} className="filter-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--dark-grey-scale)" className="filter" viewBox="0 0 16 16">
+                                            <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
+                                        </svg>
+                                    </Button>
+                                </th>
                                 <th>Members</th>
-                                <th>Type</th>
+                                <th>Type
+                                    <Button onClick={() => visibilitySort(reversed)} className="filter-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--dark-grey-scale)" className="filter" viewBox="0 0 16 16">
+                                            <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
+                                        </svg>
+                                    </Button>
+                                </th>
                                 <th>Join</th>
                             </tr>
                         </thead>
@@ -133,6 +327,16 @@ function JoinLeague() {
                                             return league.leagueName;
                                         }
                                         )()}
+                                        </td>
+                                        <td>
+                                            {(() => (<div>{league.settings.balance}</div>))()}
+                                        </td>
+                                        <td>
+                                            {(() => (<div>{league.settings.tradeLimit}</div>))()}
+                                        </td>
+                                        <td>
+                                            {`${new Date(league.settings.startDate).getMonth() + 1
+                                            }/${new Date(league.settings.startDate).getDate() + 1}/${new Date(league.settings.startDate).getFullYear()}`}
                                         </td>
                                         <td>
                                             {`${new Date(league.settings.endDate).getMonth() + 1
@@ -178,6 +382,64 @@ function JoinLeague() {
                             </Form.Group>
 
                             <Button onClick={() => joinLeague(selectedLeague)}>Join</Button>
+                        </Form>
+                    </Modal.Body>
+                </Modal>
+
+                <Modal show={showFilter} onHide={handleFilterClose} centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title> Filter Preferences </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form className="filter-form">
+                            <Form.Group controlId="formLeagueName">
+                                <Form.Label>League Name</Form.Label>
+                                <Form.Control type="text" placeholder="Name" onChange={(e) => setNameFilter(e.target.value)} />
+                            </Form.Group>
+                            <Form.Group controlId="formVisibility">
+                                <Form.Label>Visibility</Form.Label>
+                                <Form.Control as="select" onChange={(e) => setVisFilter(e.target.value)}>
+                                    <option value="both">Both</option>
+                                    <option value="public">Public</option>
+                                    <option value="private">Private</option>
+                                </Form.Control>
+                            </Form.Group>
+
+                            <Form.Group controlId="formBalance">
+                                <Form.Label>Start Balance Range</Form.Label>
+                                <Form.Control type="number" placeholder="500" onChange={(e) => setMinBalanceFilter(e.target.value)} />
+                                to
+                                <Form.Control type="number" placeholder="500" onChange={(e) => setMaxBalanceFilter(e.target.value)} />
+                            </Form.Group>
+                            <Form.Group controlId="formStart">
+                                <Form.Label>Start Date Range</Form.Label>
+                                <div className="range">
+                                    <Form.Control type="date" placeholder="01/01/2021" onChange={(e) => setEarlyStartFilter(e.target.value)} />
+                                    to
+                                    <Form.Control type="date" placeholder="01/01/2021" onChange={(e) => setLateStartFilter(e.target.value)} />
+                                </div>
+                            </Form.Group>
+                            <Form.Group controlId="formEarlyEnd">
+                                <Form.Label>End Date Range</Form.Label>
+                                <div className="range">
+                                    <Form.Control type="date" placeholder="01/01/2021" onChange={(e) => setEarlyEndFilter(e.target.value)} />
+                                    to
+                                    <Form.Control type="date" placeholder="01/01/2021" onChange={(e) => setLateEndFilter(e.target.value)} />
+                                </div>
+                            </Form.Group>
+
+                            <Button onClick={() => {
+                                console.log(nameFilter);
+                                console.log(visFilter);
+                                console.log(minBalanceFilter);
+                                console.log(maxBalanceFilter);
+                                console.log(earlyStartFilter);
+                                console.log(lateStartFilter);
+                                console.log(earlyEndFilter);
+                                console.log(lateEndFilter);
+                            }}
+                            >Save
+                            </Button>
                         </Form>
                     </Modal.Body>
                 </Modal>

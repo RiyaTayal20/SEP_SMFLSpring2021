@@ -52,6 +52,10 @@ function LeagueManagement() {
     }
 
     console.log(selectedLeague);
+    if (selectedLeague) {
+        console.log('Selected League is ');
+        console.log(selectedLeague.playerList);
+    }
     return (
         <div>
             <Container className="manage-league-container">
@@ -59,9 +63,12 @@ function LeagueManagement() {
                     Manage Leagues
                 </div>
                 <Form>
-                    <DropdownButton title={selectedLeague || 'Select League'} className="league-manage-dropdown" size="lg">
+                    <DropdownButton title={selectedLeague.leagueName || 'Select League'} className="league-manage-dropdown" size="lg">
                         {leagues && leagues.map((league) => (
-                            <Dropdown.Item onClick={() => setSelectedLeague(league.leagueName)}>
+                            <Dropdown.Item onClick={() => {
+                                setSelectedLeague(league);
+                            }}
+                            >
                                 {league.leagueName}
                             </Dropdown.Item>
                         ))}
@@ -74,42 +81,18 @@ function LeagueManagement() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    Player 1
-                                </td>
-                                <td>
-                                    <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> &nbsp;&nbsp;&nbsp;
-                                    <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Give Money</Button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Player 2
-                                </td>
-                                <td>
-                                    <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> &nbsp;&nbsp;&nbsp;
-                                    <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Give Money</Button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Player 3
-                                </td>
-                                <td>
-                                    <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> &nbsp;&nbsp;&nbsp;
-                                    <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Give Money</Button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Player 4
-                                </td>
-                                <td>
-                                    <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> or
-                                    <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Give Money</Button>
-                                </td>
-                            </tr>
+                            {selectedLeague && selectedLeague.playerList
+                            && selectedLeague.playerList.map((player) => (
+                                <tr>
+                                    <td>
+                                        {player}
+                                    </td>
+                                    <td>
+                                        <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> &nbsp;&nbsp;&nbsp;
+                                        <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Give Money</Button>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </Table>
                 </Form>

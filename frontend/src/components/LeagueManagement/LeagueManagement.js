@@ -12,7 +12,7 @@ function LeagueManagement() {
     const username = sessionStorage.getItem('username');
 
     const [leagues, setLeagues] = useState([]);
-    // const [selectedLeague, setSelectedLeague] = useState('');
+    const [selectedLeague, setSelectedLeague] = useState('');
     // const [showModal, setShowModal] = useState(false);
     // const [leagueKey, setLeagueKey] = useState('');
     // const [showAlert, setShowAlert] = useState(false);
@@ -27,7 +27,8 @@ function LeagueManagement() {
                 'Content-Type': 'application/json',
             },
         });
-        const data = await response.json();
+
+        const data = (await response.json()).filter((league) => league.leagueManager === username);
         return data;
     };
 
@@ -40,6 +41,15 @@ function LeagueManagement() {
         loadLeagues();
     }, []);
 
+    if (!leagues) {
+        return (
+            <div>
+                YOU ARENT MANAGING ANY LEAGUES
+            </div>
+        );
+    }
+
+    console.log(selectedLeague);
     return (
         <div>
             <Container className="manage-league-container">
@@ -49,13 +59,12 @@ function LeagueManagement() {
                 <Form>
                     <Form.Group controlId="LeagueSelection">
                         <Form.Label>Select League to Manage</Form.Label>
-                        <Form.Control as="select" htmlSize={3} custom>
-                            {leagues && leagues.map((league) => {
-                                if (league.leagueManager === username) {
-                                    return (<option>{league.leagueName}</option>);
-                                }
-                                return null;
-                            })}
+                        <Form.Control as="select" htmlSize={3} custom onChange={(e) => setSelectedLeague(e.target.value)}>
+                            {leagues && leagues.map((league) => (
+                                <option value={league.leagueName}>
+                                    {league.leagueName}
+                                </option>
+                            ))}
                         </Form.Control>
                     </Form.Group>
                     <Table striped bordered variant="light">

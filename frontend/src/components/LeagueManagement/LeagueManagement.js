@@ -48,7 +48,6 @@ function LeagueManagement() {
     }, []);
 
     const kickPlayer = async (player, leagueName) => {
-        console.log(`kick was called Player=${player}, league=${leagueName}`);
         const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/league/${leagueName}/kick`, {
             method: 'POST',
             headers: {
@@ -59,8 +58,6 @@ function LeagueManagement() {
                 username: player,
             }),
         });
-
-        console.log(response);
 
         if (response.status === 200) {
             const indexSelectedPlayer = selectedLeague.playerList.indexOf(player);
@@ -77,6 +74,32 @@ function LeagueManagement() {
             setSelectedLeague(newSelectedLeague);
 
             const thing = await response.text().then((res) => res).catch((err) => err.toString());
+            setShowError(false);
+            setNotifMessage(thing);
+            setShowAlert(true);
+        } else {
+            setShowAlert(false);
+            setNotifMessage('');
+            setShowError(true);
+        }
+    };
+
+    const addMoney = async (player, leagueName, amount) => {
+        const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/league/${leagueName}/donate`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: player,
+                cash: amount,
+            }),
+        });
+
+        if (response.status === 200) {
+            const thing = await response.text().then((res) => res).catch((err) => err.toString());
+            console.log(thing);
             setShowError(false);
             setNotifMessage(thing);
             setShowAlert(true);
@@ -147,13 +170,7 @@ function LeagueManagement() {
                                             return (<Button onClick={() => kickPlayer(player, selectedLeague.leagueName)}>Kick</Button>);
                                         })()}
                                         &nbsp;&nbsp;&nbsp;
-                                        <Button onClick={() => {
-                                            setShowAlert(false);
-                                            setNotifMessage('');
-                                            setShowError(true);
-                                        }}
-                                        >Give Money
-                                        </Button>
+                                        <Button onClick={() => addMoney(player, selectedLeague.leagueName, 500)}>Give Money</Button>
                                     </td>
                                 </tr>
                             ))}

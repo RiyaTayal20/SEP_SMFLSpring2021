@@ -2,25 +2,33 @@ import React from 'react';
 import {
     Container, Row, Col,
 } from 'react-bootstrap';
+import Table from 'react-bootstrap/Table';
 
 const StockStatistics = (props) => {
     const { statistics } = props;
     return (
         <Container fluid="md">
+            <Table striped bordered hover variant="light">
+                <tbody>
+                    <tr>
+                        <td>statistics</td>
+                    </tr>
+                </tbody>
+            </Table>
             <Row>
                 <Col>
                     <b>Previous Close:&nbsp;</b>
-                    {statistics.previousClose}
+                    ${statistics.previousClose}
                 </Col>
                 <Col>
                     <b>Market Cap:&nbsp;</b>
-                    {statistics.marketCap}
+                    {statistics.marketCap.toLocaleString()}
                 </Col>
             </Row>
             <Row>
                 <Col>
                     <b>Open:&nbsp;</b>
-                    {statistics.openPrice}
+                    ${statistics.openPrice}
                 </Col>
                 <Col>
                     <b>Beta:&nbsp;</b>
@@ -33,16 +41,14 @@ const StockStatistics = (props) => {
                     {statistics.peRatio}
                 </Col>
                 <Col>
-                    <b>EPS:&nbsp;</b>
+                    <b>Earnings Per Share(EPS):&nbsp;</b>
                     {statistics.eps}
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <b>Year Range:&nbsp;</b>
-                    {statistics.week52Low}
-                    &nbsp;-&nbsp;
-                    {statistics.week52High}
+                    <b>52-Week High/Low:&nbsp;</b>
+                    ${statistics.week52High}/${statistics.week52Low}
                 </Col>
                 <Col>
                     <b>Dividend:&nbsp;</b>
@@ -56,7 +62,7 @@ const StockStatistics = (props) => {
                 </Col>
                 <Col>
                     <b>Average Volume:&nbsp;</b>
-                    {statistics.avgVolume}
+                    {statistics.avgVolume.toLocaleString()}
                 </Col>
             </Row>
             <Row>

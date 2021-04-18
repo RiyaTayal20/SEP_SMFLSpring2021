@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import Alert from 'react-bootstrap/Alert';
 // import Col from 'react-bootstrap/Col';
 // import Row from 'react-bootstrap/Row';
 // import InputGroup from 'react-bootstrap/InputGroup';
@@ -15,6 +16,9 @@ function LeagueManagement() {
 
     const [leagues, setLeagues] = useState([]);
     const [selectedLeague, setSelectedLeague] = useState('');
+    const [showAlert, setShowAlert] = useState(false);
+    const [showError, setShowError] = useState(false);
+    const [notifMessage, setNotifMessage] = useState('');
     // const [showModal, setShowModal] = useState(false);
     // const [leagueKey, setLeagueKey] = useState('');
     // const [showAlert, setShowAlert] = useState(false);
@@ -66,15 +70,20 @@ function LeagueManagement() {
             const newSelectedLeague = selectedLeague;
             setLeagues([]);
             setSelectedLeague([]);
+
             newLeagues[indexSelectedLeague].playerList.splice(indexSelectedPlayer, 1);
             newSelectedLeague.playerList.splice(indexSelectedPlayer, 1);
-            console.log(newLeagues);
-            console.log(newSelectedLeague);
             setLeagues(newLeagues);
             setSelectedLeague(newSelectedLeague);
-            console.log('New player lists:');
-            console.log(leagues[indexSelectedLeague].playerList);
-            console.log(selectedLeague.playerList);
+
+            const thing = await response.text().then((res) => res).catch((err) => err.toString());
+            setShowError(false);
+            setNotifMessage(thing);
+            setShowAlert(true);
+        } else {
+            setShowAlert(false);
+            setNotifMessage('');
+            setShowError(true);
         }
     };
 
@@ -103,6 +112,18 @@ function LeagueManagement() {
                             </Dropdown.Item>
                         ))}
                     </DropdownButton>
+                    {showAlert
+                    && (
+                        <Alert variant="success" onClose={() => setShowAlert(false)} dismissible>
+                            {notifMessage}
+                        </Alert>
+                    )}
+                    {showError
+                    && (
+                        <Alert variant="danger" onClose={() => setShowError(false)} dismissible>
+                            Unable to perform requested action!
+                        </Alert>
+                    )}
                     <Table striped bordered variant="light">
                         <thead>
                             <tr>
@@ -125,7 +146,14 @@ function LeagueManagement() {
                                             /* eslint max-len: 0 */
                                             return (<Button onClick={() => kickPlayer(player, selectedLeague.leagueName)}>Kick</Button>);
                                         })()}
-                                        &nbsp;&nbsp;&nbsp;<Button>Give Money</Button>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <Button onClick={() => {
+                                            setShowAlert(false);
+                                            setNotifMessage('');
+                                            setShowError(true);
+                                        }}
+                                        >Give Money
+                                        </Button>
                                     </td>
                                 </tr>
                             ))}

@@ -73,6 +73,7 @@ function Trade() {
             tickerSymbol: form.ticker,
             quantity: form.quantity,
             expiryDate,
+            pricePerShare: form.price,
         }),
     }).then((res) => {
         if (res.ok) {
@@ -103,6 +104,7 @@ function Trade() {
 
     const handleSubmit = (event) => {
         const subform = event.currentTarget;
+        console.log(form.pricePerShare);
         event.preventDefault();
         if (subform.checkValidity() === false) {
             setValidated(false);

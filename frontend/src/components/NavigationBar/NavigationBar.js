@@ -3,7 +3,7 @@ import '../../styles/NavigationBar/NavigationBar.scss';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
-import Icon from '../../icons/dropdown-arrow.png';
+import Icon from '../../assets/icons/dropdown-arrow.png';
 
 function NavigationBar() {
     return (

@@ -5,9 +5,16 @@ import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+// eslint-disable-next-line import/no-unresolved
+import { Check } from 'react-bootstrap-icons';
 import '../../styles/JoinLeague/JoinLeague.scss';
 
 function JoinLeague() {
+    /* eslint-disable max-len */
+    const username = sessionStorage.getItem('username');
+
     const [leagues, setLeagues] = useState([]);
     const [selectedLeague, setSelectedLeague] = useState('');
     const [showModal, setShowModal] = useState(false);
@@ -107,28 +114,55 @@ function JoinLeague() {
                             </tr>
                         </thead>
                         <tbody>
-                            {leagues && leagues.map((league) => (
-                                <tr>
-                                    <td>{league.leagueName}</td>
-                                    <td>
-                                        {`${new Date(league.settings.endDate).getMonth() + 1
-                                        }/${new Date(league.settings.endDate).getDate() + 1}/${new Date(league.settings.endDate).getFullYear()}`}
-                                    </td>
-                                    <td>
-                                        {league.playerList.length}
-                                        /
-                                        {league.settings.maxPlayers}
-                                    </td>
-                                    {league.settings.public
-                                        ? <td>Public</td>
-                                        : <td>Private</td>}
-                                    <td>
-                                        <Button onClick={() => handleJoin(league)}>
-                                            Join League
-                                        </Button>
-                                    </td>
-                                </tr>
-                            ))}
+                            {leagues && leagues.map((league) => {
+                                const alreadyJoined = league.playerList.includes(username);
+                                return (
+                                    <tr>
+                                        <td>{(() => {
+                                            if (alreadyJoined) {
+                                                return (
+                                                    <div>
+                                                        {league.leagueName}
+                                                        <OverlayTrigger overlay={<Tooltip>You are already in this league.</Tooltip>}>
+                                                            <Check />
+                                                        </OverlayTrigger>
+                                                    </div>
+                                                );
+                                            }
+                                            console.log('success');
+                                            return league.leagueName;
+                                        }
+                                        )()}
+                                        </td>
+                                        <td>
+                                            {`${new Date(league.settings.endDate).getMonth() + 1
+                                            }/${new Date(league.settings.endDate).getDate() + 1}/${new Date(league.settings.endDate).getFullYear()}`}
+                                        </td>
+                                        <td>
+                                            {league.playerList.length}
+                                            /
+                                            {league.settings.maxPlayers}
+                                        </td>
+                                        {league.settings.public
+                                            ? <td>Public</td>
+                                            : <td>Private</td>}
+                                        <td>{(() => {
+                                            if (alreadyJoined) {
+                                                return (
+                                                    <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Joined</Button>
+                                                );
+                                            }
+                                            return (
+                                                <Button onClick={() => handleJoin(league)}>
+                                                    Join League
+                                                </Button>
+                                            );
+                                        }
+                                        )()}
+                                        </td>
+                                    </tr>
+                                );
+                            })}
                         </tbody>
                     </Table>
                 </Form>

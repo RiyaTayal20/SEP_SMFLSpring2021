@@ -8,7 +8,7 @@ import '../../styles/News/News.scss';
 function News() {
     const username = sessionStorage.getItem('username');
 
-    const [league, setLeague] = useState(null);
+    const [league, setLeague] = useState('');
     const [leagueList, setLeagueList] = useState();
     const [articles, setArticles] = useState([]);
 

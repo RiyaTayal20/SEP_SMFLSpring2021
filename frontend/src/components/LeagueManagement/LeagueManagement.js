@@ -3,10 +3,12 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 // import Col from 'react-bootstrap/Col';
 // import Row from 'react-bootstrap/Row';
 // import InputGroup from 'react-bootstrap/InputGroup';
 import '../../styles/LeagueManagement/LeagueManagement.scss';
+import { Dropdown } from 'react-bootstrap';
 
 function LeagueManagement() {
     const username = sessionStorage.getItem('username');
@@ -57,16 +59,13 @@ function LeagueManagement() {
                     Manage Leagues
                 </div>
                 <Form>
-                    <Form.Group controlId="LeagueSelection">
-                        <Form.Label>Select League to Manage</Form.Label>
-                        <Form.Control as="select" htmlSize={3} custom onChange={(e) => setSelectedLeague(e.target.value)}>
-                            {leagues && leagues.map((league) => (
-                                <option value={league.leagueName}>
-                                    {league.leagueName}
-                                </option>
-                            ))}
-                        </Form.Control>
-                    </Form.Group>
+                    <DropdownButton title={selectedLeague || 'Select League'} className="league-manage-dropdown" size="lg">
+                        {leagues && leagues.map((league) => (
+                            <Dropdown.Item onClick={() => setSelectedLeague(league.leagueName)}>
+                                {league.leagueName}
+                            </Dropdown.Item>
+                        ))}
+                    </DropdownButton>
                     <Table striped bordered variant="light">
                         <thead>
                             <tr>
@@ -118,5 +117,4 @@ function LeagueManagement() {
         </div>
     );
 }
-
 export default LeagueManagement;

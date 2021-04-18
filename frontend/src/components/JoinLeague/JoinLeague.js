@@ -14,7 +14,7 @@ import '../../styles/JoinLeague/JoinLeague.scss';
 function JoinLeague() {
     /* eslint-disable max-len */
     const username = sessionStorage.getItem('username');
-
+    const [allLeagues, setAllLeagues] = useState([]);
     const [leagues, setLeagues] = useState([]);
     const [selectedLeague, setSelectedLeague] = useState('');
     const [showModal, setShowModal] = useState(false);
@@ -24,7 +24,6 @@ function JoinLeague() {
     const [error, setError] = useState('');
 
     const [showFilter, setShowFilter] = useState(false);
-    const [useFilter, setUseFilter] = useState(false);
     const [nameFilter, setNameFilter] = useState('');
     const [visFilter, setVisFilter] = useState('Both');
     const [minTradeLimitFilter, setMinTradeLimitFilter] = useState(null);
@@ -36,6 +35,7 @@ function JoinLeague() {
     const [earlyEndFilter, setEarlyEndFilter] = useState('');
     const [lateEndFilter, setLateEndFilter] = useState('');
     const [hideFull, setHideFull] = useState(false);
+    const [hideJoined, setHideJoined] = useState(false);
 
     const [ascending, setReversed] = useState(false);
     const [currentSort, setCurrentSort] = useState('');
@@ -45,9 +45,8 @@ function JoinLeague() {
 
     const resetFilter = () => {
         setShowFilter(false);
-        setUseFilter(false);
         setNameFilter('');
-        setVisFilter('Both');
+        setVisFilter('both');
 
         setMinTradeLimitFilter(null);
         setMaxTradeLimitFilter(null);
@@ -60,6 +59,65 @@ function JoinLeague() {
         setLateEndFilter('');
 
         setHideFull(false);
+        setHideJoined(false);
+        setLeagues(allLeagues);
+    };
+
+    const applyFilter = () => {
+        const list = allLeagues;
+        const filteredLeagues = list.filter((league) => {
+            /*
+            *   if (filterIsUsed && !(filterSatified)) {
+            *       return false;
+            *   }
+            */
+            if (nameFilter.length !== 0 && !league.leagueName.includes(nameFilter)) {
+                return false;
+            }
+            if ((visFilter === 'public' && !league.settings.public)) {
+                return false;
+            }
+            if ((visFilter === 'private' && league.settings.public)) {
+                return false;
+            }
+
+            if (minTradeLimitFilter && !(league.settings.tradeLimit >= minTradeLimitFilter)) {
+                return false;
+            }
+            if (maxTradeLimitFilter && !(league.settings.tradeLimit <= maxTradeLimitFilter)) {
+                return false;
+            }
+
+            if (minBalanceFilter && !(league.settings.balance >= minBalanceFilter)) {
+                return false;
+            }
+            if (maxBalanceFilter && !(league.settings.balance <= maxBalanceFilter)) {
+                return false;
+            }
+
+            if (earlyStartFilter && !(league.settings.startDate >= earlyStartFilter)) {
+                return false;
+            }
+            if (lateStartFilter && !(league.settings.startDate <= lateStartFilter)) {
+                return false;
+            }
+            if (earlyEndFilter && !(league.settings.endDate >= earlyEndFilter)) {
+                return false;
+            }
+            if (lateEndFilter && !(league.settings.endDate <= lateEndFilter)) {
+                return false;
+            }
+
+            if (hideFull && !(league.playerList.length < league.settings.maxPlayers)) {
+                return false;
+            }
+            if (hideJoined && league.playerList.includes(username)) {
+                return false;
+            }
+
+            return true;
+        });
+        setLeagues(filteredLeagues);
     };
 
     const joinLeague = (league) => {
@@ -111,8 +169,9 @@ function JoinLeague() {
     };
 
     const loadLeagues = async () => {
-        setLeagues(await getLeagues());
-        console.log(leagues);
+        const reqLeagues = await getLeagues();
+        setLeagues(reqLeagues);
+        setAllLeagues(reqLeagues);
     };
 
     useEffect(() => {
@@ -255,15 +314,11 @@ function JoinLeague() {
         nameSort();
     }
 
-    console.log(currentSort);
-    console.log(ascending);
-
     return (
         <div>
             <div>
                 <Button onClick={() => {
                     setShowFilter(true);
-                    setUseFilter(false);
                 }}
                 >
                     Set New Filters
@@ -358,7 +413,6 @@ function JoinLeague() {
                                                     </div>
                                                 );
                                             }
-                                            console.log('success');
                                             return league.leagueName;
                                         }
                                         )()}
@@ -468,25 +522,18 @@ function JoinLeague() {
                                 </div>
                             </Form.Group>
 
-                            <Form.Group controlId="formHide">
+                            <Form.Group controlId="formHideFull">
                                 <Form.Check type="checkbox" label="Hide Full Leagues" defaultChecked={hideFull} onChange={() => setHideFull(!hideFull)} />
+                            </Form.Group>
+                            <Form.Group controlId="formHideJoined">
+                                <Form.Check type="checkbox" label="Hide Joined Leagues" defaultChecked={hideJoined} onChange={() => setHideJoined(!hideJoined)} />
                             </Form.Group>
 
                             <center>
                                 <Button onClick={() => {
-                                    setUseFilter(true);
-                                    console.log(nameFilter);
-                                    console.log(useFilter);
-                                    console.log(visFilter);
-                                    console.log(minBalanceFilter);
-                                    console.log(maxBalanceFilter);
-                                    console.log(earlyStartFilter);
-                                    console.log(lateStartFilter);
-                                    console.log(earlyEndFilter);
-                                    console.log(lateEndFilter);
-                                    console.log(hideFull);
-                                    console.log(minTradeLimitFilter);
-                                    console.log(maxTradeLimitFilter);
+                                    applyFilter();
+                                    console.log('Saved');
+                                    handleFilterClose();
                                 }}
                                 >Set New Filter
                                 </Button>

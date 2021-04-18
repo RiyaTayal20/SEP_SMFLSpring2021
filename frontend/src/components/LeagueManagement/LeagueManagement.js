@@ -43,10 +43,10 @@ function LeagueManagement() {
         loadLeagues();
     }, []);
 
-    if (!leagues) {
+    if (leagues.length === 0) {
         return (
-            <div>
-                YOU ARENT MANAGING ANY LEAGUES
+            <div className="no-leagues-title">
+                You are not managing any leagues!
             </div>
         );
     }

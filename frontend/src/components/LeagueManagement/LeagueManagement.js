@@ -3,10 +3,12 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 // import Col from 'react-bootstrap/Col';
 // import Row from 'react-bootstrap/Row';
 // import InputGroup from 'react-bootstrap/InputGroup';
 import '../../styles/LeagueManagement/LeagueManagement.scss';
+import { Dropdown } from 'react-bootstrap';
 
 function LeagueManagement() {
     const username = sessionStorage.getItem('username');
@@ -47,17 +49,14 @@ function LeagueManagement() {
                     Manage Leagues
                 </div>
                 <Form>
-                    <Form.Group controlId="LeagueSelection">
-                        <Form.Label>Select League to Manage</Form.Label>
-                        <Form.Control as="select" htmlSize={3} custom>
-                            {leagues && leagues.map((league) => {
-                                if (league.leagueManager === username) {
-                                    return (<option>{league.leagueName}</option>);
-                                }
-                                return null;
-                            })}
-                        </Form.Control>
-                    </Form.Group>
+                    <DropdownButton title="Select League" className="league-manage-dropdown" size="lg">
+                        {leagues && leagues.map((league) => {
+                            if (league.leagueManager === username) {
+                                return (<Dropdown.Item>{league.leagueName}</Dropdown.Item>);
+                            }
+                            return null;
+                        })}
+                    </DropdownButton>
                     <Table striped bordered variant="light">
                         <thead>
                             <tr>
@@ -111,3 +110,4 @@ function LeagueManagement() {
 }
 
 export default LeagueManagement;
+

@@ -30,8 +30,8 @@ function LeagueManagement() {
             },
         });
 
-        const data = (await response.json()).filter((league) => league.leagueManager === username);
-        return data;
+        const data = await response.json();
+        return data.filter((league) => league.leagueManager === username);
     };
 
     const loadLeagues = async () => {
@@ -43,6 +43,41 @@ function LeagueManagement() {
         loadLeagues();
     }, []);
 
+    const kickPlayer = async (player, leagueName) => {
+        console.log(`kick was called Player=${player}, league=${leagueName}`);
+        const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/league/${leagueName}/kick`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: player,
+            }),
+        });
+
+        console.log(response);
+
+        if (response.status === 200) {
+            const indexSelectedPlayer = selectedLeague.playerList.indexOf(player);
+            const indexSelectedLeague = leagues.indexOf(selectedLeague);
+
+            const newLeagues = leagues;
+            const newSelectedLeague = selectedLeague;
+            setLeagues([]);
+            setSelectedLeague([]);
+            newLeagues[indexSelectedLeague].playerList.splice(indexSelectedPlayer, 1);
+            newSelectedLeague.playerList.splice(indexSelectedPlayer, 1);
+            console.log(newLeagues);
+            console.log(newSelectedLeague);
+            setLeagues(newLeagues);
+            setSelectedLeague(newSelectedLeague);
+            console.log('New player lists:');
+            console.log(leagues[indexSelectedLeague].playerList);
+            console.log(selectedLeague.playerList);
+        }
+    };
+
     if (leagues.length === 0) {
         return (
             <div className="no-leagues-title">
@@ -51,11 +86,6 @@ function LeagueManagement() {
         );
     }
 
-    console.log(selectedLeague);
-    if (selectedLeague) {
-        console.log('Selected League is ');
-        console.log(selectedLeague.playerList);
-    }
     return (
         <div>
             <Container className="manage-league-container">
@@ -80,7 +110,7 @@ function LeagueManagement() {
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="table-body">
                             {selectedLeague && selectedLeague.playerList
                             && selectedLeague.playerList.map((player) => (
                                 <tr>
@@ -88,8 +118,14 @@ function LeagueManagement() {
                                         {player}
                                     </td>
                                     <td>
-                                        <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button> &nbsp;&nbsp;&nbsp;
-                                        <Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Give Money</Button>
+                                        {(() => {
+                                            if (player === selectedLeague.leagueManager) {
+                                                return (<Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button>);
+                                            }
+                                            /* eslint max-len: 0 */
+                                            return (<Button onClick={() => kickPlayer(player, selectedLeague.leagueName)}>Kick</Button>);
+                                        })()}
+                                        &nbsp;&nbsp;&nbsp;<Button>Give Money</Button>
                                     </td>
                                 </tr>
                             ))}

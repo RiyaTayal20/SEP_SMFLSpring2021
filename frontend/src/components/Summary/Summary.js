@@ -45,23 +45,14 @@ function Summary() {
     return (
         <div className="summary-page">
             <div className="league-dropdown-section">
-                <Row>
-                    <Col>
+                <Col>
+                    <Row>
                         <DropdownButton title="Choose League" size="lg">
                             <Dropdown.Item>League</Dropdown.Item>
                         </DropdownButton>
-                    </Col>
-                    <Col>
-                        <DropdownButton title="Select Week" className="week-dropdown" size="lg">
-                            <Dropdown.Item>Date</Dropdown.Item>
-                        </DropdownButton>
-                    </Col>
-                </Row>
-            </div>
-            <div className="display-summary-info">
-                <Row>
-                    <Col>
-                        <Card className="summ-display" style={{ width: '25rem' }}>
+                    </Row>
+                    <Row>
+                        <Card className="summ-display" style={{ width: '27rem', height: '23rem' }}>
                             <ListGroup variant="flush">
                                 <ListGroup.Item className="card-list">
                                     Based on the league&apos;s performance this week,
@@ -73,9 +64,19 @@ function Summary() {
                                 <ListGroup.Item className="card-list">Tobi is the best, you lost</ListGroup.Item>
                             </ListGroup>
                         </Card>
-                    </Col>
-                    <Col>
+                    </Row>
+                </Col>
+            </div>
+            <div className="display-summary-info">
+                <Col>
+                    <Row>
+                        <DropdownButton title="Select Week" className="week-dropdown" size="lg">
+                            <Dropdown.Item>Date</Dropdown.Item>
+                        </DropdownButton>
+                    </Row>
+                    <Row>
                         <Line
+                            className="Graph"
                             data={{
                                 labels: dates, // all x values
                                 datasets: [
@@ -90,10 +91,9 @@ function Summary() {
                                     },
                                 ],
                             }}
-                            height={300}
-                            width={500}
+                            height={400}
+                            width={530}
                             options={{
-                                backgroundColor: 'white',
                                 maintainAspectRatio: false,
                                 tooltips: {
                                     backgroundColor: 'blue',
@@ -140,8 +140,8 @@ function Summary() {
                                 },
                             }}
                         />
-                    </Col>
-                </Row>
+                    </Row>
+                </Col>
             </div>
         </div>
     );

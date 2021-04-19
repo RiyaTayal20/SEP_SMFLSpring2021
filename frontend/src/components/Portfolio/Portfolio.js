@@ -24,7 +24,6 @@ const Portfolio = () => {
     const handleClose = () => setLowBalance(false);
 
     const getPortfolio = async () => {
-        console.log(viewUser);
         const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/league/specifiedportfolio/${league}/${viewUser}`, {
             method: 'GET',
             headers: {
@@ -67,8 +66,6 @@ const Portfolio = () => {
 
     // Set league and username if sent in state
     useEffect(() => {
-        console.log('loaded');
-        console.log(location);
         if (location.state && 'selectedUser' in location.state) {
             setLeague(location.state.selectedUser.league);
             setViewUser(location.state.selectedUser.username);

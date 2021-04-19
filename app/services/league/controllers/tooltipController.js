@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 const Tooltip = require('../models/tooltipModel');
 
 exports.scrapeWebsite = async (req, res) => {
-    const terms = ['previousclose', 'openingprice', 'volume', 'averagedailytradingvolume', 'marketcapitalization', 'beta', 'price-earningsratio', 'eps', 'earnings-announcement', 'costbasis'];
+    const terms = req.body.terms;
     
     for (const term of terms) {
         const url = `https://www.investopedia.com/terms/${term[0]}/${term}.asp`;
@@ -37,6 +37,6 @@ exports.getTooltip = async(req, res) => {
 exports.getTooltips = async (req, res) => {
     await Tooltip.find({}, (err, result) => {
         if (err) throw err;
-        else res.send(result);
+        else res.send(result.reduce((obj, { term, definition, url }) => (obj[term] = { definition, url }, obj), {}));
     });
 }

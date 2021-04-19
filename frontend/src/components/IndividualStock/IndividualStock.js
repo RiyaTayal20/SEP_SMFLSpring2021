@@ -98,7 +98,7 @@ function IndividualStockPage() {
         });
     };
     const ai = () => {
-        history.push('/ai');
+        history.push('/ai', { tickerSymbol: ticker });
     };
     useEffect(() => {
         getCurrentPrice();

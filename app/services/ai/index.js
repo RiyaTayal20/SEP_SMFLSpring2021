@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 const { getMarketPrice } = require('../league/utils/stockUtils');
 
 tickers = ['EDIT', 'SPCE', 'HMBL', 'PCRX', 'TV']; 
-tickers = tickers.map(function(x){ return x.toUpperCase(); })
+tickers = tickers.map(function(x) { return x.toUpperCase(); })
 // make sure all tickers are in ticker database for trade to execute
 
 meanRatings = [];
@@ -113,7 +113,7 @@ const tradeCheck = async () => {
             */
         }
         else if (bot.algorithm == 'momentum') {
-
+            placeTrade(token, leagueName, portfolio, momentumRatings);
         }
         else if (bot.algorithm == 'candlesticks') {
 
@@ -140,7 +140,7 @@ mean.on('close', (code) => {
 });
 
 momentum.on('close', (code) => {
-    tradeCheck();
+    // tradeCheck();
 });
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

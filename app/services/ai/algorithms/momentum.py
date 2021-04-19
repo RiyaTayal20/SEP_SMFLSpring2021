@@ -4,7 +4,6 @@ import yfinance as yf
 import pandas_datareader as pdr
 import datetime as dt
 from dateutil.relativedelta import relativedelta
-import matplotlib.pyplot as plt
 
 tickers = ['EDIT', 'SPCE', 'HMBL', 'PCRX', 'TV']
 

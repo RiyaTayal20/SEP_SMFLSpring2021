@@ -12,6 +12,20 @@ const aiController = require('../controllers/aiController');
  * @name get/mean/:ticker
  */
  router.get('/mean/:ticker', aiController.mean);
+ 
+ /**
+ * Route handling query of mean reversion graph data
+ * @function
+ * @name get/close/:ticker
+ */
+  router.get('/close/:ticker', aiController.close);
+
+ /**
+ * Route handling query of momentum graph data
+ * @function
+ * @name get/momentum/:ticker
+ */
+router.get('/momentum/:ticker', aiController.momentum);
 
  router.get('*', (req, res) => {
     res.status(404).send('This endpoint does not exist!');

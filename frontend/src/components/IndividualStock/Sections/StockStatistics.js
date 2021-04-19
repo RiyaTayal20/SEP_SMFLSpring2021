@@ -1,39 +1,86 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Container, Row, Col,
 } from 'react-bootstrap';
+// import Modal from 'react-bootstrap/Modal';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
 
 const StockStatistics = (props) => {
+    const [tooltips, setTooltips] = useState();
+    /* eslint-disable max-len */
     const { statistics } = props;
+
+    const getTooltips = async () => {
+        const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/tooltips/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        const data = await response.json();
+        setTooltips(data);
+    };
+
+    const popover = (title, term) => (
+        <Popover>
+            <Popover.Title>{title || 'Loading...'}</Popover.Title>
+            <Popover.Content>
+                {tooltips && (
+                    <div>
+                        <div>{tooltips[term].definition}</div>
+                        <a href={tooltips[term].url}>Read more</a>
+                    </div>
+                )}
+            </Popover.Content>
+        </Popover>
+    );
+
+    useEffect(() => {
+        getTooltips();
+    }, []);
+
     return (
         <Container fluid="md">
             <Row>
                 <Col>
-                    <b>Previous Close:&nbsp;</b>
+                    <OverlayTrigger rootClose trigger="click" overlay={popover('Previous Close', 'previousclose')}>
+                        <b>Previous Close:&nbsp;</b>
+                    </OverlayTrigger>
                     {statistics.previousClose}
                 </Col>
                 <Col>
-                    <b>Market Cap:&nbsp;</b>
+                    <OverlayTrigger rootClose trigger="click" overlay={popover('Market Capitalization', 'marketcapitalization')}>
+                        <b>Market Cap:&nbsp;</b>
+                    </OverlayTrigger>
                     {statistics.marketCap}
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <b>Open:&nbsp;</b>
+                    <OverlayTrigger rootClose trigger="click" overlay={popover('Opening Price', 'openingprice')}>
+                        <b>Open:&nbsp;</b>
+                    </OverlayTrigger>
                     {statistics.openPrice}
                 </Col>
                 <Col>
-                    <b>Beta:&nbsp;</b>
+                    <OverlayTrigger rootClose trigger="click" overlay={popover('Beta', 'beta')}>
+                        <b>Beta:&nbsp;</b>
+                    </OverlayTrigger>
                     {statistics.beta}
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <b>PE Ratio:&nbsp;</b>
+                    <OverlayTrigger rootClose trigger="click" overlay={popover('PE Ratio', 'price-earningsratio')}>
+                        <b>PE Ratio:&nbsp;</b>
+                    </OverlayTrigger>
                     {statistics.peRatio}
                 </Col>
                 <Col>
-                    <b>EPS:&nbsp;</b>
+                    <OverlayTrigger rootClose trigger="click" overlay={popover('Earnings Per Share', 'eps')}>
+                        <b>EPS:&nbsp;</b>
+                    </OverlayTrigger>
                     {statistics.eps}
                 </Col>
             </Row>

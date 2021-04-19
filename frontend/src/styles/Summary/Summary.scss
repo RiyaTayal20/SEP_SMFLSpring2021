@@ -1,0 +1,37 @@
+@import '../root.scss';
+@import '../Button.scss';
+
+.summary-page{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    margin-left: 2vw;
+    margin-top: 5vh;
+
+
+    .league-dropdown-section{
+        display: inherit;
+    }
+
+    .display-summary-info{
+        display: inherit;
+        justify-content: space-between;
+        margin-left: 7vw;
+    }
+}
+
+.btn-primary{
+    background-color: var(--mint) !important;
+    border-color: var(--mint) !important;
+    margin-bottom: 5vh;
+}
+
+.summ-display{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5vh;
+}
+
+.card-list{
+    margin-bottom: 2.5vh;
+}

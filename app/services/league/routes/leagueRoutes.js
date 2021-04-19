@@ -37,6 +37,20 @@ router.post('/leave', leagueValidation.authValidation, leagueValidation.findVali
 router.post('/disband', leagueValidation.authValidation, leagueValidation.findValidLeague, leagueController.disbandLeague);
 
 /**
+ * Route handling league manager kicking player from league
+ * @function
+ * @name post/kick
+ */
+router.post('/:league/kick', leagueValidation.authValidation, leagueController.kickPlayer);
+
+/**
+ * Route handling league manager adding money to player's portfolio
+ * @function
+ * @name post/donate
+ */
+ router.post('/:league/donate', leagueValidation.authValidation, leagueController.addMoneyToPlayer);
+
+/**
  * Route handling query of all leagues
  * @function
  * @name get/find/all
@@ -55,7 +69,7 @@ router.get('/find/names', leagueController.getLeagueNames);
  * @function
  * @name get/find/:leagueName
  */
-// router.get('/find/:leagueName', leagueController.getLeagueByName);
+router.get('/find/:leagueName', leagueController.getLeagueByName);
 
 /**
  * Route handling query of user's portfolio in specified league
@@ -65,5 +79,9 @@ router.get('/find/names', leagueController.getLeagueNames);
 router.get('/portfolio/:league', leagueValidation.authValidation, leagueController.getPortfolio);
 
 router.get('/news/:league', leagueValidation.authValidation, leagueController.getPortfolioNews);
+
+router.get('/summary/:leagueName', leagueValidation.authValidation, leagueController.getSummary);
+
+router.post('/insert/:leagueName', leagueValidation.authValidation, leagueController.insertNetWorth);
 
 module.exports = router;

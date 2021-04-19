@@ -78,6 +78,8 @@ router.get('/find/:leagueName', leagueController.getLeagueByName);
  */
 router.get('/portfolio/:league', leagueValidation.authValidation, leagueController.getPortfolio);
 
+router.get('/specifiedportfolio/:league/:username', leagueValidation.authValidation, leagueController.getSpecifiedPortfolio);
+
 router.get('/news/:league', leagueValidation.authValidation, leagueController.getPortfolioNews);
 
 router.get('/summary/:leagueName', leagueValidation.authValidation, leagueController.getSummary);

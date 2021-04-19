@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Modal from 'react-bootstrap/Modal';
@@ -10,6 +11,8 @@ import '../../styles/Portfolio/Portfolio.scss';
 const Portfolio = () => {
     /* eslint-disable max-len */
     const username = sessionStorage.getItem('username');
+
+    const location = useLocation();
 
     const [league, setLeague] = useState(null);
     const [leagueList, setLeagueList] = useState();
@@ -61,6 +64,16 @@ const Portfolio = () => {
             .then((result) => setLeagueObj(result));
         return data;
     };
+
+    // Set league and username if sent in state
+    useEffect(() => {
+        console.log('loaded');
+        console.log(location);
+        if (location.state && 'selectedUser' in location.state) {
+            setLeague(location.state.selectedUser.league);
+            setViewUser(location.state.selectedUser.username);
+        }
+    }, []);
 
     useEffect(() => {
         getPortfolio();

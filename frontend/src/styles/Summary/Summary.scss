@@ -4,17 +4,21 @@
 .summary-page{
     display:flex;
     flex-direction: column;
-    
     align-content:center;
 }
 
 .league-dropdown-section{
-    padding-top:40px;
-    padding-bottom: 40px;
+    margin-top:10vh;
+    margin-bottom: 10vh;
+}
+
+.btn-primary{
+    background-color: var(--mint) !important;
+    border-color: var(--mint) !important;
 }
 
 .week-dropdown-section{
-    padding-bottom:40px;
+    margin-bottom:20vh;
 
 }
 
@@ -24,6 +28,7 @@
 }
 
 .summ-display{
-    margin-bottom: 10px;
+    margin-bottom: 5vh;
 }
+
 

@@ -1,6 +1,5 @@
 import React from 'react';
-// import Form from 'react-bootstrap/Form';
-// import Button from 'react-bootstrap/Button';
+// import Form from 'react-bootstrap/Form';';
 import '../../styles/Summary/Summary.scss';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -48,17 +47,13 @@ function Summary() {
             <div className="league-dropdown-section">
                 <Row>
                     <Col>
-                        <DropdownButton title="Choose League" className="league-dropdown" size="lg">
-                            <Dropdown.Item>
-                                League
-                            </Dropdown.Item>
+                        <DropdownButton title="Choose League" size="lg">
+                            <Dropdown.Item>League</Dropdown.Item>
                         </DropdownButton>
                     </Col>
                     <Col>
                         <DropdownButton title="Select Week" className="week-dropdown" size="lg">
-                            <Dropdown.Item>
-                                Date
-                            </Dropdown.Item>
+                            <Dropdown.Item>Date</Dropdown.Item>
                         </DropdownButton>
                     </Col>
                 </Row>

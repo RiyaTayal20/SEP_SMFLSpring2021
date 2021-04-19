@@ -17,16 +17,16 @@
 .login-container{
     display: flex;
     flex-direction: column;
-    justify-content: center
+    justify-content: center;
 }
 
 .login-form{ 
     @extend %flex-center;
     border-style: solid;
     border-color: white;
-    margin: 90px auto;
+    margin: 80px auto;
     margin-left: 250px;
-    padding: 110px 110px;
+    padding: 4vh 3vw;
     .form-group {
         @extend %flex-center;
         color: white;
@@ -46,6 +46,7 @@
 
 .text-register{
     padding: 10px 0px 0px 10px;
+    width: 25vw;
 }
 
 .form-group{

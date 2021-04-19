@@ -2,26 +2,30 @@
 @import '../Button.scss';
 
 .join-league-form-title{
-    font-size: 35px;
+    font-size: 40px;
     color: white;
-    padding: 30px;
+    padding-top: 4.5%;
+    padding-bottom: 3%;
 }
 
 .table {
     background-color: var(--light-scale-grey);
+    width:100%;
 }
 
 .join-league-container{
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .join-league-form{
-    min-width: 800px;
+    min-width: 110%;
     overflow: auto;
     margin-bottom: 100px;
+    padding-left: 6vw;
+    width: 60vw;
     .btn {
         @include btn;
     }

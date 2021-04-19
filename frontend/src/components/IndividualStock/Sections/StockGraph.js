@@ -2,9 +2,10 @@ import React from 'react';
 import { Line } from 'react-chartjs-2';
 
 const StockGraph = (props) => {
-    const { graph } = props;
+    const { graph, color } = props;
     const days = Object.keys(graph);
     const prices = Object.values(graph);
+
     return (
         <div>
             <Line
@@ -14,7 +15,7 @@ const StockGraph = (props) => {
                         {
                             label: 'Price',
                             data: prices, // all y values
-                            borderColor: 'rgba(98, 252, 3, 1)',
+                            borderColor: color,
                             hoverBackgroundColor: 'blue',
                             fill: false,
                             borderWidth: 1,

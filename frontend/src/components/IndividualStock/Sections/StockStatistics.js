@@ -86,29 +86,39 @@ const StockStatistics = (props) => {
             </Row>
             <Row>
                 <Col>
-                    <b>Year Range:&nbsp;</b>
+                    <OverlayTrigger rootClose trigger="click" overlay={popover('52-Week High/Low', '52weekhighlow')}>
+                        <b>Year Range:&nbsp;</b>
+                    </OverlayTrigger>
                     {statistics.week52Low}
                     &nbsp;-&nbsp;
                     {statistics.week52High}
                 </Col>
                 <Col>
-                    <b>Dividend:&nbsp;</b>
+                    <OverlayTrigger rootClose trigger="click" overlay={popover('Dividend', 'dividend')}>
+                        <b>Dividend:&nbsp;</b>
+                    </OverlayTrigger>
                     {statistics.dividend}
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <b>Volume:&nbsp;</b>
+                    <OverlayTrigger rootClose trigger="click" overlay={popover('Volume', 'volume')}>
+                        <b>Volume:&nbsp;</b>
+                    </OverlayTrigger>
                     {statistics.volume}
                 </Col>
                 <Col>
-                    <b>Average Volume:&nbsp;</b>
+                    <OverlayTrigger rootClose trigger="click" overlay={popover('Average Volume', 'averagedailytradingvolume')}>
+                        <b>Average Volume:&nbsp;</b>
+                    </OverlayTrigger>
                     {statistics.avgVolume}
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <b>Earnings Date:&nbsp;</b>
+                    <OverlayTrigger rootClose trigger="click" overlay={popover('Earnings Announcement', 'earnings-announcement')}>
+                        <b>Earnings Date:&nbsp;</b>
+                    </OverlayTrigger>
                     {statistics.earningsDate}
                 </Col>
             </Row>

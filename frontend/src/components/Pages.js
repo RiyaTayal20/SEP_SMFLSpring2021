@@ -10,6 +10,7 @@ import SymbolLookupPage from './SymbolLookup/SymbolLookup';
 import PortfolioPage from './Portfolio/Portfolio';
 import NewsPage from './News/News';
 import AIPage from './Ai/Ai';
+import SummaryPage from './Summary/Summary';
 
 export {
     RegistrationPage,
@@ -24,4 +25,5 @@ export {
     PortfolioPage,
     NewsPage,
     AIPage,
+    SummaryPage,
 };

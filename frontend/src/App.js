@@ -15,6 +15,7 @@ import {
     PortfolioPage,
     NewsPage,
     AIPage,
+    SummaryPage,
 } from './components/Pages';
 import Header from './components/Header/Header';
 import NavigationBar from './components/NavigationBar/NavigationBar';
@@ -66,6 +67,9 @@ function App() {
                             </Route>
                             <Route path="/ai">
                                 <AIPage />
+                            </Route>
+                            <Route path="/summary">
+                                <SummaryPage />
                             </Route>
                         </Switch>
                     </div>

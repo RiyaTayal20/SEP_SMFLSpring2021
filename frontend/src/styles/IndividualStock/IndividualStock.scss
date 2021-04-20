@@ -5,10 +5,6 @@
     margin: 4vh 0vw 0vh 4vw;
 }
 
-h1 {
-    color: white;
-}
-
 .form{
     display: flex;
     flex-direction: column;
@@ -29,6 +25,9 @@ h1 {
 
 .currentPrice > span {
     display: inline-block;
+    h3 {
+        font-weight: 900;
+    }
 }
 
 .stats {
@@ -66,15 +65,21 @@ h1 {
 
     .graph{
         padding: 2vh 4vw 6vh 2vw;
+        h2 {
+            text-align: center;
+            font-weight: 900;
+        }
     }
 }
 
-.graph > h2 {
-    text-align: center;
-    font-weight: 800;
+.lightbulb-button {
+    Button {
+        width: 60px;
+        height: 70px;
+    }
 }
 
-.lightbulb-button {
-    display: flex;
-    justify-content: flex-end;
+.lightbulb-button > Button:hover {
+    color: black;
+    font-size: x-large;
 }

@@ -6,6 +6,7 @@ import datetime as dt
 from dateutil.relativedelta import relativedelta
 import sys
 
+pd.options.mode.chained_assignment = None 
 pd.set_option("display.max_rows", None, "display.max_columns", None)
 
 now = dt.datetime.now()

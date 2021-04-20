@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+// eslint-disable-next-line import/no-unresolved
 import { Lightbulb } from 'react-bootstrap-icons';
 import StockStatistics from './Sections/StockStatistics';
 import StockGraph from './Sections/StockGraph';
@@ -108,16 +109,18 @@ function IndividualStockPage() {
     return (
         <div className="stock-container">
             <div className="header">
-                <h3>{ticker}</h3>
+                <h2>{ticker}</h2>
                 <h1>{statistics.equityName}</h1>
                 <div className="currentPrice">
                     <span><h2><b>${currentPrice}</b></h2></span>
                     &nbsp;&nbsp;&nbsp;
-                    <span><b><h5 style={{ color: difference > 0 ? 'green' : 'red' }}>{difference}&nbsp;({percentChange}%)</h5></b></span>
+                    <span><h3 style={{ color: difference > 0 ? 'green' : 'red' }}>{difference}&nbsp;({percentChange}%)</h3></span>
                 </div>
-                <Button className="lightbulb-button" onClick={ai} style={{ backgroundColor: 'Transparent' }} size="lg">
-                    <Lightbulb />
-                </Button>
+                <div className="lightbulb-button">
+                    <Button onClick={ai} size="lg">
+                        <Lightbulb />
+                    </Button>
+                </div>
             </div>
             <div className="makeshift-tab-component">
                 <div className="graph-btns">

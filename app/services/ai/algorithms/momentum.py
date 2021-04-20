@@ -5,7 +5,9 @@ import pandas_datareader as pdr
 import datetime as dt
 from dateutil.relativedelta import relativedelta
 
-tickers = ['EDIT', 'SPCE', 'HMBL', 'FUTU', 'KSU', 'SHW', 'TDUP']
+pd.options.mode.chained_assignment = None 
+
+tickers = ['CNI', 'MO', 'UAL','OBCI','HOG','JNJ','LND', 'AAPL']
 
 # Get last 3 months of data
 now = dt.datetime.now()
@@ -78,7 +80,7 @@ for t in tickers:
 
     if not np.isnan(df['Buy Signal'][len(df)-1]):
         print('Buy')
-    elif not np.isnan(df['Sell Signal'][len(df)-1]):
+    elif not np.isnan(df['Sell Signal'][len(df)-2]):
         print('Sell')
     else:
         print('Hold')

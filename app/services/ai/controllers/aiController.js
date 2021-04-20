@@ -3,7 +3,6 @@
 const {spawn} = require('child_process');
 
 exports.close = async (req, res) => {
-    console.log('close');
     let close;
     const python = spawn('python', ['./controllers/indicators/close.py', req.params.ticker]);
     python.stdout.on('data', function (data) {    
@@ -24,7 +23,6 @@ exports.close = async (req, res) => {
 };
 
 exports.mean = async (req, res) => {
-    console.log('mean');
     let smaDates, smaPrices, smaLower, smaUpper, smaClose, smaBuyers, smaSellers;
     const python = spawn('python', ['./controllers/indicators/meanGraph.py', req.params.ticker]);
     python.stdout.on('data', function (data) {
@@ -57,7 +55,6 @@ exports.mean = async (req, res) => {
 };
 
 exports.momentum = async (req, res) => {
-    console.log('momentum');
     let dates, rsi, buy, sell;
     const python = spawn('python', ['./controllers/indicators/momentumGraph.py', req.params.ticker]);
     python.stdout.on('data', function (data) {

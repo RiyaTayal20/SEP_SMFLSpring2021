@@ -74,14 +74,14 @@ function AIPage() {
     }, []);
     return (
         <div className="ai-container">
-            <div className="header">
+            <div className="ai-header">
                 <h1>AI Player Algorithms</h1>
-                <h4>The AI players utilize the following algorithms and technical indicators when placing trades.</h4>
+                <h4>The AI players will utilize the following algorithms and technical indicators when placing trades.</h4>
             </div>
             <div className="algorithms">
                 <div className="mean">
                     <h1><b>Mean Reversion</b></h1>
-                    <div classNmae="meanGraph">
+                    <div className="meanGraph">
                         <Line
                             data={{
                                 labels: mean.smaDates, // all x values
@@ -209,7 +209,7 @@ function AIPage() {
                             }}
                         />
                     </div>
-                    <h4>Every time that the current price of the stock breaks out above the upper bollinger band, the ai player will buy into this position. Every time the price falls below the lower bollinger band, the ai player employing this algorithm will sell a position in this stock.</h4>
+                    <h4>Every time that the current price of the stock breaks out above the upper bollinger band, the ai player will buy into this position. This is shown by the green triangles in the graph above. Every time the price falls below the lower bollinger band, the ai player employing this algorithm will sell a position in this stock. This is shown by the red triangles in the graph above.</h4>
                 </div>
                 <div className="momentum">
                     <h1><b>Momentum Trading</b></h1>
@@ -306,7 +306,7 @@ function AIPage() {
                             }}
                         />
                     </div>
-                    <h4>Whenever the relative standard index (RSI) values are above 70, this indicates an overbought condition, meaning it is a good time to sell out of your position. Whenever the RSI is below 30, this indicates an oversold condition, meaning it is a good time to buy shares or increase position in a stock.</h4>
+                    <h4>Whenever the relative standard index (RSI) values are above 70, this indicates an overbought condition, meaning it is a good time to sell out of your position. The AI player sell all shares of a position as seen in the red triangles in the graph. Whenever the RSI is below 30, this indicates an oversold condition, meaning it is a good time to buy shares or increase position in a stock. The AI players will buy shares of this equity as seen through the green triangles in the graph. </h4>
                 </div>
                 <div className="candlesticks">
                     <h1><b>Japanese Candlesticks</b></h1>

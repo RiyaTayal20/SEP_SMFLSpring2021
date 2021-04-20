@@ -133,14 +133,16 @@ function JoinLeague() {
             }),
         }).then((res) => {
             if (res.ok) {
-                setShowAlert(true);
+                setShowError(false);
                 setShowModal(false);
+                setShowAlert(true);
                 res.json().then((data) => {
                     console.log(data);
                 });
             } else {
-                setShowError(true);
+                setShowAlert(false);
                 setShowModal(false);
+                setShowError(true);
                 res.text().then((text) => {
                     console.log(text);
                     setError(text);
@@ -318,6 +320,8 @@ function JoinLeague() {
         <div>
             <div>
                 <Button onClick={() => {
+                    setShowAlert(false);
+                    setShowError(false);
                     setShowFilter(true);
                 }}
                 >

@@ -66,7 +66,6 @@ exports.momentum = async (req, res) => {
         data = data.split(' ');
         data = data.filter(item => item);
         data.splice(0,6);
-        console.log(data);
         dates = data.filter((e, i) => i % 4 + 3 === 4 - 1);
         rsi= data.filter((e, i) => i % 4 + 2=== 4 - 1);
         sell = data.filter((e, i) => i % 4 === 4 - 1);
@@ -74,7 +73,6 @@ exports.momentum = async (req, res) => {
     });
     python.stderr.on('data', function (data){
         console.log(data.toString());
-
     });
     python.on('close', (code) => {
         const momentumData = {

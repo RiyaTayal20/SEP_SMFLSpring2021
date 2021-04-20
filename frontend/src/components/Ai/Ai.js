@@ -74,11 +74,13 @@ function AIPage() {
     }, []);
     return (
         <div className="ai-container">
-            <h1>AI Feature</h1>
-            <h4>Use these algorithms to determine whether the stock is a buy or sell</h4>
+            <div className="header">
+                <h1>AI Player Algorithms</h1>
+                <h4>The AI players utilize the following algorithms and technical indicators when placing trades.</h4>
+            </div>
             <div className="algorithms">
                 <div className="mean">
-                    <h2>Mean Reversion</h2>
+                    <h1><b>Mean Reversion</b></h1>
                     <div classNmae="meanGraph">
                         <Line
                             data={{
@@ -90,7 +92,7 @@ function AIPage() {
                                         borderColor: 'rgba(76, 235, 52, 1)',
                                         pointBackgroundColor: 'rgba(76, 235, 52, 1)',
                                         hoverBackgroundColor: 'blue',
-                                        pointRadius: 5,
+                                        pointRadius: 7,
                                         pointStyle: 'triangle',
                                         borderWidth: 3,
                                         fill: false,
@@ -104,7 +106,7 @@ function AIPage() {
                                         hoverBackgroundColor: 'blue',
                                         pointStyle: 'triangle',
                                         rotation: 180,
-                                        pointRadius: 5,
+                                        pointRadius: 7,
                                         borderWidth: 3,
                                         fill: false,
                                         lineTension: 0.1,
@@ -172,7 +174,7 @@ function AIPage() {
                                         },
                                         scaleLabel: {
                                             display: true,
-                                            fontSize: 15,
+                                            fontSize: 20,
                                             fontColor: 'white',
                                             fontStyle: 'bold',
                                             labelString: '$',
@@ -188,7 +190,7 @@ function AIPage() {
                                         },
                                         scaleLabel: {
                                             display: true,
-                                            fontSize: 15,
+                                            fontSize: 20,
                                             fontColor: 'white',
                                             fontStyle: 'bold',
                                             labelString: 'Date',
@@ -200,18 +202,18 @@ function AIPage() {
                                 },
                                 legend: {
                                     labels: {
-                                        fontSize: 12,
+                                        fontSize: 15,
                                         fontColor: 'white',
                                     },
                                 },
                             }}
                         />
                     </div>
-                    <p>Every time that the current price of the stock breaks out above the upper bollinger band, the ai player will buy into this position. Every time the price falls below the lower bollinger band, the ai player employing this algorithm will sell a position in this stock.</p>
+                    <h4>Every time that the current price of the stock breaks out above the upper bollinger band, the ai player will buy into this position. Every time the price falls below the lower bollinger band, the ai player employing this algorithm will sell a position in this stock.</h4>
                 </div>
                 <div className="momentum">
-                    <h2>Momentum Trading</h2>
-                    <div classNmae="momentumGraph">
+                    <h1><b>Momentum Trading</b></h1>
+                    <div className="momentumGraph">
                         <Line
                             data={{
                                 labels: momentum.dates,
@@ -224,7 +226,7 @@ function AIPage() {
                                         hoverBackgroundColor: 'blue',
                                         pointStyle: 'triangle',
                                         fill: false,
-                                        pointRadius: 5,
+                                        pointRadius: 7,
                                         borderWidth: 2,
                                         lineTension: 0.1,
                                     },
@@ -237,7 +239,7 @@ function AIPage() {
                                         pointStyle: 'triangle',
                                         rotation: 180,
                                         fill: false,
-                                        pointRadius: 5,
+                                        pointRadius: 7,
                                         borderWidth: 2,
                                         lineTension: 0.1,
                                     },
@@ -269,7 +271,7 @@ function AIPage() {
                                         },
                                         scaleLabel: {
                                             display: true,
-                                            fontSize: 15,
+                                            fontSize: 20,
                                             fontColor: 'white',
                                             fontStyle: 'bold',
                                             labelString: 'RSI Value',
@@ -285,7 +287,7 @@ function AIPage() {
                                         },
                                         scaleLabel: {
                                             display: true,
-                                            fontSize: 15,
+                                            fontSize: 20,
                                             fontColor: 'white',
                                             fontStyle: 'bold',
                                             labelString: 'Date',
@@ -297,18 +299,19 @@ function AIPage() {
                                 },
                                 legend: {
                                     labels: {
-                                        fontSize: 12,
+                                        fontSize: 14,
                                         fontColor: 'white',
                                     },
                                 },
                             }}
                         />
                     </div>
-                    <p>Whenever the relative standard index (RSI) values are above 70, this indicates an overbought condition, meaning it is a good time to sell out of your position. Whenever the RSI is below 30, this indicates an oversold condition, meaning it is a good time to buy shares or increase position in a stock.</p>
+                    <h4>Whenever the relative standard index (RSI) values are above 70, this indicates an overbought condition, meaning it is a good time to sell out of your position. Whenever the RSI is below 30, this indicates an oversold condition, meaning it is a good time to buy shares or increase position in a stock.</h4>
                 </div>
                 <div className="candlesticks">
-                    <h2>Japanese Candlesticks</h2>
-                    <p>description</p>
+                    <h1><b>Japanese Candlesticks</b></h1>
+                    <p>insert graph here</p>
+                    <h4>description</h4>
                 </div>
             </div>
         </div>

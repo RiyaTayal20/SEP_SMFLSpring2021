@@ -14,7 +14,7 @@ const aiController = require('../controllers/aiController');
  router.get('/mean/:ticker', aiController.mean);
  
  /**
- * Route handling query of mean reversion graph data
+ * Route handling query of close prices over the past year
  * @function
  * @name get/close/:ticker
  */

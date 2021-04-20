@@ -209,7 +209,7 @@ function AIPage() {
                             }}
                         />
                     </div>
-                    <h4>Every time that the current price of the stock breaks out above the upper bollinger band, the ai player will buy into this position. This is shown by the green triangles in the graph above. Every time the price falls below the lower bollinger band, the ai player employing this algorithm will sell a position in this stock. This is shown by the red triangles in the graph above.</h4>
+                    <h4>Every time that the current price of the stock breaks out above the upper bollinger band, the ai player will sell out of this position. This is shown by the red triangles in the graph above. Every time the price falls below the lower bollinger band, the ai player employing this algorithm will buy into this stock. This is shown by the green triangles in the graph above.</h4>
                 </div>
                 <div className="momentum">
                     <h1><b>Momentum Trading</b></h1>

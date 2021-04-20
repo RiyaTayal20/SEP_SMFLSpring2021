@@ -1,34 +1,24 @@
 import React from 'react';
 // import Form from 'react-bootstrap/Form';
-// import Container from 'react-bootstrap/Container';
+import Container from 'react-bootstrap/Container';
 import '../../styles/CentralizedLeague/CentralizedLeague.scss';
 // import { Dropdown } from 'react-bootstrap';
 // import DropdownButton from 'react-bootstrap/DropdownButton';
 import Table from 'react-bootstrap/Table';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+// import Col from 'react-bootstrap/Col';
 import { Line } from 'react-chartjs-2';
 
 function CentralizedLeague() {
     const dates = '';
     const prices = '';
     return (
-        <div className="centra-league-page">
-            <Row>
-                <Col>
-                    <Table>
-                        <thead>
-                            <tr>
-                                <th>Rank #</th>
-                                <th>Investor</th>
-                                <th>Account Value</th>
-                                <th>Growth</th>
-                            </tr>
-                        </thead>
-                    </Table>
-                </Col>
-                <Col>
-                    <Line>
+        <Container className="custom-cont">
+            <div className="centra-league-page">
+                <Row className="lead-graph">
+                    <h3 className="graph-header"> League Graph </h3>
+                    <Line
+                        className="Graph"
                         data={{
                             labels: dates, // all x values
                             datasets: [
@@ -40,13 +30,13 @@ function CentralizedLeague() {
                                     fill: false,
                                     borderWidth: 1,
                                     lineTension: 0.1,
+                                    title: 'League Graph',
                                 },
                             ],
                         }}
-                        height={300}
-                        width={500}
+                        height={400}
+                        width={800}
                         options={{
-                            backgroundColor: 'white',
                             maintainAspectRatio: false,
                             tooltips: {
                                 backgroundColor: 'blue',
@@ -90,13 +80,40 @@ function CentralizedLeague() {
                                     fontSize: 12,
                                     fontColor: 'white',
                                 },
-
                             },
                         }}
-                    </Line>
-                </Col>
-            </Row>
-        </div>
+                    />
+                </Row>
+
+                <Row>
+                    <h3>Leaderboard</h3>
+                    <Table className="leaderboard-table" striped bordered variant="light">
+                        <thead>
+                            <tr>
+                                <th>Rank #</th>
+                                <th>Investor</th>
+                                <th>Account Value</th>
+                                <th>Growth</th>
+                            </tr>
+                        </thead>
+                    </Table>
+                </Row>
+                <Row>
+                    <h3>Transaction History</h3>
+                    <Table className="transaction-table" striped bordered variant="light">
+                        <thead>
+                            <tr>
+                                <th>Stock Symbol</th>
+                                <th>Buy/Sell</th>
+                                <th>Quantity</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                    </Table>
+                </Row>
+
+            </div>
+        </Container>
 
     );
 }

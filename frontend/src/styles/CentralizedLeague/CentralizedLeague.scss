@@ -1,0 +1,34 @@
+@import '../root.scss';
+
+
+.table {
+    background-color: var(--light-scale-grey);
+}
+
+
+h3{
+    color: #3fc380;
+}
+.centra-league-page{
+    margin-left:10vw;
+    margin-top:5vh;
+
+    
+}
+    
+.leader-row{
+    margin-bottom:30vh;
+}
+.leaderboard-table{
+    margin-top:4vh;
+    margin-right: 20vw;
+    margin-bottom:30vh;
+    overflow:  auto;
+}
+
+.transaction-table{
+    margin-top: 5vh;
+    margin-right: 20vw;
+    margin-bottom:20vh;
+    overflow: auto;  
+}

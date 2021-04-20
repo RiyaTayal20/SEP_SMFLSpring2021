@@ -10,6 +10,7 @@ import SymbolLookupPage from './SymbolLookup/SymbolLookup';
 import PortfolioPage from './Portfolio/Portfolio';
 import NewsPage from './News/News';
 import SummaryPage from './Summary/Summary';
+import CentralizedLeaguePage from './CentralizedLeague/CentralizedLeague';
 
 export {
     RegistrationPage,
@@ -24,4 +25,5 @@ export {
     PortfolioPage,
     NewsPage,
     SummaryPage,
+    CentralizedLeaguePage,
 };

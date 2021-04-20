@@ -32,7 +32,7 @@ const sendTrade = async (token, leagueName, order, ticker, quantity) => fetch(`$
         tickerSymbol: ticker,
         quantity: quantity,
         expiryDate: "",
-        // pricePerShare: "",
+        pricePerShare: "",
     }),
 }).then((res) => {
     if (res.ok) {
@@ -61,7 +61,7 @@ const getAIPortfolio = async (token, leagueName) => {
     return await response.json();
 };
 
-const placeTrade = async (token, leagueName, portfolio, ratings) => {
+const tradeCheck = async (token, leagueName, portfolio, ratings) => {
     let buyStocks = ratings.map((e, i) => e === 'Buy' ? tickers[i] : '').filter(String);
     if (buyStocks.length != 0) {
         let ticker = buyStocks[Math.floor(Math.random() * buyStocks.length)].toLowerCase();
@@ -82,7 +82,7 @@ const placeTrade = async (token, leagueName, portfolio, ratings) => {
     }
 };
 
-const tradeCheck = async () => {
+const AIoperations = async () => {
     const response = await fetch(`${process.env.LAPI_URL}/user/ai`, {
         method: 'GET',
     });
@@ -94,7 +94,7 @@ const tradeCheck = async () => {
         const leagueName = await getLeagueName(leagueID);        
         const portfolio = await getAIPortfolio(token, leagueName);
         if (bot.algorithm == 'mean') {
-            placeTrade(token, leagueName, portfolio, meanRatings);
+            tradeCheck(token, leagueName, portfolio, meanRatings);
             /*
             let buyStocks = meanRatings.map((e, i) => e === 'Buy' ? tickers[i] : '').filter(String);
             if (buyStocks.length != 0) {
@@ -113,7 +113,7 @@ const tradeCheck = async () => {
             */
         }
         else if (bot.algorithm == 'momentum') {
-            placeTrade(token, leagueName, portfolio, momentumRatings);
+            tradeCheck(token, leagueName, portfolio, momentumRatings);
         }
         else if (bot.algorithm == 'candlesticks') {
 
@@ -140,7 +140,7 @@ mean.on('close', (code) => {
 });
 
 momentum.on('close', (code) => {
-    // tradeCheck();
+    AIoperations();
 });
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

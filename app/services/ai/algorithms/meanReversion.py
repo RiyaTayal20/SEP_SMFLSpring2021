@@ -3,7 +3,7 @@ import datetime as dt
 import pandas_datareader as pdr
 from dateutil.relativedelta import relativedelta
 
-tickers = ['EDIT', 'SPCE', 'HMBL', 'PCRX', 'TV']
+tickers = ['EDIT', 'SPCE', 'HMBL', 'FUTU', 'KSU', 'SHW', 'TDUP']
 
 now = dt.datetime.now()
 start = now + relativedelta(days=-30)

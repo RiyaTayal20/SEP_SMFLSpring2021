@@ -5,7 +5,7 @@ import pandas_datareader as pdr
 import datetime as dt
 from dateutil.relativedelta import relativedelta
 
-tickers = ['EDIT', 'SPCE', 'HMBL', 'PCRX', 'TV']
+tickers = ['EDIT', 'SPCE', 'HMBL', 'FUTU', 'KSU', 'SHW', 'TDUP']
 
 # Get last 3 months of data
 now = dt.datetime.now()

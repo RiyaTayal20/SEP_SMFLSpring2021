@@ -15,6 +15,7 @@ function CentralizedLeague() {
     return (
         <Container className="custom-cont">
             <div className="centra-league-page">
+                <h1 className="league-header">League Name</h1>
                 <Row className="lead-graph">
                     <h3 className="graph-header"> League Graph </h3>
                     <Line

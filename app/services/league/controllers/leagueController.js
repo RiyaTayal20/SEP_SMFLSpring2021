@@ -742,6 +742,8 @@ exports.getSummary = async (req, res) => {
         endAverage: parseFloat(endAverage).toFixed(2),
         leaguePercentageReturn: parseFloat(leagueReturn).toFixed(2),
         leagueDollarReturn: parseFloat(endAverage - startAverage).toFixed(2),
+        leaguePercentageReturnDifference: parseFloat(personalReturn - leagueReturn).toFixed(2),
+        leagueDollarReturnDifference: parseFloat((endWorth - startWorth) - (endAverage - startAverage)).toFixed(2),
         personalStartWorth: parseFloat(startWorth).toFixed(2),
         personalEndWorth: parseFloat(endWorth).toFixed(2),
         personalPercentageReturn: parseFloat(personalReturn).toFixed(2),

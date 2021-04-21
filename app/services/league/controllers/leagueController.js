@@ -149,11 +149,13 @@ const retrievePortfolioInfo = async (username, league) => {
     });
     if (portfolio) {
         const responseInfo = {
+            owner: portfolio.owner,
             currentNetWorth: portfolio.currentNetWorth,
             closePercentChange: portfolio.closePercentChange,
             cashAvailable: portfolio.cash,
             holdings: portfolio.currentHoldings,
             netWorth: portfolio.netWorth,
+            orders: portfolio.orders,
         };
         return responseInfo;
     }
@@ -856,4 +858,35 @@ exports.insertNetWorth = async (req, res) => {
             if (err) throw err;
         },
     );
+};
+
+// Zip arrays
+
+exports.getLeagueOverview = async (req, res) => {
+    try {
+        // Get league
+        const league = await League
+        .findOne({
+            leagueName: req.params.leagueName,
+        })
+        .then((result) => result)
+        .catch(() => null);
+        if (!league) return res.status(422).json('Error: League not found');
+        // Get portfolios and order for leaderboard
+        const portfolios = await Promise.all(league.playerList.map(async (player) => await retrievePortfolioInfo(player, league)));
+        const sortedPortfolios = portfolios.sort((a, b) => b.currentNetWorth - a.currentNetWorth)
+        // Get % growth
+        const portfolioWithGrowth = sortedPortfolios.map((portfolio) => ({ ...portfolio, growth: (((portfolio.currentNetWorth / league.settings.balance) - 1) * 100).toFixed(3) }))
+        // Get transaction history
+        const allTransactions = portfolioWithGrowth.map((portfolio) => portfolio.orders.filter((order) => order.executed));
+        const sortedTransactions = allTransactions.flat().sort((a, b) => Date.parse(b.timePlaced) - Date.parse(a.timePlaced));
+        const fullResponse = {
+            portfolios: portfolioWithGrowth,
+            transactions: sortedTransactions,
+        };
+        res.json(fullResponse);
+    } catch (err) {
+        console.log(err);
+        res.status(400).send(err.toString());
+    }
 };

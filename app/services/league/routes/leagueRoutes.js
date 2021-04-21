@@ -84,6 +84,8 @@ router.get('/news/:league', leagueValidation.authValidation, leagueController.ge
 
 router.get('/summary/:leagueName', leagueValidation.authValidation, leagueController.getSummary);
 
+router.get('/overview/:leagueName', leagueController.getLeagueOverview);
+
 router.post('/insert/:leagueName', leagueValidation.authValidation, leagueController.insertNetWorth);
 
 module.exports = router;

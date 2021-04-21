@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 // import Form from 'react-bootstrap/Form';
 // import Container from 'react-bootstrap/Container';
 import '../../styles/CentralizedLeague/CentralizedLeague.scss';
@@ -10,8 +11,30 @@ import Col from 'react-bootstrap/Col';
 import { Line } from 'react-chartjs-2';
 
 function CentralizedLeague() {
+    const location = useLocation();
+    console.log(location);
+
+    const [league, setLeague] = useState('');
     const dates = '';
     const prices = '';
+
+    const getLeague = async () => {
+        const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/find/${league}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        const data = await response.json();
+        return data;
+    };
+
+    useEffect(async () => {
+        if (league) {
+            setLeague(await getLeague());
+        }
+    }, [league]);
+
     return (
     // <Container className="custom-cont">
         <div className="centra-league-page">

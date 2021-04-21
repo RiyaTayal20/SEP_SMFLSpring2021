@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
@@ -46,7 +47,15 @@ function CurrentLeagues() {
                 <ListGroup className="league-list">
                     {leagues && leagues.map((league) => (
                         <ListGroup.Item>
-                            <p className="current-league-name">{league.leagueName}</p>
+                            <Link to={
+                                {
+                                    pathname: '/centralizedleague',
+                                    state: { league: league.leagueName },
+                                }
+                            }
+                            >
+                                <p className="current-league-name">{league.leagueName}</p>
+                            </Link>
                             {league.portfolioList
                                 && league.portfolioList.map((portfolio) => {
                                     console.log(portfolio);

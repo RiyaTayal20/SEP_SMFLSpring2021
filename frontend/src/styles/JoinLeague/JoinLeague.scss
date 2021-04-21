@@ -19,11 +19,31 @@
 }
 
 .join-league-form{
-   // min-width: 800px;
     overflow: auto;
     margin-bottom: 100px;
     .btn {
         @include btn;
+    }
+}
+
+.filtering-buttons{
+    display: flex;
+    margin-bottom: 3vh;
+
+    .btn {
+        @include btn;
+    }
+
+    .set-filters{
+        display: inherit;
+        flex-direction: row;
+        margin-right: 1vw;
+    }
+
+    .reset-filters{
+        display: inherit;
+        flex-direction: row;
+        align-items: flex-end !important;
     }
 }
 
@@ -34,7 +54,41 @@
     padding: 0.10rem 0.25rem !important;
 }
 
+.filter-form-field-container{
+    display: flex;
+
+    .filter-form-fields{
+        display: inherit;
+        flex-direction: row;
+    }
+}
+
+.Modal{
+    width: 850px !important;
+  }
+
+.range{
+    display: flex;
+
+    .filter-form-title{
+        display: inherit;
+        flex-direction: column;
+    }
+
+    .filter-form-fields{
+        display: inherit;
+        flex-direction: row;
+    }
+}
+
 .private-league-form{
+    .btn {
+        @include btn;
+    }
+}
+
+.accept-filters{
+    text-align: center;
     .btn {
         @include btn;
     }

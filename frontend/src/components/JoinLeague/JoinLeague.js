@@ -133,14 +133,16 @@ function JoinLeague() {
             }),
         }).then((res) => {
             if (res.ok) {
-                setShowAlert(true);
+                setShowError(false);
                 setShowModal(false);
+                setShowAlert(true);
                 res.json().then((data) => {
                     console.log(data);
                 });
             } else {
-                setShowError(true);
+                setShowAlert(false);
                 setShowModal(false);
+                setShowError(true);
                 res.text().then((text) => {
                     console.log(text);
                     setError(text);
@@ -315,23 +317,22 @@ function JoinLeague() {
     }
 
     return (
-        <div>
-            <div>
-                <Button onClick={() => {
-                    setShowFilter(true);
-                }}
-                >
-                    Set New Filters
-                </Button>
-            </div>
-            <div>
-                <Button onClick={() => resetFilter()}>
-                    Reset Filters
-                </Button>
-            </div>
+        <div className="join-league-page-container">
             <Container style={{ marginLeft: '8vw' }} className="join-league-container">
                 <div className="join-league-form-title">
                     Join a League
+                </div>
+                <div className="filtering-buttons">
+                    <div className="set-filters">
+                        <Button className="f-buttons" onClick={() => { setShowFilter(true); }}>
+                            Set New Filters
+                        </Button>
+                    </div>
+                    <div className="reset-filters">
+                        <Button className="f-buttons" onClick={() => resetFilter()}>
+                            Reset Filters
+                        </Button>
+                    </div>
                 </div>
                 {showAlert
                     && (
@@ -475,8 +476,8 @@ function JoinLeague() {
                     </Modal.Body>
                 </Modal>
 
-                <Modal show={showFilter} onHide={handleFilterClose} centered>
-                    <Modal.Header closeButton>
+                <Modal size="lg" show={showFilter} onHide={handleFilterClose} centered>
+                    <Modal.Header className="filter-header" closeButton>
                         <Modal.Title> Filter Preferences </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -493,32 +494,32 @@ function JoinLeague() {
                                     <option value="private">Private</option>
                                 </Form.Control>
                             </Form.Group>
-                            <Form.Group controlId="formTradeLimit">
-                                <Form.Label>Trade Limit Range</Form.Label>
-                                <Form.Control type="number" placeholder="0" defaultValue={minTradeLimitFilter} onChange={(e) => setMinTradeLimitFilter(e.target.value)} />
+                            <Form.Group className="filter-form-field-container" controlId="formTradeLimit">
+                                <Form.Label className="filter-form-title">Trade Limit Range</Form.Label>
+                                <Form.Control className="filter-form-fields" type="number" placeholder="0" defaultValue={minTradeLimitFilter} onChange={(e) => setMinTradeLimitFilter(e.target.value)} />
                                 to
-                                <Form.Control type="number" placeholder="0" defaultValue={maxTradeLimitFilter} onChange={(e) => setMaxTradeLimitFilter(e.target.value)} />
+                                <Form.Control className="filter-form-fields" type="number" placeholder="0" defaultValue={maxTradeLimitFilter} onChange={(e) => setMaxTradeLimitFilter(e.target.value)} />
                             </Form.Group>
-                            <Form.Group controlId="formBalance">
-                                <Form.Label>Start Balance Range</Form.Label>
-                                <Form.Control type="number" placeholder="500" defaultValue={minBalanceFilter} onChange={(e) => setMinBalanceFilter(e.target.value)} />
+                            <Form.Group className="filter-form-field-container" controlId="formBalance">
+                                <Form.Label className="filter-form-title">Start Balance Range</Form.Label>
+                                <Form.Control className="filter-form-fields" type="number" placeholder="500" defaultValue={minBalanceFilter} onChange={(e) => setMinBalanceFilter(e.target.value)} />
                                 to
-                                <Form.Control type="number" placeholder="500" defaultValue={maxBalanceFilter} onChange={(e) => setMaxBalanceFilter(e.target.value)} />
+                                <Form.Control className="filter-form-fields" type="number" placeholder="500" defaultValue={maxBalanceFilter} onChange={(e) => setMaxBalanceFilter(e.target.value)} />
                             </Form.Group>
-                            <Form.Group controlId="formStart">
-                                <Form.Label>Start Date Range</Form.Label>
+                            <Form.Group className="filter-form-field-container" controlId="formStart">
+                                <Form.Label className="filter-form-title">Start Date Range</Form.Label>
                                 <div className="range">
-                                    <Form.Control type="date" placeholder="01/01/2021" defaultValue={earlyStartFilter} onChange={(e) => setEarlyStartFilter(e.target.value)} />
+                                    <Form.Control className="filter-form-fields" type="date" placeholder="01/01/2021" defaultValue={earlyStartFilter} onChange={(e) => setEarlyStartFilter(e.target.value)} />
                                     to
-                                    <Form.Control type="date" placeholder="01/01/2021" defaultValue={lateStartFilter} onChange={(e) => setLateStartFilter(e.target.value)} />
+                                    <Form.Control className="filter-form-fields" type="date" placeholder="01/01/2021" defaultValue={lateStartFilter} onChange={(e) => setLateStartFilter(e.target.value)} />
                                 </div>
                             </Form.Group>
-                            <Form.Group controlId="formEnd">
-                                <Form.Label>End Date Range</Form.Label>
+                            <Form.Group className="filter-form-field-container" controlId="formEnd">
+                                <Form.Label className="filter-form-title">End Date Range</Form.Label>
                                 <div className="range">
-                                    <Form.Control type="date" placeholder="01/01/2021" defaultValue={earlyEndFilter} onChange={(e) => setEarlyEndFilter(e.target.value)} />
+                                    <Form.Control className="filter-form-fields" type="date" placeholder="01/01/2021" defaultValue={earlyEndFilter} onChange={(e) => setEarlyEndFilter(e.target.value)} />
                                     to
-                                    <Form.Control type="date" placeholder="01/01/2021" defaultValue={lateEndFilter} onChange={(e) => setLateEndFilter(e.target.value)} />
+                                    <Form.Control className="filter-form-fields" type="date" placeholder="01/01/2021" defaultValue={lateEndFilter} onChange={(e) => setLateEndFilter(e.target.value)} />
                                 </div>
                             </Form.Group>
 
@@ -529,7 +530,7 @@ function JoinLeague() {
                                 <Form.Check type="checkbox" label="Hide Joined Leagues" defaultChecked={hideJoined} onChange={() => setHideJoined(!hideJoined)} />
                             </Form.Group>
 
-                            <center>
+                            <div className="accept-filters">
                                 <Button onClick={() => {
                                     applyFilter();
                                     console.log('Saved');
@@ -537,7 +538,7 @@ function JoinLeague() {
                                 }}
                                 >Set New Filter
                                 </Button>
-                            </center>
+                            </div>
                         </Form>
                     </Modal.Body>
                 </Modal>

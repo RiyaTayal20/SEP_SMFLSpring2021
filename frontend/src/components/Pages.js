@@ -4,6 +4,7 @@ import HomePage from './Home/Home';
 import CreateLeaguePage from './CreateLeague/CreateLeague';
 import JoinLeaguePage from './JoinLeague/JoinLeague';
 import IndividualStockPage from './IndividualStock/IndividualStock';
+import LeagueManagementPage from './LeagueManagement/LeagueManagement';
 import TradePage from './Trade/Trade';
 import CurrentLeaguesPage from './CurrentLeagues/CurrentLeagues';
 import SymbolLookupPage from './SymbolLookup/SymbolLookup';
@@ -19,6 +20,7 @@ export {
     CreateLeaguePage,
     JoinLeaguePage,
     IndividualStockPage,
+    LeagueManagementPage,
     TradePage,
     CurrentLeaguesPage,
     SymbolLookupPage,

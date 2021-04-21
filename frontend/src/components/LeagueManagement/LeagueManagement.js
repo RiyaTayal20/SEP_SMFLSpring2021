@@ -221,7 +221,12 @@ function LeagueManagement() {
                                 <Form.Label>Give Money to {selectedPlayer}:</Form.Label>
                                 <Form.Control type="number" step="1" placeholder="Enter amount..." onChange={(e) => setAmount(e.target.value)} />
                             </Form.Group>
-                            <Button onClick={() => addMoney(selectedPlayer, selectedLeague.leagueName, amt)}>Give</Button>
+                            <Button onClick={() => {
+                                handleClose();
+                                addMoney(selectedPlayer, selectedLeague.leagueName, amt);
+                            }}
+                            >Give
+                            </Button>
                         </Form>
                     </Modal.Body>
                 </Modal>

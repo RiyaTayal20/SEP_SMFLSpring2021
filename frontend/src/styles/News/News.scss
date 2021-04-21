@@ -1,3 +1,5 @@
+@import '../Button.scss';
+
 .news-title{
     color: white;
     font-size: 35px;
@@ -15,18 +17,7 @@
 .news-dropdown {
     margin-left: 15px;
     .btn{
-        color: black;
-        background-color: white;
-        border-color: white;
-        &:hover, &:focus, &:active{
-            color: black;
-            background-color: white;
-            border-color: white;
-        }
-        &:not(:disabled):not(.disabled) {
-            background: white;
-            color: black;
-        }
+        @include dropdownbtn;
     }
 }
 

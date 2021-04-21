@@ -715,7 +715,6 @@ exports.getSummary = async (req, res) => {
         });
     });
 
-    console.log(SPHistorical);
     SPHistorical.forEach((day) => {
         date = new Date(day.date);
         date.setHours(0,0,0,0);
@@ -727,9 +726,6 @@ exports.getSummary = async (req, res) => {
             SPEndWorth = day.close;
         }
     });
-
-    console.log(`lastFriday: ${lastFriday}`);
-    console.log(`endDay: ${endDay}`);
 
     const startAverage = startPortfolioTotals / ((leagueInfo.portfolioList).length - 1);
     const endAverage = endPortfolioTotals / ((leagueInfo.portfolioList).length - 1);

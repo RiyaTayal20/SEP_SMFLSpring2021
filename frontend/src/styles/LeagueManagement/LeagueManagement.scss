@@ -1,54 +1,53 @@
 @import '../root.scss';
 @import '../Button.scss';
 
-.portfolio-title{
-    font-size: 35px;
-    margin-left: 15px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-}
-
 .no-leagues-title{
     color: white;
     font-size: 35px;
     padding: 30px;
 }
 
-.portfolio-container{
+.manage-league-container{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     color: white;
-    .header {
-        padding-top: 30px;
+    .manage-league-form-title{
+        font-size: 35px;
         text-align: center;
-        h1 {
-            font-size: 60px;
-        }
+        margin-left: 15px;
+        padding-top: 5vh;
+        padding-bottom: 5vh;
     }
-}
-
-.league-manage-dropdown{
-    margin-left: 15px;
-    .btn{
-        color: black;
-        background-color: white;
-        border-color: white;
-        &:hover, &:focus, &:active{
+    .league-manage-dropdown{
+        margin-left: 15px;
+        padding-bottom: 7vh;
+        text-align: center;
+        .btn{
             color: black;
             background-color: white;
             border-color: white;
+            &:hover, &:focus, &:active{
+                color: black;
+                background-color: white;
+                border-color: white;
+            }
+            &:not(:disabled):not(.disabled) {
+                background: white;
+                color: black;
+            }
         }
-        &:not(:disabled):not(.disabled) {
-            background: white;
-            color: black;
+    }
+    .table-body{
+        padding: 5vh;
+        text-align: center;
+        .btn {
+            padding: 1vh 1vw;
+            background-color: #3FC380;
+            border-color: #3FC380;
         }
     }
 }
 
-.table-body{
-    .btn {
-        background-color: #3FC380;
-        border-color: #3FC380;
-    }
-}
+
+

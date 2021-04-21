@@ -68,7 +68,7 @@ function App() {
                             <Route path="/summary">
                                 <SummaryPage />
                             </Route>
-                            <Route path="/centralizedLeague">
+                            <Route path="/centralizedleague">
                                 <CentralizedLeaguePage />
                             </Route>
                         </Switch>

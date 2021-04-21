@@ -14,6 +14,8 @@ import {
     SymbolLookupPage,
     PortfolioPage,
     NewsPage,
+    SummaryPage,
+    CentralizedLeaguePage,
 } from './components/Pages';
 import Header from './components/Header/Header';
 import NavigationBar from './components/NavigationBar/NavigationBar';
@@ -62,6 +64,12 @@ function App() {
                             </Route>
                             <Route path="/news">
                                 <NewsPage />
+                            </Route>
+                            <Route path="/summary">
+                                <SummaryPage />
+                            </Route>
+                            <Route path="/centralizedLeague">
+                                <CentralizedLeaguePage />
                             </Route>
                         </Switch>
                     </div>

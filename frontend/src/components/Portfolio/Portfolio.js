@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import Container from 'react-bootstrap/Container';
 import Positions from './Sections/Positions';
 import PortfolioGraph from './Sections/PortfolioGraph';
+import PortfolioHistory from './Sections/PortfolioHistory';
 import '../../styles/Portfolio/Portfolio.scss';
 
 const Portfolio = () => {
@@ -85,6 +86,7 @@ const Portfolio = () => {
                             </h1>
                             <PortfolioGraph portfolio={portfolio} />
                             <Positions portfolio={portfolio} />
+                            <PortfolioHistory portfolio={portfolio} />
                         </div>
                     )}
             </Container>

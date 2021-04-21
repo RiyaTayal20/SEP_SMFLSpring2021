@@ -495,22 +495,32 @@ function JoinLeague() {
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group className="filter-form-field-container" controlId="formTradeLimit">
-                                <Form.Label className="filter-form-title">Trade Limit Range</Form.Label>
-                                <Form.Control className="filter-form-fields" type="number" placeholder="0" defaultValue={minTradeLimitFilter} onChange={(e) => setMinTradeLimitFilter(e.target.value)} />
-                                to
-                                <Form.Control className="filter-form-fields" type="number" placeholder="0" defaultValue={maxTradeLimitFilter} onChange={(e) => setMaxTradeLimitFilter(e.target.value)} />
+                                <div className="filter-form-title">
+                                    <Form.Label>Trade Limit Range</Form.Label>
+                                </div>
+                                <div className="range">
+                                    <Form.Control className="filter-form-fields" type="number" placeholder="0" defaultValue={minTradeLimitFilter} onChange={(e) => setMinTradeLimitFilter(e.target.value)} />
+                                    <div className="spacing-between-fields">to</div>
+                                    <Form.Control className="filter-form-fields" type="number" placeholder="0" defaultValue={maxTradeLimitFilter} onChange={(e) => setMaxTradeLimitFilter(e.target.value)} />
+                                </div>
                             </Form.Group>
                             <Form.Group className="filter-form-field-container" controlId="formBalance">
-                                <Form.Label className="filter-form-title">Start Balance Range</Form.Label>
-                                <Form.Control className="filter-form-fields" type="number" placeholder="500" defaultValue={minBalanceFilter} onChange={(e) => setMinBalanceFilter(e.target.value)} />
-                                to
-                                <Form.Control className="filter-form-fields" type="number" placeholder="500" defaultValue={maxBalanceFilter} onChange={(e) => setMaxBalanceFilter(e.target.value)} />
+                                <div className="filter-form-title">
+                                    <Form.Label>Start Balance Range</Form.Label>
+                                </div>
+                                <div className="range">
+                                    <Form.Control className="filter-form-fields" type="number" placeholder="0" defaultValue={minBalanceFilter} onChange={(e) => setMinBalanceFilter(e.target.value)} />
+                                    <div className="spacing-between-fields">to</div>
+                                    <Form.Control className="filter-form-fields" type="number" placeholder="0" defaultValue={maxBalanceFilter} onChange={(e) => setMaxBalanceFilter(e.target.value)} />
+                                </div>
                             </Form.Group>
                             <Form.Group className="filter-form-field-container" controlId="formStart">
-                                <Form.Label className="filter-form-title">Start Date Range</Form.Label>
+                                <div className="filter-form-title">
+                                    <Form.Label>Start Date Range</Form.Label>
+                                </div>
                                 <div className="range">
                                     <Form.Control className="filter-form-fields" type="date" placeholder="01/01/2021" defaultValue={earlyStartFilter} onChange={(e) => setEarlyStartFilter(e.target.value)} />
-                                    to
+                                    <div className="spacing-between-fields">to</div>
                                     <Form.Control className="filter-form-fields" type="date" placeholder="01/01/2021" defaultValue={lateStartFilter} onChange={(e) => setLateStartFilter(e.target.value)} />
                                 </div>
                             </Form.Group>
@@ -518,7 +528,7 @@ function JoinLeague() {
                                 <Form.Label className="filter-form-title">End Date Range</Form.Label>
                                 <div className="range">
                                     <Form.Control className="filter-form-fields" type="date" placeholder="01/01/2021" defaultValue={earlyEndFilter} onChange={(e) => setEarlyEndFilter(e.target.value)} />
-                                    to
+                                    <div className="spacing-between-fields">to</div>
                                     <Form.Control className="filter-form-fields" type="date" placeholder="01/01/2021" defaultValue={lateEndFilter} onChange={(e) => setLateEndFilter(e.target.value)} />
                                 </div>
                             </Form.Group>

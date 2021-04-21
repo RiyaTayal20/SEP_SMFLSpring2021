@@ -56,29 +56,16 @@
 
 .filter-form-field-container{
     display: flex;
+    flex-direction: column;
 
-    .filter-form-fields{
+    .range{
         display: inherit;
         flex-direction: row;
     }
 }
 
-.Modal{
-    width: 850px !important;
-  }
-
-.range{
-    display: flex;
-
-    .filter-form-title{
-        display: inherit;
-        flex-direction: column;
-    }
-
-    .filter-form-fields{
-        display: inherit;
-        flex-direction: row;
-    }
+.spacing-between-fields{
+    margin: 0.6vh 1vw 0vh 1vw;
 }
 
 .private-league-form{

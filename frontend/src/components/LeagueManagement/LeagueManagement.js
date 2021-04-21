@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Alert from 'react-bootstrap/Alert';
+import Modal from 'react-bootstrap/Modal';
 // import Col from 'react-bootstrap/Col';
 // import Row from 'react-bootstrap/Row';
 // import InputGroup from 'react-bootstrap/InputGroup';
@@ -19,7 +20,9 @@ function LeagueManagement() {
     const [showAlert, setShowAlert] = useState(false);
     const [showError, setShowError] = useState(false);
     const [notifMessage, setNotifMessage] = useState('');
-    // const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+
+    const handleClose = () => setShowModal(false);
     // const [leagueKey, setLeagueKey] = useState('');
     // const [showAlert, setShowAlert] = useState(false);
     // const [showError, setShowError] = useState(false);
@@ -96,7 +99,7 @@ function LeagueManagement() {
                 cash: amount,
             }),
         });
-
+        setShowModal(true);
         if (response.status === 200) {
             const thing = await response.text().then((res) => res).catch((err) => err.toString());
             console.log(thing);
@@ -177,6 +180,20 @@ function LeagueManagement() {
                         </tbody>
                     </Table>
                 </Form>
+                <Modal show={showModal} onHide={handleClose} centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{player}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form className="add-money-form">
+                            <Form.Group controlId="giveMoney">
+                                <Form.Label>Give Money:</Form.Label>
+                                <Form.Control type="number" step="0.01" placeholder="Enter amount..." /*onChange={(e) => setLeagueKey(e.target.value)}*/ />
+                            </Form.Group>
+                            <Button onClick={() => addMoney(player,selectedLeague.leagueName,100/*,money??*/ )}>Give</Button>
+                        </Form>
+                    </Modal.Body>
+                </Modal>
             </Container>
         </div>
     );

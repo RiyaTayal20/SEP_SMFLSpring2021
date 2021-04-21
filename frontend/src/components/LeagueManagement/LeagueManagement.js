@@ -3,9 +3,9 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import Modal from 'react-bootstrap/Modal';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Alert from 'react-bootstrap/Alert';
-import Modal from 'react-bootstrap/Modal';
 // import Col from 'react-bootstrap/Col';
 // import Row from 'react-bootstrap/Row';
 // import InputGroup from 'react-bootstrap/InputGroup';
@@ -17,6 +17,8 @@ function LeagueManagement() {
 
     const [leagues, setLeagues] = useState([]);
     const [selectedLeague, setSelectedLeague] = useState('');
+    const [selectedPlayer, setSelectedPlayer] = useState('');
+    const [amt, setAmount] = useState('');
     const [showAlert, setShowAlert] = useState(false);
     const [showError, setShowError] = useState(false);
     const [notifMessage, setNotifMessage] = useState('');
@@ -87,6 +89,12 @@ function LeagueManagement() {
         }
     };
 
+    const handleGiveMoney = (player) => {
+        console.log(player);
+        setSelectedPlayer(player);
+        setShowModal(true);
+    };
+
     const addMoney = async (player, leagueName, amount) => {
         const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/league/${leagueName}/donate`, {
             method: 'POST',
@@ -99,7 +107,6 @@ function LeagueManagement() {
                 cash: amount,
             }),
         });
-        setShowModal(true);
         if (response.status === 200) {
             const thing = await response.text().then((res) => res).catch((err) => err.toString());
             console.log(thing);
@@ -173,7 +180,7 @@ function LeagueManagement() {
                                             return (<Button onClick={() => kickPlayer(player, selectedLeague.leagueName)}>Kick</Button>);
                                         })()}
                                         &nbsp;&nbsp;&nbsp;
-                                        <Button onClick={() => addMoney(player, selectedLeague.leagueName, 500)}>Give Money</Button>
+                                        <Button onClick={() => handleGiveMoney(player)}>Give Money</Button>
                                     </td>
                                 </tr>
                             ))}
@@ -182,15 +189,15 @@ function LeagueManagement() {
                 </Form>
                 <Modal show={showModal} onHide={handleClose} centered>
                     <Modal.Header closeButton>
-                        <Modal.Title>{player}</Modal.Title>
+                        <Modal.Title>{selectedPlayer.username}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form className="add-money-form">
                             <Form.Group controlId="giveMoney">
                                 <Form.Label>Give Money:</Form.Label>
-                                <Form.Control type="number" step="0.01" placeholder="Enter amount..." /*onChange={(e) => setLeagueKey(e.target.value)}*/ />
+                                <Form.Control type="number" step="0.01" placeholder="Enter amount..." onChange={(e) => setAmount(e.target.value)} />
                             </Form.Group>
-                            <Button onClick={() => addMoney(player,selectedLeague.leagueName,100/*,money??*/ )}>Give</Button>
+                            <Button onClick={() => addMoney(selectedPlayer, selectedLeague.leagueName, amt)}>Give</Button>
                         </Form>
                     </Modal.Body>
                 </Modal>

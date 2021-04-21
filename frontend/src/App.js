@@ -14,7 +14,8 @@ import {
     SymbolLookupPage,
     PortfolioPage,
     NewsPage,
-    CentralizedLeaguePage,
+    SummaryPage,
+    WelcomePage,
 } from './components/Pages';
 import Header from './components/Header/Header';
 import NavigationBar from './components/NavigationBar/NavigationBar';
@@ -28,7 +29,7 @@ function App() {
             <div className="App">
                 <Header />
                 <div className="site-container">
-                    { ['/user/register', '/user/login'].indexOf(window.location.pathname) < 0 && <NavigationBar /> }
+                    { ['/user/register', '/user/login', '/welcome'].indexOf(window.location.pathname) < 0 && <NavigationBar /> }
                     <div className="site-content">
                         <Switch>
                             <Route path="/user/register">
@@ -64,8 +65,11 @@ function App() {
                             <Route path="/news">
                                 <NewsPage />
                             </Route>
-                            <Route path="/CentralizedLeague">
-                                <CentralizedLeaguePage />
+                            <Route path="/summary">
+                                <SummaryPage />
+                            </Route>
+                            <Route path="/welcome">
+                                <WelcomePage />
                             </Route>
                         </Switch>
                     </div>

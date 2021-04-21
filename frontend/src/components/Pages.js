@@ -9,7 +9,8 @@ import CurrentLeaguesPage from './CurrentLeagues/CurrentLeagues';
 import SymbolLookupPage from './SymbolLookup/SymbolLookup';
 import PortfolioPage from './Portfolio/Portfolio';
 import NewsPage from './News/News';
-import CentralizedLeaguePage from './CentralizedLeague/CentralizedLeague';
+import SummaryPage from './Summary/Summary';
+import WelcomePage from './Welcome/Welcome';
 
 export {
     RegistrationPage,
@@ -23,5 +24,6 @@ export {
     SymbolLookupPage,
     PortfolioPage,
     NewsPage,
-    CentralizedLeaguePage,
+    SummaryPage,
+    WelcomePage,
 };

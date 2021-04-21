@@ -1,0 +1,57 @@
+@import '../root.scss';
+@import '../Button.scss';
+
+.container {
+    max-width: 100%;
+  }
+.one-cont{
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    flex-direction: column;
+    
+    .main-Icon{ 
+        display:inherit;
+        margin-left:17vw;
+        margin-top:10vh;
+    
+    }
+
+}
+.two-cont{
+    display:flex;
+    flex-direction:row;
+    .education{
+        display:inherit;
+    }
+    .market{
+        display:inherit;
+    }
+}
+.all-buttons{
+    display:flex;
+    flex-direction:row;
+    .reg-button{
+        display:inherit;
+        justify-content: center;
+        align-items:center;
+        color: white;
+        background-color: #5367fc;
+        border-color:white;
+        margin-left:17vw;
+        margin-top:5vh;
+    
+    }
+
+    .log-button{
+        display:inherit;
+        justify-content: center;
+        align-items:center;
+        color: white;
+        background-color:var(--mint);
+        border-color:white;
+        margin-left:17vw;
+        margin-top:5vh;
+    
+    }
+}

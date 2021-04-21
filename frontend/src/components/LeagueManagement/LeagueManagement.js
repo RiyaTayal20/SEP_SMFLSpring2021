@@ -23,8 +23,17 @@ function LeagueManagement() {
     const [showError, setShowError] = useState(false);
     const [notifMessage, setNotifMessage] = useState('');
     const [showModal, setShowModal] = useState(false);
+    const [showModalKick, setShowModalKick] = useState(false);
 
-    const handleClose = () => setShowModal(false);
+    const handleClose = () => {
+        setShowModal(false);
+        setShowModalKick(false);
+    };
+
+    const closeAlerts = () => {
+        setShowAlert(false);
+        setShowError(false);
+    };
     // const [leagueKey, setLeagueKey] = useState('');
     // const [showAlert, setShowAlert] = useState(false);
     // const [showError, setShowError] = useState(false);
@@ -138,6 +147,7 @@ function LeagueManagement() {
                     <DropdownButton title={selectedLeague.leagueName || 'Select League'} className="league-manage-dropdown" size="lg">
                         {leagues && leagues.map((league) => (
                             <Dropdown.Item onClick={() => {
+                                closeAlerts();
                                 setSelectedLeague(league);
                             }}
                             >
@@ -177,27 +187,63 @@ function LeagueManagement() {
                                                 return (<Button style={{ backgroundColor: 'gray', borderColor: 'gray' }}>Kick</Button>);
                                             }
                                             /* eslint max-len: 0 */
-                                            return (<Button onClick={() => kickPlayer(player, selectedLeague.leagueName)}>Kick</Button>);
+                                            return (
+                                                <Button onClick={() => {
+                                                    setSelectedPlayer(player);
+                                                    closeAlerts();
+                                                    setShowModalKick(true);
+                                                }}
+                                                >
+                                                    Kick
+                                                </Button>
+                                            );
                                         })()}
                                         &nbsp;&nbsp;&nbsp;
-                                        <Button onClick={() => handleGiveMoney(player)}>Give Money</Button>
+                                        <Button onClick={() => {
+                                            closeAlerts();
+                                            handleGiveMoney(player);
+                                        }}
+                                        >Give Money
+                                        </Button>
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </Table>
                 </Form>
-                <Modal show={showModal} onHide={handleClose} centered>
+                <Modal className="modalView" show={showModal} onHide={handleClose} centered>
                     <Modal.Header closeButton>
-                        <Modal.Title>{selectedPlayer.username}</Modal.Title>
+                        <Modal.Title>Add Money</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form className="add-money-form">
                             <Form.Group controlId="giveMoney">
-                                <Form.Label>Give Money:</Form.Label>
-                                <Form.Control type="number" step="0.01" placeholder="Enter amount..." onChange={(e) => setAmount(e.target.value)} />
+                                <Form.Label>Give Money to {selectedPlayer}:</Form.Label>
+                                <Form.Control type="number" step="1" placeholder="Enter amount..." onChange={(e) => setAmount(e.target.value)} />
                             </Form.Group>
                             <Button onClick={() => addMoney(selectedPlayer, selectedLeague.leagueName, amt)}>Give</Button>
+                        </Form>
+                    </Modal.Body>
+                </Modal>
+                <Modal className="modalView" show={showModalKick} onHide={handleClose} centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Confirmation</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form className="add-money-form">
+                            <Form.Group controlId="giveMoney">
+                                <Form.Label>Are you sure you want to kick {selectedPlayer} from {selectedLeague.leagueName}?</Form.Label>
+                            </Form.Group>
+                            <Button
+                                style={{ 'background-color': '#FF5757', 'border-color': '#FF5757' }}
+                                onClick={() => {
+                                    handleClose();
+                                    kickPlayer(selectedPlayer, selectedLeague.leagueName);
+                                }}
+                            >Yes, Kick {selectedPlayer}
+                            </Button>
+                            &nbsp;&nbsp;
+                            <Button onClick={() => handleClose()}>No, Do Not Kick</Button>
                         </Form>
                     </Modal.Body>
                 </Modal>

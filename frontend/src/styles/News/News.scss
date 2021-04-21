@@ -1,9 +1,13 @@
+:root{
+    .site-content{
+        margin-right: 0px;
+    }
+}
+
 .news-title{
     color: white;
     font-size: 35px;
-    margin-left: 15px;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    margin: 5vh 0vw 5vh 1vw;
 }
 
 .news-container {
@@ -13,19 +17,20 @@
 }
 
 .news-dropdown {
-    margin-left: 15px;
+    margin-left: 1vw;
+
     .btn{
-        color: black;
-        background-color: white;
-        border-color: white;
+        color: white;
+        background-color: var(--mint);
+        border-color: var(--mint);
         &:hover, &:focus, &:active{
-            color: black;
-            background-color: white;
+            color: white;
+            background-color: var(--mint);
             border-color: white;
         }
         &:not(:disabled):not(.disabled) {
-            background: white;
-            color: black;
+            background: var(--mint);
+            color: white;
         }
     }
 }
@@ -37,9 +42,19 @@
 }
 
 .article {
-    padding: 50px;
-    width: 500px;
-    height: 400px;
+    width: 300px;
+    height: 345px;
+    margin: 2vh 0vw 8vh 3vw;
+}
+
+.article-cards {
+    width: 300px;
+    height: 345px;
+}
+
+.article-image-cards{
+    width: 297px;
+    height: 215px;
 }
 
 .article-headline {

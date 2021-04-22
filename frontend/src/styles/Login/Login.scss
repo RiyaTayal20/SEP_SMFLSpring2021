@@ -13,33 +13,35 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
 
-    .login-form{ 
+.login-form{ 
+    @extend %flex-center;
+    border-style: solid;
+    border-color: white;
+    margin: 80px auto;
+    margin-left: 250px;
+    padding: 4vh 3vw;
+    .form-group {
         @extend %flex-center;
-        border-style: solid;
-        border-color: white;
-        margin: 90px auto;
-        padding:70px 110px;
-        .form-group {
-            @extend %flex-center;
-            color: white;
-            align-items: flex-start;
-        }
+        color: white;
+        align-items: flex-start;
+    }
     
-        .text-register {
-            &:hover {
-                text-decoration: underline;
-            }
+    .text-register {
+        &:hover {
+            text-decoration: underline;
         }
+    }
     
-        .btn {
-            @include btn;
-        }
+    .btn {
+        @include btn;
     }
 }
 
 .text-register{
     padding: 10px 0px 0px 10px;
+    width: 25vw;
 }
 
 .form-group{

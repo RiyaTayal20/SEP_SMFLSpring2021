@@ -2,8 +2,8 @@
 @import '../Button.scss';
 
 .login-form-title{
-    padding-top: 30px;
-    color: white;
+    padding-top: 5vh;
+    color: var(--white);
     text-align: center;
     height: 0px;
     font-size: 35px;
@@ -18,13 +18,12 @@
 .login-form{ 
     @extend %flex-center;
     border-style: solid;
-    border-color: white;
-    margin: 80px auto;
-    margin-left: 250px;
-    padding: 4vh 3vw;
+    border-color: var(--white);
+    margin: 10vh auto;
+    padding: 10vh 4vw 8vh 4vw;
     .form-group {
         @extend %flex-center;
-        color: white;
+        color: var(--white);
         align-items: flex-start;
     }
     
@@ -40,8 +39,8 @@
 }
 
 .text-register{
-    padding: 10px 0px 0px 10px;
-    width: 25vw;
+    padding: 2vh 0px 0px 0.5vw;
+    width: 20vw;
 }
 
 .form-group{

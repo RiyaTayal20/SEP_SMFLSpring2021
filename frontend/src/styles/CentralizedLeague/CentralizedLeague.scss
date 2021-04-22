@@ -4,44 +4,27 @@
     background-color: var(--light-scale-grey);
 }
 
-h3{
-    color: #3fc380;
+h3 {
+    color: var(--mint);
 }
 
-.league-header{
-    color: #5367fc;
+.league-header {
+    color: var(--purple);
     text-align: center;
-    margin-bottom:4vh;
+    margin-bottom: 4vh;
 }
 
-.centra-league-page{
-    margin-left:10vw;
-    margin-top:5vh;
+.central-league-page {
+    margin-top: 5vh;
    
 }
 
-.lead-graph.row{
-    display:flex; 
-    flex-direction:row;
-    flex-wrap:nowrap;
+.lead-graph.row {
+    display: flex; 
+    flex-direction: row;
+    flex-wrap: nowrap;
 }
-    
-.graph-header{
-    margin-left:2.5vw;
-}
-// .leader-row{
-//     margin-bottom:30vh;
-// }
-// .leaderboard-table{
-//     margin-top:4vh;
-//     margin-right: 20vw;
-//     margin-bottom:30vh;
-//     // overflow:  auto;
-// }
 
-// .transaction-table{
-//     margin-top: 5vh;
-//     margin-right: 20vw;
-//     margin-bottom:20vh;
-//     // overflow: auto;  
-// }
+.graph-header{
+    margin-left: 2.5vw;
+}

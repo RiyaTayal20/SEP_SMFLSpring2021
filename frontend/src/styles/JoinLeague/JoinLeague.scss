@@ -3,7 +3,7 @@
 
 .join-league-form-title{
     font-size: 40px;
-    color: white;
+    color: var(--white);
     padding-top: 4.5%;
     padding-bottom: 3%;
 }
@@ -48,12 +48,11 @@
     .reset-filters{
         display: inherit;
         flex-direction: row;
-        align-items: flex-end !important;
     }
 }
 
 .filter-button{
-    background-color: white !important;
+    background-color: var(--white) !important;
     border: none !important;
     margin-left: 0.5vw;
     padding: 0.10rem 0.25rem !important;

@@ -1,5 +1,5 @@
 .news-title{
-    color: white;
+    color: var(--white);
     font-size: 35px;
     margin: 5vh 0vw 5vh 1vw;
 }
@@ -13,17 +13,17 @@
 .news-dropdown {
     margin-left: 1%;
     .btn{
-        color: white;
+        color: var(--white);
         background-color: var(--mint);
         border-color: var(--mint);
         &:hover, &:focus, &:active{
-            color: white;
+            color: var(--white);
             background-color: var(--mint);
-            border-color: white;
+            border-color: var(--white);
         }
         &:not(:disabled):not(.disabled) {
             background: var(--mint);
-            color: white;
+            color: var(--white);
         }
     }
 }

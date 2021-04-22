@@ -2,25 +2,25 @@
 @import '../Button.scss';
 
 .no-leagues-title{
-    color: white;
+    color: var(--white);
     font-size: 35px;
-    padding: 30px;
+    padding-top: 10vh;
 }
 
 .manage-league-container{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    color: white;
+    color: var(--white);
+    
     .manage-league-form-title{
         font-size: 35px;
         text-align: center;
-        margin-left: 15px;
         padding-top: 5vh;
         padding-bottom: 5vh;
     }
+
     .league-manage-dropdown{
-        margin-left: 15px;
         padding-bottom: 7vh;
         text-align: center;
         .btn{
@@ -38,6 +38,7 @@
             }
         }
     }
+
     .table-body{
         padding: 5vh;
         text-align: center;

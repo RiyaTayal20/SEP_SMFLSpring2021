@@ -8,14 +8,14 @@
 }
 
 .order-title{
-    font-size: 35px;
+    font-size: 40px;
     padding-bottom: 30px;
     padding-top: 30px;
     margin-left: -15px;
 }
 
 .account-details-title{
-    font-size: 35px;
+    font-size: 40px;
     padding-bottom: 30px;
     padding-top: 30px;
 }
@@ -24,16 +24,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 18px;
     .form-control{
-        width: 150px;
+        width: 160%;
     }
     .form-group {
         color: white;
     }
 
     .form-label{
-        min-width: 150px;
+        min-width: 110%;
     }
 
     .btn {
@@ -46,7 +45,7 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    margin-left: 150px;
+    margin-left: 3vw;
 }
 
 .account-details-information{

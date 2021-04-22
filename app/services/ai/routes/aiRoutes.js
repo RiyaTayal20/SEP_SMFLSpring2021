@@ -27,6 +27,18 @@ const aiController = require('../controllers/aiController');
  */
 router.get('/momentum/:ticker', aiController.momentum);
 
+/**
+ * Route handling query of momentum graph data
+ * @function
+ * @name get/candlesticks/:ticker
+ */
+ router.get('/candlesticks/:ticker', aiController.candlesticks);
+
+ /**
+ * Route handling all other queries
+ * @function
+ * @name get/
+ */
  router.get('*', (req, res) => {
     res.status(404).send('This endpoint does not exist!');
 });

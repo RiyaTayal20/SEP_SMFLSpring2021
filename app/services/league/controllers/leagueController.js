@@ -155,6 +155,7 @@ const retrievePortfolioInfo = async (username, league) => {
             cashAvailable: portfolio.cash,
             holdings: portfolio.currentHoldings,
             netWorth: portfolio.netWorth,
+            orders: portfolio.orders,
         };
         return responseInfo;
     }
@@ -650,6 +651,7 @@ exports.getPortfolio = async (req, res) => {
                 closePercentChange: (parseFloat(portfolioInfo.closePercentChange) * 100).toFixed(2),
                 holdings: remapHoldings,
                 netWorth: portfolioInfo.netWorth,
+                orders: portfolioInfo.orders,
             };
             res.json(fullResponse);
         });

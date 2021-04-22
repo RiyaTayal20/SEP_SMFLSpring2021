@@ -7,6 +7,8 @@ const PORT = process.env.PORT || 3000;
 
 const { aiBots }  = require('./tasks/aiTask');
 
+aiBots();
+
 cron.schedule('*/2 10-16 * * 1-5', () => {
     console.log('AI bots');
     aiBots();

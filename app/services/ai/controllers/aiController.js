@@ -63,10 +63,10 @@ exports.momentum = async (req, res) => {
         data = data.split(' ');
         data = data.filter(item => item);
         data.splice(0,6);
-        dates = data.filter((e, i) => i % 4 + 3 === 4 - 1);
-        rsi= data.filter((e, i) => i % 4 + 2=== 4 - 1);
         sell = data.filter((e, i) => i % 4 === 4 - 1);
         buy = data.filter((e, i) => i % 4 + 1 === 4 - 1);
+        rsi= data.filter((e, i) => i % 4 + 2 === 4 - 1);
+        dates = data.filter((e, i) => i % 4 + 3 === 4 - 1);
     });
     python.stderr.on('data', function (data){
         console.log(data.toString());
@@ -79,5 +79,37 @@ exports.momentum = async (req, res) => {
             sell: sell,
         };
         res.send(momentumData);
+    });
+};
+
+exports.candlesticks = async (req, res) => {
+    let dates, open, high, low, close, i;
+    let candlesticksData = [];
+    const python = spawn('python', ['./controllers/indicators/candlestickGraph.py', req.params.ticker]);
+    python.stdout.on('data', function (data) {
+        data = data.toString().trim();
+        data = data.replace(/[\r\n]+/gm, ' ');
+        data = data.split(' ');
+        data = data.filter(item => item);
+        data.splice(0,5);
+        close = data.filter((e, i) => i % 5 === 5 - 1);
+        open = data.filter((e, i) => i % 5 + 1 === 5 - 1);
+        low = data.filter((e, i) => i % 5 + 2 === 5 - 1);
+        high = data.filter((e, i) => i % 5 + 3 === 5 - 1);
+        dates = data.filter((e, i) => i % 5 + 4 === 5 - 1);
+        for (i = 0; i < open.length; i++) {
+            let ohlc = [parseFloat(open[i]).toFixed(2), parseFloat(high[i]).toFixed(2), parseFloat(low[i]).toFixed(2), parseFloat(close[i]).toFixed(2)];
+            const temp = {
+                x: dates[i],
+                y: ohlc,
+            }
+            candlesticksData.push(temp);
+        }
+    });
+    python.stderr.on('data', function (data){
+        console.log(data.toString());
+    });
+    python.on('close', (code) => {
+        res.send(candlesticksData);
     });
 };

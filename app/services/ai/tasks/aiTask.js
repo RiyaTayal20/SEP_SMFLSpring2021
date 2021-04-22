@@ -116,6 +116,10 @@ exports.aiBots = async () => {
         console.log(meanRatings);
     });
 
+    mean.stderr.on('data', function (data){
+        console.log(data.toString());
+    });
+
     mean.on('close', (code) => {
 
     });
@@ -129,7 +133,30 @@ exports.aiBots = async () => {
         console.log(momentumRatings);
     });
 
+    momentum.stderr.on('data', function (data){
+        console.log(data.toString());
+    });
+
     momentum.on('close', (code) => {
         AIoperations();
     });
+
+    /*
+    const candlesticks = spawn('python', ['algorithms/candlesticks.py']);
+
+    candlesticks.stdout.on('data', function (data) {
+        let rating = data.toString().trim();
+        rating = rating.replace( /[\r\n]+/gm, ' ');
+        candlestickRatings = rating.split(' ');
+        console.log(candlestickRatings);
+    });
+
+    candlesticks.stderr.on('data', function (data){
+        console.log(data.toString());
+    });
+
+    candlesticks.on('close', (code) => {
+        AIoperations();
+    });
+    */
 };

@@ -2,32 +2,85 @@
 @import '../Button.scss';
 
 .join-league-form-title{
-    font-size: 35px;
+    font-size: 40px;
     color: white;
-    padding: 30px;
+    padding-top: 4.5%;
+    padding-bottom: 3%;
 }
 
 .table {
     background-color: var(--light-scale-grey);
+    width:100%;
 }
 
 .join-league-container{
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .join-league-form{
-    min-width: 800px;
+    min-width: 110%;
     overflow: auto;
     margin-bottom: 100px;
+    padding-left: 6vw;
+    width: 60vw;
     .btn {
         @include btn;
     }
 }
 
+.filtering-buttons{
+    display: flex;
+    margin-bottom: 3vh;
+
+    .btn {
+        @include btn;
+    }
+
+    .set-filters{
+        display: inherit;
+        flex-direction: row;
+        margin-right: 1vw;
+    }
+
+    .reset-filters{
+        display: inherit;
+        flex-direction: row;
+        align-items: flex-end !important;
+    }
+}
+
+.filter-button{
+    background-color: white !important;
+    border: none !important;
+    margin-left: 0.5vw;
+    padding: 0.10rem 0.25rem !important;
+}
+
+.filter-form-field-container{
+    display: flex;
+    flex-direction: column;
+
+    .range{
+        display: inherit;
+        flex-direction: row;
+    }
+}
+
+.spacing-between-fields{
+    margin: 0.6vh 1vw 0vh 1vw;
+}
+
 .private-league-form{
+    .btn {
+        @include btn;
+    }
+}
+
+.accept-filters{
+    text-align: center;
     .btn {
         @include btn;
     }

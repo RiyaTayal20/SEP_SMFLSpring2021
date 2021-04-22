@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
+import ReactApexChart from 'react-apexcharts';
 import '../../styles/Ai/Ai.scss';
 
 function AIPage() {
@@ -8,6 +9,7 @@ function AIPage() {
     const history = useHistory();
     const ticker = history.location.state.tickerSymbol;
     const [close, setClose] = useState('');
+    const [candlesticks, setCandlesticks] = useState('');
     const [mean, setMean] = useState({
         smaDates: '',
         smaPrices: '',
@@ -22,6 +24,73 @@ function AIPage() {
         buy: '',
         sell: '',
     });
+    const series = [{
+        data: candlesticks,
+    }];
+    const options = {
+        chart: {
+            type: 'candlestick',
+            height: 350,
+        },
+        tooltip: {
+            enabled: true,
+            theme: false,
+        },
+        xaxis: {
+            title: {
+                text: 'Date',
+                style: {
+                    color: 'white',
+                    fontSize: '18px',
+                    fontWeight: 800,
+                    cssClass: 'apexcharts-yaxis-title',
+                },
+            },
+            type: 'datetime',
+            labels: {
+                show: true,
+                style: {
+                    colors: 'white',
+                    fontSize: 14,
+                    cssClass: 'apexcharts-xaxis-label',
+                },
+            },
+        },
+        yaxis: {
+            title: {
+                text: 'Price',
+                style: {
+                    color: 'white',
+                    fontSize: '18px',
+                    fontWeight: 800,
+                    cssClass: 'apexcharts-yaxis-title',
+                },
+            },
+            labels: {
+                show: true,
+                style: {
+                    colors: 'white',
+                    fontSize: 14,
+                    cssClass: 'apexcharts-yaxis-label',
+                },
+            },
+            axisTicks: {
+                show: true,
+                color: 'white',
+            },
+        },
+    };
+    const getCandlesticks = async () => {
+        const response = await fetch(`${process.env.REACT_APP_AAPI_URL}/ai/candlesticks/${ticker}`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
+        });
+        const data = await response.json();
+        setCandlesticks(data);
+    };
     const getClose = async () => {
         const response = await fetch(`${process.env.REACT_APP_AAPI_URL}/ai/close/${ticker}`, {
             method: 'GET',
@@ -71,6 +140,7 @@ function AIPage() {
         getClose();
         getMean();
         getMomentum();
+        getCandlesticks();
     }, []);
     return (
         <div className="ai-container">
@@ -118,7 +188,6 @@ function AIPage() {
                                         pointRadius: 0,
                                         hoverBackgroundColor: 'blue',
                                         fill: false,
-                                        fillBetweenSet: 1,
                                         borderWidth: 2,
                                         lineTension: 0.1,
                                     },
@@ -129,7 +198,6 @@ function AIPage() {
                                         pointRadius: 0,
                                         hoverBackgroundColor: 'blue',
                                         fill: false,
-                                        fillBetweenSet: 1,
                                         borderWidth: 2,
                                         lineTension: 0.1,
                                     },
@@ -162,6 +230,8 @@ function AIPage() {
                                 maintainAspectRatio: false,
                                 tooltips: {
                                     backgroundColor: 'blue',
+                                    titleFontSize: 16,
+                                    bodyFontSize: 16,
                                 },
                                 interaction: {
                                     mode: 'point',
@@ -177,7 +247,7 @@ function AIPage() {
                                             fontSize: 20,
                                             fontColor: 'white',
                                             fontStyle: 'bold',
-                                            labelString: '$',
+                                            labelString: 'Price',
                                         },
                                         ticks: {
                                             fontColor: 'white',
@@ -209,7 +279,7 @@ function AIPage() {
                             }}
                         />
                     </div>
-                    <h4>Every time that the current price of the stock breaks out above the upper bollinger band, the ai player will sell out of this position. This is shown by the red triangles in the graph above. Every time the price falls below the lower bollinger band, the ai player employing this algorithm will buy into this stock. This is shown by the green triangles in the graph above.</h4>
+                    <h4>Mean reversion is rooted in the belief that the prices will eventually revert to the mean of the historic data and even out over time. When implementing this strategy, the bot is attracted to prices that stray away from historical averages. Our AI bots make use of technical indicators such as the Bollinger Bands, which encompass both the Simple Moving Average (SMA) and standard deviations. These indicators find good levels to enter and exit trades, which can be seen through the red and green triangles in the graph above. The Bollinger Bands are comprised of three trend lines: a lower band, a middle band and an upper band. The middle band represents the SMA over a 14 day period, while the upper and lower bands are plotted two standard deviations away from the SMA. Any time the current price of the stock drops below the lower band, it indicates an oversold condition prompting the bot to buy into a position in that equity. Likewise, any time the price breaks above the upper band, it indicates an overbought position prompting the bot to take profits and sell out of its position.   <b><a href="https://www.investopedia.com/terms/b/bollingerbands.asp">Read More</a></b></h4>
                 </div>
                 <div className="momentum">
                     <h1><b>Momentum Trading</b></h1>
@@ -262,6 +332,8 @@ function AIPage() {
                                 maintainAspectRatio: false,
                                 tooltips: {
                                     backgroundColor: 'blue',
+                                    titleFontSize: 16,
+                                    bodyFontSize: 16,
                                 },
                                 scales: {
                                     yAxes: [{
@@ -306,12 +378,14 @@ function AIPage() {
                             }}
                         />
                     </div>
-                    <h4>Whenever the relative standard index (RSI) values are above 70, this indicates an overbought condition, meaning it is a good time to sell out of your position. The AI player sell all shares of a position as seen in the red triangles in the graph. Whenever the RSI is below 30, this indicates an oversold condition, meaning it is a good time to buy shares or increase position in a stock. The AI players will buy shares of this equity as seen through the green triangles in the graph. </h4>
+                    <h4>Momentum trading is a strategy that takes advantage of an upwards or downwards trend in an equity’s price. It is rooted in the belief that trends that head in one direction will continue to head in that direction because of the momentum already behind them. When implementing this strategy, the bots are attracted to equities that are currently rising and sell them when they believe they have peaked. Our AI bots make use of technical indicators such as the relative strength index (RSI) and volume. The RSI is a momentum indicator that analyzes recent changes in price movements for a particular equity and determines an overbought or oversold condition for it. When the RSI is 30 or below, it indicates an oversold condition prompting the bot to buy into a position in that equity. Likewise, when the RSI is 70 or above, it indicates an overbought condition prompting the bot to take profits and sell out of this position.   <b><a href="https://www.investopedia.com/terms/r/rsi.asp">Read More</a></b></h4>
                 </div>
                 <div className="candlesticks">
                     <h1><b>Japanese Candlesticks</b></h1>
-                    <p>insert graph here</p>
-                    <h4>description</h4>
+                    <div className="candlestickGraph">
+                        <ReactApexChart options={options} series={series} type="candlestick" height={350} />
+                    </div>
+                    <h4>Candlestick charts help investors keep track of price movements over time. Every candlestick consists of a rectangular body and two wicks on either end. Each candlestick represents one day’s worth of price data for a stock: the opening price, the closing price, the lowest price of the day and the highest price of the day. The color of the central rectangle is determined by if the price fell after open or rose. Green candlesticks are bullish and indicate buying pressure, while red candlesticks are bearish and indicate selling pressure. Our bots identify patterns in these candlesticks over time to estimate support and resistance levels, as well as the proper time to enter and exit trades. When the most popular bullish candlestick patterns are detected, the bots are prompted to buy shares of a stock. Likewise, when the most popular bearish patterns are identified, the bots are prompted to sell out of a position.   <b><a href="https://www.investopedia.com/articles/active-trading/062315/using-bullish-candlestick-patterns-buy-stocks.asp">Read More</a></b></h4>
                 </div>
             </div>
         </div>

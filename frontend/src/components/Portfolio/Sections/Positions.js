@@ -5,7 +5,6 @@ import '../../../styles/Portfolio/Positions.scss';
 
 const Positions = (props) => {
     const { portfolio } = props;
-    console.log(portfolio);
     /* eslint-disable max-len */
 
     return (

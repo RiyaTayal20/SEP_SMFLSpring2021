@@ -149,6 +149,7 @@ const retrievePortfolioInfo = async (username, league) => {
     });
     if (portfolio) {
         const responseInfo = {
+            owner: portfolio.owner,
             currentNetWorth: portfolio.currentNetWorth,
             closePercentChange: portfolio.closePercentChange,
             cashAvailable: portfolio.cash,
@@ -595,6 +596,89 @@ exports.getPortfolio = async (req, res) => {
     }
 };
 
+/**
+ * Retrieve a portfolio for user in a specified league
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @returns {Object}
+ */
+ exports.getSpecifiedPortfolio = async (req, res) => {
+    try {
+        const username = req.params.username;
+        // Need to check league since middleware only checks body
+        const league = await League
+            .findOne({
+                leagueName: req.params.league,
+            })
+            .then((result) => result)
+            .catch(() => null);
+        if (!league) return res.status(422).json('Error: League not found');
+        // Get current net worth, cash, holdings, net worth history
+        const portfolioInfo = await retrievePortfolioInfo(username, league);
+        // eslint-disable-next-line max-len, no-return-assign, no-param-reassign, no-sequences
+        const remapHoldings = portfolioInfo.holdings.reduce((obj, { ticker, quantity }) => (obj[ticker] = { quantity }, obj), {});
+        const updatedLeague = await League.findOne(
+            { leagueName: league.leagueName },
+            (err) => {
+                if (err) throw err;
+            },
+        );
+        let portfolio;
+        updatedLeague.portfolioList.forEach((leaguePortfolio) => {
+            if (leaguePortfolio.owner === username) {
+                portfolio = leaguePortfolio;
+            }
+        });
+        // Get current prices, cost basis, descriptions, total gain/loss
+        const currentPrices = [];
+        const statistics = [];
+        for (let i = 0; i < portfolioInfo.holdings.length; i += 1) {
+            const { ticker } = portfolioInfo.holdings[i];
+            // Start async calls for current price and statistics
+            currentPrices.push(getMarketPrice(ticker));
+            statistics.push(getStatistics(ticker));
+            // Get cost basis
+            const costBasis = calculateCostBasis(ticker, portfolio);
+            remapHoldings[ticker].costBasis = costBasis.toFixed(2);
+        }
+        const setPrices = await Promise.all(currentPrices).then((result) => {
+            for (let i = 0; i < portfolioInfo.holdings.length; i += 1) {
+                const { ticker, quantity } = portfolioInfo.holdings[i];
+                // Current and total price
+                remapHoldings[ticker].currentPrice = result[i].price.toFixed(2);
+                remapHoldings[ticker].totalValue = (result[i].price * quantity).toFixed(2);
+                // Gain/loss
+                // eslint-disable-next-line max-len
+                remapHoldings[ticker].totalChange = (remapHoldings[ticker].totalValue - (remapHoldings[ticker].costBasis * quantity)).toFixed(2);
+                // eslint-disable-next-line max-len
+                remapHoldings[ticker].percentChange = (remapHoldings[ticker].totalChange / (remapHoldings[ticker].costBasis * quantity)).toFixed(2);
+            }
+        });
+        const setNames = await Promise.all(statistics).then((result) => {
+            // Get equity name
+            for (let i = 0; i < portfolioInfo.holdings.length; i += 1) {
+                const { ticker } = portfolioInfo.holdings[i];
+                remapHoldings[ticker].equityName = result[i].equityName;
+                remapHoldings[ticker].closePercentChange = (result[i].percentChange * 100).toFixed(2);
+            }
+        });
+        await Promise.all([setPrices, setNames]).then(() => {
+            const fullResponse = {
+                currentNetWorth: parseFloat(portfolioInfo.currentNetWorth).toFixed(2),
+                cashAvailable: parseFloat(portfolioInfo.cashAvailable).toFixed(2),
+                closePercentChange: (parseFloat(portfolioInfo.closePercentChange) * 100).toFixed(2),
+                holdings: remapHoldings,
+                netWorth: portfolioInfo.netWorth,
+                orders: portfolioInfo.orders,
+            };
+            res.json(fullResponse);
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(400).send(err.toString());
+    }
+};
+
 exports.getPortfolioNews = async (req, res) => {
     try {
         const { username } = res.locals;
@@ -776,4 +860,39 @@ exports.insertNetWorth = async (req, res) => {
             if (err) throw err;
         },
     );
+};
+
+// Zip arrays
+
+exports.getLeagueOverview = async (req, res) => {
+    try {
+        // Get league
+        console.log(req.params.leagueName);
+        const league = await League
+        .findOne({
+            leagueName: req.params.leagueName,
+        })
+        .then((result) => result)
+        .catch((err) => console.log(err));
+        console.log(league);
+        if (!league) return res.status(422).json('Error: League not found');
+        // Get portfolios and order for leaderboard
+        const portfolios = await Promise.all(league.playerList.map(async (player) => await retrievePortfolioInfo(player, league)));
+        const sortedPortfolios = portfolios.sort((a, b) => b.currentNetWorth - a.currentNetWorth)
+        // Put position
+        const portfolioWithPosition = sortedPortfolios.map((portfolio, position) => ({ ...portfolio, position: position+1 }));
+        // Get % growth
+        const portfolioWithGrowth = portfolioWithPosition.map((portfolio) => ({ ...portfolio, growth: (((portfolio.currentNetWorth / league.settings.balance) - 1) * 100).toFixed(3) }))
+        // Get transaction history
+        const allTransactions = portfolioWithGrowth.map((portfolio) => portfolio.orders.filter((order) => order.executed));
+        const sortedTransactions = allTransactions.flat().sort((a, b) => Date.parse(b.timePlaced) - Date.parse(a.timePlaced));
+        const fullResponse = {
+            portfolios: portfolioWithGrowth,
+            transactions: sortedTransactions,
+        };
+        res.json(fullResponse);
+    } catch (err) {
+        console.log(err);
+        res.status(400).send(err.toString());
+    }
 };

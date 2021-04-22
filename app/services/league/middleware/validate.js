@@ -138,7 +138,7 @@ exports.authValidation = [
         }
         const dotSplit = spaceSplit[1].split('.');
         if (dotSplit.length !== 3) {
-            return res.status(401).json('Bad Authorization. Token should have 3 periods');
+            return res.status(401).json('Bad Authorization. Token should have 2 periods');
         }
         if (!errors.isEmpty()) return res.status(401).json({ errors: errors.array() });
         try {

@@ -586,6 +586,7 @@ exports.getPortfolio = async (req, res) => {
                 closePercentChange: (parseFloat(portfolioInfo.closePercentChange) * 100).toFixed(2),
                 holdings: remapHoldings,
                 netWorth: portfolioInfo.netWorth,
+                orders: portfolioInfo.orders,
             };
             res.json(fullResponse);
         });

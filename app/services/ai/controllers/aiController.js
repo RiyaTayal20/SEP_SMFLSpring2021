@@ -13,11 +13,16 @@ exports.close = async (req, res) => {
         data.splice(0,3);
         close2 = data.filter((e, i) => i % 3 === 3 - 1);
         dataOut = data;
-        
-        res.send(close2);
+        console.log(close2);
+        res.write(JSON.stringify({
+            data: close2,
+        }));
+        res.end();
+        console.log('sent close');
+        console.log(close2);
     });
     python.stderr.on('data', function (data){
-        console.log(data.toString());
+        console.log("data.toString()");
     });
 };
 
@@ -30,7 +35,7 @@ exports.mean = async (req, res) => {
         data = data.split(' ');
         data = data.filter(item => item);
         data.splice(0,6);
-        console.log(data[6]);
+        
         smaDates = data.filter((e, i) => i % 6 === 0);        
         smaPrices = data.filter((e, i) => i % 6 === 1);
         smaLower = data.filter((e, i) => i % 6 === 2);
@@ -38,17 +43,17 @@ exports.mean = async (req, res) => {
         smaBuyers = data.filter((e, i) => i % 6 === 4);
         smaSellers = data.filter((e, i) => i % 6 === 5);
 
-        const meanData = JSON.stringify({
+        const meanData = {
             smaDates: smaDates,
             smaPrices: smaPrices,
             smaLower: smaLower,
             smaUpper: smaUpper,
             smaBuyers: smaBuyers,
             smaSellers: smaSellers,
-        });
-        res.send(meanData);
-
-        return 5;
+        };
+        res.write(JSON.stringify(meanData));
+        res.end();
+        console.log('sent mean');
     });
     python.stderr.on('data', function (data){
         console.log(data.toString());
@@ -88,7 +93,9 @@ exports.momentum = async (req, res) => {
             buy: buy,
             sell: sell,
         };
-        res.send(momentumData);
+        res.write(JSON.stringify(momentumData));
+        res.end();
+        console.log('sent momentum');
     });
     python.stderr.on('data', function (data){
         console.log(data.toString());
@@ -118,8 +125,11 @@ exports.candlesticks = async (req, res) => {
             }
             candlesticksData.push(temp);
         }
-        
-        res.send(candlesticksData);
+        res.write(JSON.stringify({
+            data: candlesticksData,
+        }));
+        res.end();
+        console.log('sent candlestick');
     });
     python.stderr.on('data', function (data){
         console.log(data.toString());

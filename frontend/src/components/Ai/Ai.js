@@ -6,10 +6,11 @@ import '../../styles/Ai/Ai.scss';
 
 function AIPage() {
     /* eslint-disable max-len */
+    /* eslint-disable no-unused-vars */
     const history = useHistory();
     const ticker = history.location.state.tickerSymbol;
     const [close, setClose] = useState('');
-    const [candlesticks, setCandlesticks] = useState('');
+    const [candlesticks, setCandlesticks] = useState([]);
     const [mean, setMean] = useState({
         smaDates: '',
         smaPrices: '',
@@ -88,7 +89,8 @@ function AIPage() {
                 'Content-Type': 'application/json',
             },
         });
-        const data = await response.json();
+        const arrayJ = await response.json();
+        const { data } = arrayJ;
         setCandlesticks(data);
     };
     const getClose = async () => {
@@ -99,7 +101,8 @@ function AIPage() {
                 'Content-Type': 'application/json',
             },
         });
-        const data = await response.json();
+        const arrayJ = await response.json();
+        const { data } = arrayJ;
         setClose(data);
     };
     const getMean = async () => {
@@ -383,7 +386,14 @@ function AIPage() {
                 <div className="candlesticks">
                     <h1><b>Japanese Candlesticks</b></h1>
                     <div className="candlestickGraph">
-                        <ReactApexChart options={options} series={series} type="candlestick" height={350} />
+                        <ReactApexChart
+                            options={options}
+                            series={[{
+                                data: candlesticks,
+                            }]}
+                            type="candlestick"
+                            height={350}
+                        />
                     </div>
                     <h4>Candlestick charts help investors keep track of price movements over time. Every candlestick consists of a rectangular body and two wicks on either end. Each candlestick represents one day’s worth of price data for a stock: the opening price, the closing price, the lowest price of the day and the highest price of the day. The color of the central rectangle is determined by if the price fell after open or rose. Green candlesticks are bullish and indicate buying pressure, while red candlesticks are bearish and indicate selling pressure. Our bots identify patterns in these candlesticks over time to estimate support and resistance levels, as well as the proper time to enter and exit trades. When the most popular bullish candlestick patterns are detected, the bots are prompted to buy shares of a stock. Likewise, when the most popular bearish patterns are identified, the bots are prompted to sell out of a position.   <b><a href="https://www.investopedia.com/articles/active-trading/062315/using-bullish-candlestick-patterns-buy-stocks.asp">Read More</a></b></h4>
                 </div>

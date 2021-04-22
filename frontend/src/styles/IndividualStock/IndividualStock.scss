@@ -2,74 +2,61 @@
     display: flex;
     flex-direction: column;
     color: white;
-    margin: 4vh 0vw 0vh 4vw;
+    margin-top: 6vh;
 }
 
 h1 {
     color: white;
 }
 
-.form{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+.header > h1 {
+    font-size: 3vw;
+}
 
-    .submit-button{
-        width: 100%
+.header > div > span {
+    h2 {
+        font-size: 3vw;
+    }
+    h5 {
+        font-size: 2vw;
     }
 }
 
-.ticker-form, .header {
-    margin-bottom: 50px;
-}
-
-.header > h1 {
-    font-size: 4vw;
-}
-
-.currentPrice > span {
+.current-price > span{
     display: inline-block;
 }
 
-.stats {
-    margin-top: 50px;
-    margin-bottom: 50px;
+.stats-table.table{
+    color: white;
     font-size: 1.5vw;
+    width: 35vw;
+    min-height: 10vw;
+    min-width: 40vw;
+}
+
+.stats-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding-right: 15px;
 }
 
 .makeshift-tab-component{
     display: flex;
     flex-direction: column;
-    border: solid;
-    border-width: 1px;
-    border-color: white;
+    height: 20vw;
 
-    .graph-btns {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        margin-bottom: 4vh;
-        background-color: white;
-        border-radius: 0rem;
-
-        .button{
-            width: 100%;
-            border-radius: 0rem;
+    .time-button {
+        size: 10px;
+        color: #3FC380;
+        border-color: #3FC380;
+        &:hover, &:focus {
+            background-color: #2c8f5d;
+            border-color:#2c8f5d;
         }
     }
 
-    .graph-btns{
-        border: solid;
-        border-width: 0px 0px 2px 0px;
-        border-color: white;
+    .graph {
+        height: 20vw;
     }
-
-    .graph{
-        padding: 2vh 4vw 6vh 2vw;
-    }
-}
-
-.graph > h2 {
-    text-align: center;
-    font-weight: 800;
 }

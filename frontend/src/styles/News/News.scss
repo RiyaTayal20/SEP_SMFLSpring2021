@@ -3,9 +3,7 @@
 .news-title{
     color: white;
     font-size: 35px;
-    margin-left: 15px;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    margin: 5vh 0vw 5vh 1vw;
 }
 
 .news-container {
@@ -15,7 +13,7 @@
 }
 
 .news-dropdown {
-    margin-left: 15px;
+    margin-left: 1%;
     .btn{
         @include dropdownbtn;
     }
@@ -28,9 +26,19 @@
 }
 
 .article {
-    padding: 50px;
-    width: 500px;
-    height: 400px;
+    width: 300px;
+    height: 345px;
+    margin: 2vh 0vw 8vh 3vw;
+}
+
+.article-cards {
+    width: 300px;
+    height: 345px;
+}
+
+.article-image-cards{
+    width: 297px;
+    height: 215px;
 }
 
 .article-headline {

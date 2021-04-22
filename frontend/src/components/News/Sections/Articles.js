@@ -9,8 +9,8 @@ const Articles = (props) => {
         <Container className="articles-container">
             {articles.map((article) => (
                 <div className="article">
-                    <Card>
-                        <Card.Img variant="top" src={article.image} />
+                    <Card className="article-cards">
+                        <Card.Img className="article-image-cards" variant="top" src={article.image} />
                         <Card.Body>
                             <Card.Title className="article-headline">{article.headline}</Card.Title>
                             <Card.Text>

@@ -51,7 +51,7 @@ function Trade() {
     };
 
     const getEquity = async () => {
-        const response = await fetch(`${process.env.REACT_APP_SAPI_URL}/equity/statistics/${form.tickerSymbol}`, {
+        const response = await fetch(`${process.env.REACT_APP_SAPI_URL}/equity/statistics/${form.ticker}`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,

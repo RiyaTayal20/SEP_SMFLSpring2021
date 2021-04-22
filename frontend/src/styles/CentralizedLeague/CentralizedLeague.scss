@@ -4,10 +4,6 @@
     background-color: var(--light-scale-grey);
 }
 
-h3{
-    color: #3fc380;
-}
-
 .league-header{
     color: #5367fc;
     text-align: center;
@@ -17,6 +13,10 @@ h3{
 .centra-league-page{
     margin-left:10vw;
     margin-top:5vh;
+
+    h3{
+        color: #3fc380;
+    }
    
 }
 

@@ -20,8 +20,8 @@ const PortfolioHistory = (props) => {
                                     <th>Date Placed</th>
                                     <th>Ticker</th>
                                     <th>Quantity</th>
-                                    <th>Price Per Share</th>
-                                    <th>Total Price</th>
+                                    <th>Price Per Share($)</th>
+                                    <th>Total Price($)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -29,7 +29,7 @@ const PortfolioHistory = (props) => {
                                     /* eslint-disable no-underscore-dangle, max-len */
                                     <tr key={order._id}>
                                         <td>{new Date(order.timePlaced).toString().split('GMT')[0]}</td>
-                                        <td>{order.tickerSymbol}</td>
+                                        <td>{(order.tickerSymbol).toUpperCase()}</td>
                                         <td>{order.quantity}</td>
                                         <td>{parseFloat(order.pricePerShare).toFixed(2)}</td>
                                         <td>{parseFloat(order.totalPrice).toFixed(2)}</td>

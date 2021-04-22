@@ -20,10 +20,11 @@ const Positions = (props) => {
                                 <th>Symbol</th>
                                 <th>Description</th>
                                 <th>Quantity</th>
-                                <th>Current Price</th>
-                                <th>Total Value</th>
-                                <th>Average Cost Basis</th>
-                                <th>Total Change</th>
+                                <th>Current Price($)</th>
+                                <th>Total Value($)</th>
+                                <th>Average Cost Basis($)</th>
+                                <th>Total Gain($)</th>
+                                <th>Day Gain(%)</th>
                             </tr>
                         </thead>
                         {portfolio
@@ -32,13 +33,14 @@ const Positions = (props) => {
                                     {portfolio.holdings
                                     && Object.keys(portfolio.holdings).map((ticker) => (
                                         <tr key={ticker}>
-                                            <td>{ticker}</td>
+                                            <td>{ticker.toUpperCase()}</td>
                                             <td>{portfolio.holdings[ticker].equityName}</td>
                                             <td>{portfolio.holdings[ticker].quantity}</td>
                                             <td>{portfolio.holdings[ticker].currentPrice}</td>
                                             <td>{portfolio.holdings[ticker].totalValue}</td>
                                             <td>{portfolio.holdings[ticker].costBasis}</td>
                                             <td>{portfolio.holdings[ticker].totalChange}</td>
+                                            <td>{portfolio.holdings[ticker].closePercentChange}</td>
                                         </tr>
                                     ))}
                                 </tbody>

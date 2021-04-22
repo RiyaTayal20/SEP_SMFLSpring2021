@@ -84,6 +84,7 @@ exports.getLeagueByUser = async (req, res) => {
  exports.getAI = async (req, res) => {
     await User.find({'isBot': true} , (err, result) => {
         if (err) throw err;
+        if (!result) res.status(404).send('League not found');
         res.send(result);
     });
 };

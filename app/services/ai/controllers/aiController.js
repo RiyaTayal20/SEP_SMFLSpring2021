@@ -3,7 +3,7 @@
 const {spawn} = require('child_process');
 
 exports.close = async (req, res) => {
-    let close;
+    let close2;
     const python = spawn('python', ['./controllers/indicators/close.py', req.params.ticker]);
     python.stdout.on('data', function (data) {    
         data = data.toString().trim();
@@ -11,14 +11,13 @@ exports.close = async (req, res) => {
         data = data.split(' ');       
         data = data.filter(item => item);
         data.splice(0,3);
-        close = data.filter((e, i) => i % 3 === 3 - 1);
+        close2 = data.filter((e, i) => i % 3 === 3 - 1);
         dataOut = data;
+        
+        res.send(close2);
     });
     python.stderr.on('data', function (data){
         console.log(data.toString());
-    });
-    python.on('close', (code) => {
-        res.send(close);
     });
 };
 
@@ -31,27 +30,42 @@ exports.mean = async (req, res) => {
         data = data.split(' ');
         data = data.filter(item => item);
         data.splice(0,6);
-        smaSellers = data.filter((e, i) => i % 6 === 6 - 1);
-        smaBuyers = data.filter((e, i) => i % 6 + 1 === 6 - 1);        
-        smaUpper = data.filter((e, i) => i % 6 + 2 === 6 - 1);
-        smaLower = data.filter((e, i) => i % 6 + 3 === 6 - 1);        
-        smaPrices = data.filter((e, i) => i % 6 + 4 === 6 - 1);
-        smaDates = data.filter((e, i) => i % 6 + 5 === 6 - 1);
-    });
-    python.stderr.on('data', function (data){
-        console.log(data.toString());
-    });
-    python.on('close', (code) => {
-        const meanData = {
+        console.log(data[6]);
+        smaDates = data.filter((e, i) => i % 6 === 0);        
+        smaPrices = data.filter((e, i) => i % 6 === 1);
+        smaLower = data.filter((e, i) => i % 6 === 2);
+        smaUpper = data.filter((e, i) => i % 6 === 3);
+        smaBuyers = data.filter((e, i) => i % 6 === 4);
+        smaSellers = data.filter((e, i) => i % 6 === 5);
+
+        const meanData = JSON.stringify({
             smaDates: smaDates,
             smaPrices: smaPrices,
             smaLower: smaLower,
             smaUpper: smaUpper,
             smaBuyers: smaBuyers,
             smaSellers: smaSellers,
-        };
+        });
         res.send(meanData);
+
+        return 5;
     });
+    python.stderr.on('data', function (data){
+        console.log(data.toString());
+    });
+    // python.on('close', (code) => {
+    //     console.log('sending dates');
+    //     console.log(smaDates);
+    //     const meanData = JSON.stringify({
+    //         smaDates: smaDates,
+    //         smaPrices: smaPrices,
+    //         smaLower: smaLower,
+    //         smaUpper: smaUpper,
+    //         smaBuyers: smaBuyers,
+    //         smaSellers: smaSellers,
+    //     });
+    //     res.send(meanData);
+    // });
 };
 
 exports.momentum = async (req, res) => {
@@ -67,11 +81,7 @@ exports.momentum = async (req, res) => {
         buy = data.filter((e, i) => i % 4 + 1 === 4 - 1);
         rsi= data.filter((e, i) => i % 4 + 2 === 4 - 1);
         dates = data.filter((e, i) => i % 4 + 3 === 4 - 1);
-    });
-    python.stderr.on('data', function (data){
-        console.log(data.toString());
-    });
-    python.on('close', (code) => {
+
         const momentumData = {
             dates: dates,
             rsi: rsi,
@@ -79,6 +89,9 @@ exports.momentum = async (req, res) => {
             sell: sell,
         };
         res.send(momentumData);
+    });
+    python.stderr.on('data', function (data){
+        console.log(data.toString());
     });
 };
 
@@ -105,11 +118,10 @@ exports.candlesticks = async (req, res) => {
             }
             candlesticksData.push(temp);
         }
+        
+        res.send(candlesticksData);
     });
     python.stderr.on('data', function (data){
         console.log(data.toString());
-    });
-    python.on('close', (code) => {
-        res.send(candlesticksData);
     });
 };

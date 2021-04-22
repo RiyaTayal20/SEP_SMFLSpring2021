@@ -18,11 +18,31 @@ const SummaryGraph = (props) => {
     }
 
     if (portfolio && portfolio.netWorth) {
+        if (dates) {
+            portfolio.netWorth = portfolio.netWorth.filter((item) => {
+            // YYYY-MM-DD
+            // Only 5 dates
+                const checkDate = new Date(item.date);
+
+                const startYear = parseInt((dates[0]).substring(0, 4), 10);
+                const startMonth = parseInt(dates[0].substring(5, 7), 10);
+                const startDay = parseInt(dates[0].substring(8), 10);
+                const endYear = parseInt(dates[4].substring(0, 4), 10);
+                const endMonth = parseInt(dates[4].substring(5, 7), 10);
+                const endDay = parseInt(dates[4].substring(8), 10);
+
+                const startDate = new Date(startYear, startMonth - 1, startDay);
+                const endDate = new Date(endYear, endMonth - 1, endDay);
+
+                if (checkDate < startDate || checkDate > endDate.getTime()) {
+                    return false;
+                }
+                return true;
+            });
+        }
         portfolioPrices = Object.keys(portfolio.netWorth).map((j) => portfolio.netWorth[j].worth);
         portfolioPercentages = portfolioPrices.map((price) => price / portfolioPrices[0]);
     }
-    console.log(SPData);
-    console.log(SPprices);
 
     return (
         <Line

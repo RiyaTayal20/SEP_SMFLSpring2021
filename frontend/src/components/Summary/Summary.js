@@ -46,7 +46,6 @@ function Summary() {
     };
 
     const getSP = async () => {
-        console.log('called');
         const response = await fetch(`${process.env.REACT_APP_SAPI_URL}/equity/historical/SPY?timeframe=6m`, {
             method: 'GET',
             headers: {
@@ -57,8 +56,6 @@ function Summary() {
         const data = await response.json();
         const SPprices = [];
         const startDate = new Date(`${week}/21`);
-
-        console.log(startDate);
 
         let month;
         let day;
@@ -88,9 +85,6 @@ function Summary() {
             startDate.setTime(startDate.getTime() + (24 * 60 * 60 * 1000));
         }
 
-        console.log('data');
-        console.log(data);
-        console.log(SPprices);
         setSPData(SPprices);
     };
 

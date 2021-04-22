@@ -9,12 +9,14 @@ import {
     CreateLeaguePage,
     JoinLeaguePage,
     IndividualStockPage,
+    LeagueManagementPage,
     TradePage,
     CurrentLeaguesPage,
     SymbolLookupPage,
     PortfolioPage,
     NewsPage,
     SummaryPage,
+    CentralizedLeaguePage,
     WelcomePage,
 } from './components/Pages';
 import Header from './components/Header/Header';
@@ -47,6 +49,9 @@ function App() {
                             <Route path="/league/join">
                                 <JoinLeaguePage />
                             </Route>
+                            <Route path="/league/manage">
+                                <LeagueManagementPage />
+                            </Route>
                             <Route path="/stock">
                                 <IndividualStockPage />
                             </Route>
@@ -67,6 +72,9 @@ function App() {
                             </Route>
                             <Route path="/summary">
                                 <SummaryPage />
+                            </Route>
+                            <Route path="/centralizedLeague">
+                                <CentralizedLeaguePage />
                             </Route>
                             <Route path="/welcome">
                                 <WelcomePage />

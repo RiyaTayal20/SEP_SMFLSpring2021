@@ -51,7 +51,7 @@ function Trade() {
     };
 
     const getEquity = async () => {
-        const response = await fetch(`${process.env.REACT_APP_SAPI_URL}/equity/statistics/${form.tickerSymbol}`, {
+        const response = await fetch(`${process.env.REACT_APP_SAPI_URL}/equity/statistics/${form.ticker}`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -221,18 +221,16 @@ function Trade() {
                             <Row>
                                 <Form.Label>Quantity:</Form.Label>
                                 <Col>
-                                    <InputGroup>
-                                        <Form.Control
-                                            type="number"
-                                            required
-                                            min="0"
-                                            placeholder="Ex: 3"
-                                            onChange={(e) => setField('quantity', e.target.value)}
-                                        />
-                                        <Form.Control.Feedback type="invalid">
-                                            Please input a quantity.
-                                        </Form.Control.Feedback>
-                                    </InputGroup>
+                                    <Form.Control
+                                        type="number"
+                                        required
+                                        min="0"
+                                        placeholder="Ex: 3"
+                                        onChange={(e) => setField('quantity', e.target.value)}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        Please input a quantity.
+                                    </Form.Control.Feedback>
                                 </Col>
                             </Row>
                         </Form.Group>

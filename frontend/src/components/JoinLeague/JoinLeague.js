@@ -318,7 +318,7 @@ function JoinLeague() {
 
     return (
         <div className="join-league-page-container">
-            <Container style={{ marginLeft: '8vw' }} className="join-league-container">
+            <Container className="join-league-container">
                 <div className="join-league-form-title">
                     Join a League
                 </div>

@@ -15,38 +15,38 @@ df = pdr.get_data_yahoo(sys.argv[1], start, now)
 
 df['Up Move'] = np.nan
 df['Down Move'] = np.nan
-df['Average Up'] = np.nan
-df['Average Down'] = np.nan
+df['Avg Up'] = np.nan
+df['Avg Down'] = np.nan
 df['RS'] = np.nan
 df['RSI'] = np.nan
 df['Buy RSI'] = np.nan
 df['Sell RSI'] = np.nan
 
-for x in range(1, len(df)):
-    df['Up Move'][x] = 0
-    df['Down Move'][x] = 0
-    if df['Adj Close'][x] > df['Adj Close'][x-1]:
-        df['Up Move'][x] = df['Adj Close'][x] - df['Adj Close'][x-1]
-    if df['Adj Close'][x] < df['Adj Close'][x-1]:
-        df['Down Move'][x] = abs(df['Adj Close'][x] - df['Adj Close'][x-1])  
+for i in range(1, len(df)):
+    df['Up Move'][i] = 0
+    df['Down Move'][i] = 0
+    if df['Adj Close'][i] > df['Adj Close'][i-1]:
+        df['Up Move'][i] = df['Adj Close'][i] - df['Adj Close'][i-1]
+    if df['Adj Close'][i] < df['Adj Close'][i-1]:
+        df['Down Move'][i] = abs(df['Adj Close'][i] - df['Adj Close'][i-1])  
         
 
-df['Average Up'][14] = df['Up Move'][1:15].mean()
-df['Average Down'][14] = df['Down Move'][1:15].mean()
-df['RS'][14] = df['Average Up'][14] / df['Average Down'][14]
-df['RSI'][14] = 100 - (100/(1+df['RS'][14]))
+df['Avg Up'][14] = df['Up Move'][1:15].mean()
+df['Avg Down'][14] = df['Down Move'][1:15].mean()
+df['RS'][14] = df['Avg Up'][14] / df['Avg Down'][14]
+df['RSI'][14] = 100 - (100/(1+df['RS'][14])) 
 
-for x in range(15, len(df)):
-    df['Average Up'][x] = (df['Average Up'][x-1]*13+df['Up Move'][x])/14
-    df['Average Down'][x] = (df['Average Down'][x-1]*13+df['Down Move'][x])/14
-    df['RS'][x] = df['Average Up'][x] / df['Average Down'][x]
-    df['RSI'][x] = 100 - (100/(1+df['RS'][x]))
+for i in range(15, len(df)):
+    df['Avg Up'][i] = (df['Avg Up'][i-1]*13+df['Up Move'][i])/14
+    df['Avg Down'][i] = (df['Avg Down'][i-1]*13+df['Down Move'][i])/14
+    df['RS'][i] = df['Avg Up'][i] / df['Avg Down'][i]
+    df['RSI'][i] = 100 - (100/(1+df['RS'][i]))
 
-for x in range(15, len(df)):
-  if df['RSI'][x] >= 70:
-    df['Sell RSI'][x] = df['RSI'][x]
-  elif df['RSI'][x] <= 30:
-    df['Buy RSI'][x] = df['RSI'][x]
+for i in range(15, len(df)): 
+  if df['RSI'][i] >= 70:
+    df['Sell RSI'][i] = df['RSI'][i]
+  elif df['RSI'][i] <= 30:
+    df['Buy RSI'][i] = df['RSI'][i]
 
 df = df.iloc[15:]
 data = pd.merge(df['RSI'], df['Buy RSI'], on='Date')

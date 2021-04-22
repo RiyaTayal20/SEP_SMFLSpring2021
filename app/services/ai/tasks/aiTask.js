@@ -56,7 +56,7 @@ const tradeCheck = async (token, leagueName, portfolio, ratings) => {
     if (buyStocks.length != 0) {
         let ticker = buyStocks[Math.floor(Math.random() * buyStocks.length)].toLowerCase();
         let price = await getMarketPrice(ticker);
-        let quantity = Math.floor(portfolio.cashAvailable/8/price.price);
+        let quantity = Math.floor(portfolio.cashAvailable/20/price.price);
         console.log(`buys ${quantity} shares of ${ticker}!`);
         if (quantity > 0) {
             sendTrade(token, leagueName, 'marketBuy', ticker, quantity);
@@ -99,7 +99,7 @@ const AIoperations = async () => {
 }
 
 exports.aiBots = async () => {
-    tickers = ['CNI', 'MO', 'UAL','OBCI','HOG','JNJ','LND', 'AAPL'] 
+    tickers = ['CNI', 'MO', 'TSLA','TDC', 'XM', 'EFX', 'JNJ', 'AAPL', 'SNBR', 'SEIC']
     tickers = tickers.map(function(x) { return x.toUpperCase(); })
     // make sure all tickers are in ticker database for trade to execute
 
@@ -138,10 +138,10 @@ exports.aiBots = async () => {
     });
 
     momentum.on('close', (code) => {
-        AIoperations();
+        
     });
 
-    /*
+
     const candlesticks = spawn('python', ['algorithms/candlesticks.py']);
 
     candlesticks.stdout.on('data', function (data) {
@@ -158,5 +158,5 @@ exports.aiBots = async () => {
     candlesticks.on('close', (code) => {
         AIoperations();
     });
-    */
+    
 };

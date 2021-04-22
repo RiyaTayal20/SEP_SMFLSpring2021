@@ -4,84 +4,73 @@ import yfinance as yf
 import pandas_datareader as pdr
 import datetime as dt
 from dateutil.relativedelta import relativedelta
+import warnings
 
 pd.options.mode.chained_assignment = None 
+warnings.filterwarnings("ignore", category=RuntimeWarning) 
 
-tickers = ['CNI', 'MO', 'UAL','OBCI','HOG','JNJ','LND', 'AAPL']
+tickers = ['CNI', 'MO', 'TSLA','TDC', 'XM', 'EFX', 'JNJ', 'AAPL', 'SNBR', 'SEIC']
 
 # Get last 3 months of data
 now = dt.datetime.now()
 start = now + relativedelta(months=-3)
 for t in tickers: 
     df = pdr.get_data_yahoo(t, start, now)
+    df_index = df.index
+    
+    #Initializing factors
+    df_factors = pd.DataFrame(np.nan, index=df_index, columns=['up_move', 'down_move', 'avg_up', 'avg_down', 'rs', 'rsi', 'position_long_next', 'buy_sig', 'sell_sig', 'buy_rsi', 'sell_rsi']);
 
-    # DataFrame layout
-    df['Up Move'] = np.nan
-    df['Down Move'] = np.nan
-    df['Average Up'] = np.nan
-    df['Average Down'] = np.nan
-    df['RS'] = np.nan
-    df['RSI'] = np.nan
-    df['Long Tomorrow'] = np.nan
-    df['Buy Signal'] = np.nan
-    df['Sell Signal'] = np.nan
-    df['Buy RSI'] = np.nan
-    df['Sell RSI'] = np.nan
-    df['Strategy'] = np.nan
+    df=df.join(df_factors)
+    df['up_move']=0
+    df['down_move']=0
+    
+    rsi_days = 14
 
-    ## Calculate Up Move & Down Move
-    for x in range(1, len(df)):
-        df['Up Move'][x] = 0
-        df['Down Move'][x] = 0
-        if df['Adj Close'][x] > df['Adj Close'][x-1]:
-            df['Up Move'][x] = df['Adj Close'][x] - df['Adj Close'][x-1]
-        if df['Adj Close'][x] < df['Adj Close'][x-1]:
-            df['Down Move'][x] = abs(df['Adj Close'][x] - df['Adj Close'][x-1])  
-            
-    ## Calculate Average Up and Down for 14 day RSI
-    df['Average Up'][14] = df['Up Move'][1:15].mean()
-    df['Average Down'][14] = df['Down Move'][1:15].mean()
-    df['RS'][14] = df['Average Up'][14] / df['Average Down'][14]
-    df['RSI'][14] = 100 - (100/(1+df['RS'][14]))
+    #Calculating the moves based on adjusted values
+    for i in range(1, len(df)):
+        df['up_move'][i] = 0
+        df['down_move'][i] = 0
+        if df['Adj Close'][i] > df['Adj Close'][i-1]:
+            df['up_move'][i] = df['Adj Close'][i] - df['Adj Close'][i-1]
+        if df['Adj Close'][i] < df['Adj Close'][i-1]:
+            df['down_move'][i] = abs(df['Adj Close'][i] - df['Adj Close'][i-1])  
+    
+    # Calculate the rsi_days average up and down, rs and rsi
+    df['avg_up'][rsi_days] = df['up_move'][1:rsi_days+1].mean()
+    df['avg_down'][rsi_days] = df['down_move'][1:rsi_days+1].mean()
+    df['rs'][rsi_days] = df['avg_up'][rsi_days] / df['avg_down'][rsi_days]
+    df['rsi'][rsi_days] = 100 - (100/(1+df['rs'][rsi_days]))
 
-    ## Calculate rest of Average Up and Down/ RSI
-    for x in range(15, len(df)):
-        df['Average Up'][x] = (df['Average Up'][x-1]*13+df['Up Move'][x])/14
-        df['Average Down'][x] = (df['Average Down'][x-1]*13+df['Down Move'][x])/14
-        df['RS'][x] = df['Average Up'][x] / df['Average Down'][x]
-        df['RSI'][x] = 100 - (100/(1+df['RS'][x]))
+    # Calculate the rest of average up and down, rs and rsi
+    for i in range(rsi_days+1, len(df)):
+        df['avg_up'][i] = (df['avg_up'][i-1]*13+df['up_move'][i])/rsi_days
+        df['avg_down'][i] = (df['avg_down'][i-1]*13+df['down_move'][i])/rsi_days
+        df['rs'][i] = df['avg_up'][i] / df['avg_down'][i]
+        df['rsi'][i] = 100 - (100/(1+df['rs'][i]))
 
-    ## Calculate buy and sell ratings
-    for x in range(15, len(df)):
-        if ((df['RSI'][x] <= 40) & (df['RSI'][x-1]>40) ):
-            df['Long Tomorrow'][x] = True
-        elif ((df['Long Tomorrow'][x-1] == True) & (df['RSI'][x] <= 70)):
-            df['Long Tomorrow'][x] = True
+    for i in range(15, len(df)):
+        if ((df['rsi'][i] <= 40) & (df['rsi'][i-1]>40) ):
+            df['position_long_next'][i] = True
+        elif ((df['position_long_next'][i-1]) and (df['rsi'][i] <= 70)):
+            df['position_long_next'][i] = True
         else:
-            df['Long Tomorrow'][x] = False
-            
-        if ((df['Long Tomorrow'][x] == True) & (df['Long Tomorrow'][x-1] == False)):
-            df['Buy Signal'][x] = df['Adj Close'][x]
-            df['Buy RSI'][x] = df['RSI'][x]
-            
-        if ((df['Long Tomorrow'][x] == False) & (df['Long Tomorrow'][x-1] == True)):
-            df['Sell Signal'][x] = df['Adj Close'][x]
-            df['Sell RSI'][x] = df['RSI'][x]
+            df['position_long_next'][i] = False
+        
+        #Buy Signal
+        if ((df['position_long_next'][i]) and (not df['position_long_next'][i-1])):
+            df['buy_sig'][i] = df['Adj Close'][i]
+            df['buy_rsi'][i] = df['rsi'][i]
+        #Sell Signal    
+        if ((not df['position_long_next'][i]) and (df['position_long_next'][i-1])):
+            df['sell_sig'][i] = df['Adj Close'][i]
+            df['sell_rsi'][i] = df['rsi'][i]
 
-    '''        
-    ## Calculate strategy performance
-    df['Strategy'][15] = df['Adj Close'][15]
-    for x in range(16, len(df)):
-        if df['Long Tomorrow'][x-1] == True:
-            df['Strategy'][x] = df['Strategy'][x-1]* (df['Adj Close'][x] / df['Adj Close'][x-1])
-        else:
-            df['Strategy'][x] = df['Strategy'][x-1]
-    '''
-
-    if not np.isnan(df['Buy Signal'][len(df)-1]):
+    if not np.isnan(df['buy_sig'][len(df)-1]):
         print('Buy')
-    elif not np.isnan(df['Sell Signal'][len(df)-2]):
+    elif not np.isnan(df['sell_sig'][len(df)-2]):
         print('Sell')
     else:
         print('Hold')
+
         

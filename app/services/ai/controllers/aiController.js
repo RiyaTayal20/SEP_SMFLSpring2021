@@ -61,7 +61,7 @@ exports.mean = async (req, res) => {
         };
         res.write(JSON.stringify(meanData));
         res.end();
-        console.log('sent mean');
+        // console.log('sent mean');
     });
 };
 
@@ -93,7 +93,7 @@ exports.momentum = async (req, res) => {
         };
         res.write(JSON.stringify(momentumData));
         res.end();
-        console.log('sent momentum');
+        // console.log('sent momentum');
     });
 };
 
@@ -131,7 +131,7 @@ exports.candlesticks = async (req, res) => {
             data: candlesticksData,
         }));
         res.end();
-        console.log('sent candlestick');
+        // console.log('sent candlestick');
     });
     
 };

@@ -12,14 +12,14 @@ const Portfolio = () => {
     /* eslint-disable max-len */
     const username = sessionStorage.getItem('username');
 
-    const location = useLocation();
-
-    const [league, setLeague] = useState(null);
+    const [league, setLeague] = useState('');
     const [leagueList, setLeagueList] = useState();
     const [portfolio, setPortfolio] = useState();
     const [lowBalance, setLowBalance] = useState(false);
     const [viewUser, setViewUser] = useState(username);
     const [leagueObj, setLeagueObj] = useState(null);
+
+    const location = useLocation();
 
     const handleClose = () => setLowBalance(false);
 
@@ -66,11 +66,11 @@ const Portfolio = () => {
 
     // Set league and username if sent in state
     useEffect(() => {
-        if (location.state && 'selectedUser' in location.state) {
-            setLeague(location.state.selectedUser.league);
-            setViewUser(location.state.selectedUser.username);
+        if (location && location.selectedUser) {
+            setLeague(location.selectedUser.league);
+            setViewUser(location.selectedUser.username);
         }
-    }, []);
+    }, [location]);
 
     useEffect(() => {
         getPortfolio();

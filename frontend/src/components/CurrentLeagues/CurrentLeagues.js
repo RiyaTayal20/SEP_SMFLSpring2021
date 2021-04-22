@@ -63,7 +63,6 @@ function CurrentLeagues() {
                                         console.log(portfolio.netWorth);
                                         return (<p className="current-league-worth">${portfolio.currentNetWorth.toFixed(2)}({portfolio.currentNetWorth / 500 > 1 ? `+${parseFloat((portfolio.currentNetWorth / 500 - 1) * 100).toFixed(2)}%` : `-${parseFloat((1 - portfolio.currentNetWorth / 500) * 100).toFixed(2)}%` })</p>);
                                     }
-                                    console.log('NOne');
                                     return null;
                                 })}
                         </ListGroup.Item>

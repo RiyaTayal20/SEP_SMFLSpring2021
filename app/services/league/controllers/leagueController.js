@@ -865,18 +865,22 @@ exports.insertNetWorth = async (req, res) => {
 exports.getLeagueOverview = async (req, res) => {
     try {
         // Get league
+        console.log(req.params.leagueName);
         const league = await League
         .findOne({
             leagueName: req.params.leagueName,
         })
         .then((result) => result)
-        .catch(() => null);
+        .catch((err) => console.log(err));
+        console.log(league);
         if (!league) return res.status(422).json('Error: League not found');
         // Get portfolios and order for leaderboard
         const portfolios = await Promise.all(league.playerList.map(async (player) => await retrievePortfolioInfo(player, league)));
         const sortedPortfolios = portfolios.sort((a, b) => b.currentNetWorth - a.currentNetWorth)
+        // Put position
+        const portfolioWithPosition = sortedPortfolios.map((portfolio, position) => ({ ...portfolio, position: position+1 }));
         // Get % growth
-        const portfolioWithGrowth = sortedPortfolios.map((portfolio) => ({ ...portfolio, growth: (((portfolio.currentNetWorth / league.settings.balance) - 1) * 100).toFixed(3) }))
+        const portfolioWithGrowth = portfolioWithPosition.map((portfolio) => ({ ...portfolio, growth: (((portfolio.currentNetWorth / league.settings.balance) - 1) * 100).toFixed(3) }))
         // Get transaction history
         const allTransactions = portfolioWithGrowth.map((portfolio) => portfolio.orders.filter((order) => order.executed));
         const sortedTransactions = allTransactions.flat().sort((a, b) => Date.parse(b.timePlaced) - Date.parse(a.timePlaced));

@@ -775,7 +775,8 @@ exports.insertNetWorth = async (req, res) => {
         date: req.body.date,
         worth: req.body.worth
     }
-    await League.findOneAndUpdate(
+    console.log(`User: ${username}, Date: ${req.body.date}, Worth: ${req.body.worth}`);
+    const response = await League.findOneAndUpdate(
         { _id: req.body.leagueID, 'portfolioList.owner':  username},
         { $addToSet: { 'portfolioList.$.netWorth': currentNetWorth } },
         { new: true },
@@ -783,4 +784,5 @@ exports.insertNetWorth = async (req, res) => {
             if (err) throw err;
         },
     );
+    res.send(response);
 };

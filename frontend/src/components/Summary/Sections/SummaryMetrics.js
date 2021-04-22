@@ -31,7 +31,7 @@ const SummaryMetrics = (props) => {
                 <h1 className="return-place">#{percentageReturnPlace}</h1>
             </ListGroup.Item>
             <ListGroup.Item className="card-list">
-                Your return compared to the league
+                Your return for this week
                 {personalDollarReturn > 0
                     ? <h1 className="total-return" style={{ color: 'green' }}>$+{personalDollarReturn}(+{personalPercentageReturn}%)</h1>
                     : <h1 className="total-return" style={{ color: 'red ' }}>${personalDollarReturn}({personalPercentageReturn}%)</h1> }

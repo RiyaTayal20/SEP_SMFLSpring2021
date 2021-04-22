@@ -4,37 +4,23 @@
 
 .symbol-lookup-page{
     display: flex;
-    color: var(--purple);
-    padding: 15vh 0vh 0vh 8vw;
+    padding: 20vh 0vh 0vh 8vw;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
     
-.symbol-text{
+h1.symbol-text{
     padding-bottom: 25px;
+    color: #5367FC;
+    font-size: 4rem;
+    font-weight: bold;
 }
 
-.search-component{
-    display: flex;
-    flex-direction: row;
+.symbol-search.input-group{
+    width: 30vw;
 }
 
-.image{
-    display: flex;
-   // text-align: center;
+.search-button.btn.btn-primary{
+    @include btn;
 }
-
-.search{
-    display: flex;
-    background-color: #EEEEEE;
-    width: 60vw;
-
-}
-
-.search-container{
-    display: flex;
-    flex-direction: row;
-    align-content: center;
-}
-

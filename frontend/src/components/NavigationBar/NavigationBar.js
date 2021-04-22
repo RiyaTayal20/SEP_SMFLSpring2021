@@ -53,6 +53,9 @@ function NavigationBar() {
                 <Card.Link href="/news" style={{ color: '#2F2F31' }}>News</Card.Link>
             </Card.Header>
             <Card.Header className="card-header" style={{ backgroundColor: 'white' }}>
+                <Card.Link href="/summary" style={{ color: '#2F2F31' }}>Summary</Card.Link>
+            </Card.Header>
+            <Card.Header className="card-header" style={{ backgroundColor: 'white' }}>
                 <Card.Link href="#" style={{ color: '#2F2F31' }}>Settings</Card.Link>
             </Card.Header>
         </Accordion>

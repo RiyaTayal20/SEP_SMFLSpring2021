@@ -1,4 +1,5 @@
 @import '../root.scss';
+@import '../Button.scss';
 
 .portfolio-title{
     font-size: 40px;
@@ -24,17 +25,6 @@
 .portfolio-dropdown{
     margin-left: 1%;
     .btn{
-        color: black;
-        background-color: white;
-        border-color: white;
-        &:hover, &:focus, &:active{
-            color: black;
-            background-color: white;
-            border-color: white;
-        }
-        &:not(:disabled):not(.disabled) {
-            background: white;
-            color: black;
-        }
+        @include dropdownbtn;
     }
 }

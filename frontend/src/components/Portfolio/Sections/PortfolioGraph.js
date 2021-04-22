@@ -45,11 +45,11 @@ const PortfolioGraph = (props) => {
                                 },
                             ],
                         }}
-                        height={400}
+                        height={300}
                         width={600}
                         options={{
                             backgroundColor: 'white',
-                            maintainAspectRatio: false,
+                            maintainAspectRatio: true,
                             tooltips: {
                                 backgroundColor: 'blue',
                             },

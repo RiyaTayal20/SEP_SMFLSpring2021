@@ -52,7 +52,7 @@ function CurrentLeagues() {
                                     console.log(portfolio);
                                     if (portfolio.owner === username) {
                                         console.log(portfolio.netWorth);
-                                        return (<p className="current-league-worth">${portfolio.currentNetWorth}({portfolio.currentNetWorth / 500 > 1 ? `+${parseFloat((portfolio.currentNetWorth / 500 - 1) * 100).toFixed(2)}%` : `-${parseFloat((1 - portfolio.currentNetWorth / 500) * 100).toFixed(2)}%` })</p>);
+                                        return (<p className="current-league-worth">${portfolio.currentNetWorth}({portfolio.currentNetWorth / league.settings.balance > 1 ? `+${parseFloat((portfolio.currentNetWorth / league.settings.balance - 1) * 100).toFixed(2)}%` : `-${parseFloat((1 - portfolio.currentNetWorth / league.settings.balance) * 100).toFixed(2)}%` })</p>);
                                     }
                                     console.log('NOne');
                                     return null;

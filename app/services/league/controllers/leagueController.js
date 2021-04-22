@@ -720,10 +720,10 @@ exports.getSummary = async (req, res) => {
         date.setHours(0,0,0,0);
         date.setDate(date.getDate() + 1);
         if (date.getTime() === lastFriday.getTime()) {
-            SPStartWorth = day.close;
+            SPStartWorth = SPHistorical[day];
         }
         if (date.getTime() === endDay.getTime()) {
-            SPEndWorth = day.close;
+            SPEndWorth = SPHistorical[day];
         }
     }
     // SPHistorical.forEach((day) => {

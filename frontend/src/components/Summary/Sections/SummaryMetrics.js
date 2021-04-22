@@ -1,8 +1,11 @@
 import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 const SummaryMetrics = (props) => {
     /* eslint-disable max-len */
+    /* eslint-disable no-else-return */
     const { metrics } = props;
     let percentageReturnPlace;
     let personalPercentageReturn;
@@ -25,7 +28,7 @@ const SummaryMetrics = (props) => {
     }
 
     return (
-        <ListGroup horizontal>
+        <ListGroup>
             <ListGroup.Item className="card-list">
                 You rank in total return
                 <h1 className="return-place">#{percentageReturnPlace}</h1>
@@ -35,6 +38,19 @@ const SummaryMetrics = (props) => {
                 {personalDollarReturn > 0
                     ? <h1 className="total-return" style={{ color: 'green' }}>$+{personalDollarReturn}(+{personalPercentageReturn}%)</h1>
                     : <h1 className="total-return" style={{ color: 'red ' }}>${personalDollarReturn}({personalPercentageReturn}%)</h1> }
+                <OverlayTrigger overlay={<Tooltip>Performance relative to the rest of this league.</Tooltip>}>
+                    {(() => {
+                        console.log('??');
+                        if (leaguePercentageReturnDifference > 0 && leaguePercentageReturnDifference <= 10) {
+                            return (<h3>ABOVE AVERAGE</h3>);
+                        } else if (leaguePercentageReturnDifference > 10) {
+                            return (<h3>GREATLY ABOVE AVERAGE</h3>);
+                        } else if (leaguePercentageReturnDifference <= 0 && leaguePercentageReturnDifference > -10) {
+                            return (<h3>BELOW AVERAGE</h3>);
+                        }
+                        return (<h3>GREATLY BELOW AVERAGE</h3>);
+                    })()}
+                </OverlayTrigger>
             </ListGroup.Item>
             <ListGroup.Item className="card-list">
                 Your return compared to the league

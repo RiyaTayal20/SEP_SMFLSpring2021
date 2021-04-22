@@ -14,7 +14,7 @@ const SummaryGraph = (props) => {
     if (SPData) {
         dates = SPData.map((day) => day.date);
         SPprices = SPData.map((day) => day.close);
-        SPpercentages = SPprices.map((price) => price / SPprices[0]);
+        SPpercentages = SPprices.map((price) => (price / SPprices[0] - 1) * 100);
     }
 
     if (portfolio && portfolio.netWorth) {
@@ -41,7 +41,7 @@ const SummaryGraph = (props) => {
             });
         }
         portfolioPrices = Object.keys(portfolio.netWorth).map((j) => portfolio.netWorth[j].worth);
-        portfolioPercentages = portfolioPrices.map((price) => price / portfolioPrices[0]);
+        portfolioPercentages = portfolioPrices.map((price) => (price / portfolioPrices[0] - 1) * 100);
     }
 
     return (
@@ -70,10 +70,10 @@ const SummaryGraph = (props) => {
                     },
                 ],
             }}
-            height={400}
+            height={275}
             width={530}
             options={{
-                maintainAspectRatio: false,
+                maintainAspectRatio: true,
                 tooltips: {
                     backgroundColor: 'blue',
                 },

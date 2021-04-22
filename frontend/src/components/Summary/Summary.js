@@ -130,8 +130,10 @@ function Summary() {
             {league && (
                 <div className="league-summary">
                     <h1>Summary of Week <b>{week}:</b></h1>
-                    <SummaryMetrics metrics={summary} />
-                    <SummaryGraph dates={dates} portfolio={portfolio} prices={prices} SPData={SPData} />
+                    <div className="league-graph-metrics">
+                        <SummaryMetrics metrics={summary} />
+                        <SummaryGraph className="league-graph" dates={dates} portfolio={portfolio} prices={prices} SPData={SPData} />
+                    </div>
                 </div>
             )}
         </Container>

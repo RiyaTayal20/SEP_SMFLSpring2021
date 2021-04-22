@@ -79,6 +79,8 @@ function AIPage() {
                 show: true,
                 color: 'white',
             },
+            min: 225,
+            max: 265,
         },
     };
     const getCandlesticks = async () => {
@@ -91,6 +93,19 @@ function AIPage() {
         });
         const arrayJ = await response.json();
         const { data } = arrayJ;
+
+        const max = [];
+        const min = [];
+        data.forEach((pair) => {
+            console.log(pair.y);
+            max.push(Math.max(pair.y));
+            min.push(Math.min(pair.y));
+        });
+        console.log(max);
+        console.log(min);
+        options.yaxis.max = Math.max(max);
+        options.yaxis.min = Math.min(min);
+        console.log(`Min: ${Math.min(min)}, Max: ${Math.max(max)}`);
         setCandlesticks(data);
     };
     const getClose = async () => {

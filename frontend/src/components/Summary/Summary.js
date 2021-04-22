@@ -46,7 +46,8 @@ function Summary() {
     };
 
     const getSP = async () => {
-        const response = await fetch(`${process.env.REACT_APP_SAPI_URL}/equity/statistics/SPY`, {
+        console.log('called');
+        const response = await fetch(`${process.env.REACT_APP_SAPI_URL}/equity/historical/SPY?timeframe=6m`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -54,7 +55,43 @@ function Summary() {
             },
         });
         const data = await response.json();
-        setSPData(data['6m'].prices);
+        const SPprices = [];
+        const startDate = new Date(`${week}/21`);
+
+        console.log(startDate);
+
+        let month;
+        let day;
+        let dateString = `${startDate.getMonth()}/${startDate.getDate()}/${startDate.getFullYear()}`;
+
+        for (let i = 0; i < 5; i += 1) {
+            month = startDate.getMonth() + 1;
+            if (month < 10) {
+                month = `0${month.toString()}`;
+            } else {
+                month = month.toString();
+            }
+            day = startDate.getDate();
+            if (day < 10) {
+                day = `0${day.toString()}`;
+            } else {
+                day = day.toString();
+            }
+
+            dateString = `${startDate.getFullYear()}-${month}-${day}`;
+
+            SPprices.push({
+                date: dateString,
+                close: data[dateString],
+            });
+
+            startDate.setTime(startDate.getTime() + (24 * 60 * 60 * 1000));
+        }
+
+        console.log('data');
+        console.log(data);
+        console.log(SPprices);
+        setSPData(SPprices);
     };
 
     const getSummary = async () => {

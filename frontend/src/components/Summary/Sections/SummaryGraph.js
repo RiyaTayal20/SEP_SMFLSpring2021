@@ -21,7 +21,7 @@ const SummaryGraph = (props) => {
         portfolioPrices = Object.keys(portfolio.netWorth).map((j) => portfolio.netWorth[j].worth);
         portfolioPercentages = portfolioPrices.map((price) => price / portfolioPrices[0]);
     }
-
+    console.log(SPData);
     console.log(SPprices);
 
     return (

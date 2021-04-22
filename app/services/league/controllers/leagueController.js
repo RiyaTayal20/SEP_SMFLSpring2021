@@ -3,7 +3,7 @@
 const League = require('../models/leagueModel');
 const User = require('../models/userModel');
 const { Portfolio } = require('../models/portfolioModel');
-const { getMarketPrice, getStatistics } = require('../utils/stockUtils');
+const { getMarketPrice, getStatistics, getHistorical } = require('../utils/stockUtils');
 const { getNews } = require('../utils/newsUtils');
 
 /**
@@ -643,8 +643,8 @@ const getIndexJSON = (array, username) => {
 
 exports.getSummary = async (req, res) => {
     const { username } = res.locals;
-    let SPHistorical = await getStatistics('SPY');
-    SPHistorical = SPHistorical['6m'].prices;
+    let SPHistorical = await getHistorical('SPY', '6m');
+    // SPHistorical = SPHistorical['6m'].prices;
     let percentageReturnRankings = [];
     let dollarReturnRankings = [];
     let startPortfolioTotals = 0;
@@ -715,8 +715,8 @@ exports.getSummary = async (req, res) => {
         });
     });
 
-    SPHistorical.forEach((day) => {
-        date = new Date(day.date);
+    for(let day in SPHistorical){
+        date = new Date(day);
         date.setHours(0,0,0,0);
         date.setDate(date.getDate() + 1);
         if (date.getTime() === lastFriday.getTime()) {
@@ -725,7 +725,18 @@ exports.getSummary = async (req, res) => {
         if (date.getTime() === endDay.getTime()) {
             SPEndWorth = day.close;
         }
-    });
+    }
+    // SPHistorical.forEach((day) => {
+    //     date = new Date(day.date);
+    //     date.setHours(0,0,0,0);
+    //     date.setDate(date.getDate() + 1);
+    //     if (date.getTime() === lastFriday.getTime()) {
+    //         SPStartWorth = day.close;
+    //     }
+    //     if (date.getTime() === endDay.getTime()) {
+    //         SPEndWorth = day.close;
+    //     }
+    // });
 
     const startAverage = startPortfolioTotals / ((leagueInfo.portfolioList).length - 1);
     const endAverage = endPortfolioTotals / ((leagueInfo.portfolioList).length - 1);

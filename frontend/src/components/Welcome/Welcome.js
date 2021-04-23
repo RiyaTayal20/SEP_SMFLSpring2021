@@ -16,7 +16,7 @@ function Welcome() {
     return (
         <div>
             <Container className="one-cont">
-                <div className="Page1">
+                <div>
                     <div className="big-logo">
                         <img src={Icon} alt="logo" className="icon" style={{ width: '430px', height: '430px' }} />
                     </div>
@@ -28,44 +28,54 @@ function Welcome() {
             </Container>
 
             <div className="Page2" style={{ color: '#2f2f31', backgroundColor: '#3fc380' }}>
-                <h1 className="success" style={{ Color: '#2f2f31' }}>Successful investing is about managing risk, not avoiding it</h1>
+                <div>
+                    <u><h1 style={{ Color: '#2f2f31' }}>Successful investing is about managing risk, not avoiding it</h1></u>
+                </div>
                 <Row className="market">
                     <Col className="market-col" xs={4}>
                         <Row>
-                            <h2 className="real-title">Real Market Success </h2>
-                            <img src={Icon4} alt="logo" className="icon" style={{ width: '300px', height: '200px' }} />
-                            <h4 className="word1" style={{ color: '#2f2f31' }}>
-                                Make trades in a virtual environment before
-                                risking your own capital
-                            </h4>
+                            <div className="page-sections">
+                                <h2 className="real-title">Real Market Success </h2>
+                                <img src={Icon4} alt="logo" className="icon" style={{ width: '300px', height: '200px' }} />
+                                <h4 className="word" style={{ color: '#2f2f31' }}>
+                                    Make trades in a virtual environment before
+                                    risking your own capital
+                                </h4>
+                            </div>
                         </Row>
                         <Row>
-                            <h2 className="test-title">Test Your Trading Skills </h2>
-                            <img src={Icon3} alt="logo" className="icon" style={{ width: '300px', height: '200px' }} />
-                            <h4 className="word2" style={{ color: '#2f2f31' }}>
-                                Join or create leagues with your friends and other investors.
-                                Compete to see who has the best investment result daily
-                            </h4>
+                            <div className="page-sections">
+                                <h2 className="test-title">Test Your Trading Skills </h2>
+                                <img src={Icon3} alt="logo" className="icon" style={{ width: '300px', height: '200px' }} />
+                                <h4 className="word" style={{ color: '#2f2f31' }}>
+                                    Join or create leagues with your friends and other investors.
+                                    Compete to see who has the best investment result daily
+                                </h4>
+                            </div>
                         </Row>
                     </Col>
                     <Col className="education-col" xs={5}>
                         <Row>
-                            <h2 className="ed-title">Education</h2>
-                            <img src={Icon2} alt="logo" className="icon" style={{ width: '250px', height: '200px' }} />
-                            <h4 className="word3" style={{ color: '#2f2f31' }}>
-                                Learn more and grow. Increase your knowledge of the
-                                stock markets by playing this virtual stock market
-                                exchange game.
-                            </h4>
+                            <div className="page-sections">
+                                <h2 className="ed-title">Education</h2>
+                                <img src={Icon2} alt="logo" className="icon" style={{ width: '250px', height: '200px' }} />
+                                <h4 className="word" style={{ color: '#2f2f31' }}>
+                                    Learn more and grow. Increase your knowledge of the
+                                    stock markets by playing this virtual stock market
+                                    exchange game.
+                                </h4>
+                            </div>
                         </Row>
-                        <Row className="bot">
-                            <h2 className="bot-title">AI Bot </h2>
-                            <img src={Icon5} alt="logo" className="icon" style={{ width: '100px', height: '100px' }} />
-                            <h4 className="word4" style={{ color: '#2f2f31' }}>
-                                Compete with the best!
-                                AI BOTs allow investors to keep up with new trends
-                                and have an easier approach on global markets
-                            </h4>
+                        <Row>
+                            <div className="page-sections">
+                                <h2 className="bot-title">AI Bot </h2>
+                                <img src={Icon5} alt="logo" className="icon" style={{ width: '150px', height: '150px' }} />
+                                <h4 className="word2" style={{ color: '#2f2f31' }}>
+                                    Compete with the best!
+                                    AI BOTs allow investors to keep up with new trends
+                                    and have an easier approach on global markets
+                                </h4>
+                            </div>
                         </Row>
                     </Col>
                 </Row>
@@ -98,7 +108,7 @@ function Welcome() {
                     <Col>
                         <h5 className="created">Created By:</h5>
                     </Col>
-                    <Col>
+                    <Col className="name-list1">
                         <p>Aarushi Pandey</p>
                         <p>Aarushi Satish</p>
                         <p>Apoorva Goel</p>
@@ -106,7 +116,7 @@ function Welcome() {
                         <p>David Lau</p>
                         <p>Jacques Scheire</p>
                     </Col>
-                    <Col>
+                    <Col className="name-list2">
                         <p>Jawad Jamal</p>
                         <p>Krishna Prajapati</p>
                         <p>Riya Tayal</p>

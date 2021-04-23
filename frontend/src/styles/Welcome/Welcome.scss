@@ -5,53 +5,23 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding-bottom: 10vh;
+    padding-bottom: 7vh;
 
     .big-logo {
         padding-top: 5vh;
     }
 }
 
-.two-cont{
-    display:flex;
-    flex-direction:row;
-
-    .education-col.row{
-        display:inherit;
-    }
-    .market-col.row{
-        display:inherit;
-       
-    }
-}
-.Page2{
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 10vh;
-    padding-bottom: 4vh;
-    .market.row{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-    }
-}
-
-.row {
-    display: flex;
-    flex-wrap: wrap;
-}
-
 .all-buttons{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    padding-top: 3vh;
 
     .reg-button{
         color: var(--white);
         background-color: var(--purple);
-        border-color:var(--white);
+        border-color: var(--white);
     }
 
     .log-button{
@@ -61,19 +31,62 @@
     }
 }
 
-.bot{
-    padding-top: 8vh;
+.Page2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 7vh 0vw;
+    
+    .market{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+.success{
+    text-align: center;
+    font-weight: bolder;
+    padding-bottom: 3vh;
+}
+
+.market{
+    display: flex; 
+    flex-direction: row;
+    padding-top: 3vh;
+}
+
+.page-sections{
+    text-align: center;
+    margin: 2vh 3vw;
+}
+
+.real-title, .test-title, .ed-title{
+    font-weight: bold;
+}
+
+.bot-title{
+    margin-bottom: 5vh;
+}
+
+.word{
+    text-align: center;
+}
+
+.word2{
+    text-align: center;
+    margin-top: 2.5vh;
 }
 
 .expert{
-
     .col{
         display:flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding-top: 20vh;
+        padding-top: 15vh;
     }
+
     .expert-card.card{
         display:inherit;
         width: 1050px;
@@ -85,16 +98,16 @@
         }
     }
 }
+
 .expert-card{
-    padding-top: 78px;
-    
+    padding-top: 9vh;
 }
 
 .expert-text{
     text-align: center;
-    color: #2f2f31;
+    color: var(--dark-scale-grey);
     font-weight: bold;
-    font-size: 60px;
+    font-size: 55px;
 }
 
 .expert-text1{
@@ -105,16 +118,15 @@
 .reg-button1.btn-outline-primary{
     color: var(--white);
     border-color: var(--white);
-    margin-top: 25vh;
-    margin-bottom:15vh;
-    margin-top: 25vh;
+    margin: 20vh 0vw 15vh 0vw;
     width: 200px;
     height: 50px;
 }
 
 .names{
     color: var(--white);
-    padding-top: 5vh;
+    padding-top: 4vh;
+    padding-left: 2vw;
 }
 
 .diamond-header{
@@ -122,46 +134,6 @@
     font-weight: bold;
 }
 
-.success{
-    padding-right: 10px;
-    padding-left:80px;
-    font-weight: bold;
-    padding-bottom: 30px;
-}
-
-.word1{
-    text-align: center;
-    
-}
-
-.word2{
-    text-align: center;
-   
-}
-
-.word3{
-    text-align: center;
-    
-}
-.word4{
-    text-align: center;
-    
-}
-
-.bot-title{
-    font-weight: bold;
-    padding-bottom:13vh;
-}
-
-.real-title{
-    font-weight: bold;
-}
-
-.test-title{
-    font-weight: bold;
-}
-
-.ed-title{
-    font-weight: bold;
-  
+.created{
+    margin-left: 5vw;
 }

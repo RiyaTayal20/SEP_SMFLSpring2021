@@ -20,6 +20,10 @@
         }
     }
 
+    h1 {
+        color: white;
+    }
+
     .btn{
         @include dropdownbtn;
     }

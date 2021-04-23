@@ -31,6 +31,10 @@
     align-items: center;
   }
 
+  .no-margin {
+    margin-right: 0px;
+  }
+
   %flex-center {
     display: flex;
     flex-direction: column;

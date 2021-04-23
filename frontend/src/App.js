@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
     BrowserRouter as Router, Switch, Route,
 } from 'react-router-dom';
@@ -27,13 +27,14 @@ import './styles/global.scss';
 require('dotenv').config();
 
 function App() {
+    const login = useMemo(() => ['/user/register', '/user/login', '/welcome'].indexOf(window.location.pathname) < 0, [window.location.pathname]);
     return (
         <Router>
             <div className="App">
                 <Header />
                 <div className="site-container">
-                    { ['/user/register', '/user/login', '/welcome'].indexOf(window.location.pathname) < 0 && <NavigationBar /> }
-                    <div className="site-content">
+                    { login && <NavigationBar /> }
+                    <div className={`site-content ${login ? '' : 'no-margin'}`}>
                         <Switch>
                             <Route path="/user/register">
                                 <RegistrationPage />

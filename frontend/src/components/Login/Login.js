@@ -49,38 +49,36 @@ function Login() {
     };
 
     return (
-        <div>
-            <Container className="login-container">
-                <div>
-                    <div className="login-form-title">Sign into your account here!</div>
-                </div>
-                <Form className="login-form">
-                    {showError
-                        && (
-                            <Alert variant="danger" onClose={() => setShowError(false)} dismissible>
-                                <Alert.Heading>Alert</Alert.Heading>
-                                <ol><li>{error}</li></ol>
-                            </Alert>
-                        )}
-                    <Form.Group controlId="formBasicUsername">
-                        <Form.Label>Username:</Form.Label>
-                        <Form.Control type="username" placeholder="Enter username" onChange={(e) => setLoginUsername(e.target.value)} />
-                    </Form.Group>
+        <Container className="login-container">
+            <div>
+                <div className="login-form-title">Sign into your account here!</div>
+            </div>
+            <Form className="login-form">
+                {showError
+                    && (
+                        <Alert variant="danger" onClose={() => setShowError(false)} dismissible>
+                            <Alert.Heading>Alert</Alert.Heading>
+                            <ol><li>{error}</li></ol>
+                        </Alert>
+                    )}
+                <Form.Group controlId="formBasicUsername">
+                    <Form.Label>Username:</Form.Label>
+                    <Form.Control type="username" placeholder="Enter username" onChange={(e) => setLoginUsername(e.target.value)} />
+                </Form.Group>
 
-                    <Form.Group controlId="formBasicPassword">
-                        <Form.Label>Password:</Form.Label>
-                        <Form.Control type="password" placeholder="Password" onChange={(e) => setLoginPassword(e.target.value)} />
-                        <Form.Text className="text-register" onClick={registerAccount}>
-                            {" Don't have an account? Register here."}
-                        </Form.Text>
-                    </Form.Group>
+                <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Password:</Form.Label>
+                    <Form.Control type="password" placeholder="Password" onChange={(e) => setLoginPassword(e.target.value)} />
+                    <Form.Text className="text-register" onClick={registerAccount}>
+                        {" Don't have an account? Register here."}
+                    </Form.Text>
+                </Form.Group>
 
-                    <Button onClick={login}>
-                        Submit
-                    </Button>
-                </Form>
-            </Container>
-        </div>
+                <Button onClick={login}>
+                    Submit
+                </Button>
+            </Form>
+        </Container>
     );
 }
 

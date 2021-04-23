@@ -869,6 +869,7 @@ exports.getSummary = async (req, res) => {
 
     for(let day in SPHistorical){
         date = new Date(day);
+        console.log(day, date);
         date.setHours(0,0,0,0);
         date.setDate(date.getDate() + 1);
         if (date.getTime() === lastFriday.getTime()) {
@@ -878,17 +879,6 @@ exports.getSummary = async (req, res) => {
             SPEndWorth = SPHistorical[day];
         }
     }
-    // SPHistorical.forEach((day) => {
-    //     date = new Date(day.date);
-    //     date.setHours(0,0,0,0);
-    //     date.setDate(date.getDate() + 1);
-    //     if (date.getTime() === lastFriday.getTime()) {
-    //         SPStartWorth = day.close;
-    //     }
-    //     if (date.getTime() === endDay.getTime()) {
-    //         SPEndWorth = day.close;
-    //     }
-    // });
 
     const startAverage = startPortfolioTotals / ((leagueInfo.portfolioList).length - 1);
     const endAverage = endPortfolioTotals / ((leagueInfo.portfolioList).length - 1);
@@ -923,20 +913,25 @@ exports.getSummary = async (req, res) => {
 
 exports.insertNetWorth = async (req, res) => {
     const { username } = res.locals;
-    const currentNetWorth = {
-        date: req.body.date,
-        worth: req.body.worth
-    }
-    console.log(`User: ${username}, Date: ${req.body.date}, Worth: ${req.body.worth}`);
-    const response = await League.findOneAndUpdate(
-        { _id: req.body.leagueID, 'portfolioList.owner':  username},
-        { $addToSet: { 'portfolioList.$.netWorth': currentNetWorth } },
-        { new: true },
-        (err) => {
-            if (err) throw err;
-        },
-    );
-    res.send(response);
+    const dates = req.body.date;
+    const worths = req.body.worth;
+    
+     for (let i = 0; i < dates.length; i++) {
+        const currentNetWorth = {
+            date: dates[i],
+            worth: parseFloat(worths[i])
+        }
+        await League.findOneAndUpdate(
+            { _id: req.body.leagueID, 'portfolioList.owner':  username},
+            { $addToSet: { 'portfolioList.$.netWorth': currentNetWorth } },
+            { new: true },
+            (err) => {
+                if (err) throw err;
+            },
+        );
+    } 
+
+    res.send('Succ');
 };
 
 // Zip arrays

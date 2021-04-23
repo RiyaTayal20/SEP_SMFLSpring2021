@@ -5,9 +5,13 @@ import '../../../styles/Portfolio/PortfolioGraph.scss';
 
 const PortfolioGraph = (props) => {
     /* eslint-disable max-len */
-    const { portfolio } = props;
+    const { portfolio, league } = props;
     let dates = '';
     let prices = '';
+    let balance;
+    if (league) {
+        balance = league.settings.balance;
+    }
     if (portfolio && portfolio.netWorth) {
         dates = Object.keys(portfolio.netWorth).map((i) => portfolio.netWorth[i].date.slice(0, portfolio.netWorth[i].date.lastIndexOf('T')));
         prices = Object.keys(portfolio.netWorth).map((j) => portfolio.netWorth[j].worth);
@@ -25,8 +29,8 @@ const PortfolioGraph = (props) => {
                             : <p className="portfolio-gain" style={{ color: portfolio.closePercentChange > 0 ? 'green' : 'red' }}>${(portfolio.currentNetWorth * (portfolio.closePercentChange / 100)).toFixed(2)}&nbsp;({portfolio.closePercentChange}%)</p> }
                         &nbsp; <p className="portfolio-gain">Total Gain: </p> &nbsp;
                         {portfolio.currentNetWorth - 500 > 0
-                            ? <p className="portfolio-gain" style={{ color: portfolio.currentNetWorth - 500 > 0 ? 'green' : 'red' }}>${(portfolio.currentNetWorth - 500).toFixed(2)}&nbsp;(+{portfolio.currentNetWorth / 500 > 1 ? `+${parseFloat((portfolio.currentNetWorth / 500 - 1) * 100).toFixed(2)}%` : `-${parseFloat((1 - portfolio.currentNetWorth / 500) * 100).toFixed(2)}%` })</p>
-                            : <p className="portfolio-gain" style={{ color: portfolio.currentNetWorth - 500 > 0 ? 'green' : 'red' }}>${(portfolio.currentNetWorth - 500).toFixed(2)}&nbsp;({portfolio.currentNetWorth / 500 > 1 ? `+${parseFloat((portfolio.currentNetWorth / 500 - 1) * 100).toFixed(2)}%` : `-${parseFloat((1 - portfolio.currentNetWorth / 500) * 100).toFixed(2)}%` })</p> }
+                            ? <p className="portfolio-gain" style={{ color: portfolio.currentNetWorth - balance > 0 ? 'green' : 'red' }}>${(portfolio.currentNetWorth - balance).toFixed(2)}&nbsp;(+{portfolio.currentNetWorth / 500 > 1 ? `${parseFloat((portfolio.currentNetWorth / balance - 1) * 100).toFixed(2)}%` : `${parseFloat((1 - portfolio.currentNetWorth / balance) * 100).toFixed(2)}%` })</p>
+                            : <p className="portfolio-gain" style={{ color: portfolio.currentNetWorth - balance > 0 ? 'green' : 'red' }}>${(portfolio.currentNetWorth - balance).toFixed(2)}&nbsp;({portfolio.currentNetWorth / 500 > 1 ? `${parseFloat((portfolio.currentNetWorth / balance - 1) * 100).toFixed(2)}%` : `${parseFloat((1 - portfolio.currentNetWorth / balance) * 100).toFixed(2)}%` })</p> }
                     </div>
                 )}
             {portfolio && portfolio.netWorth

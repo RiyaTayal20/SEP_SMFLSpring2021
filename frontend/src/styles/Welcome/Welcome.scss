@@ -2,35 +2,18 @@
 @import '../Button.scss';
 
 
-.one-cont{
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    //align-items:center;
-
-    .big-logo{ 
-        display:inherit;
-         margin-top:2vh;
-        margin-left:22vw;
-
-    }
-
-}
-.site-content {
-    width: 100%;
-    margin-right: 0px !important;
-    margin-left: 0px !important;
+.one-cont.container{
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    .big-logo {
+        padding-top: 5vh;
+    }
 }
 
 .two-cont{
     display:flex;
     flex-direction:row;
-     margin:0 auto;
-    max-width: 1700px !important;
-    max-height: 1800px !important;
     .education-col.row{
         display:inherit;
     }
@@ -40,72 +23,66 @@
     }
 }
 .Page2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding-top:10vh;
-    padding-left: 9vw;
     padding-bottom:4vh;
+    .market.row{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
 }
-.market-col{
-    margin-left:5vw;
-}
-.education-col{
-    margin-left:10vw;
 
-}
 .row {
     display: flex;
     flex-wrap: wrap;
-    margin-right: 15px !important;
-    margin-left: 5px!important;
 }
+
 .all-buttons{
-    display:flex;
-    flex-direction:row;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
     .reg-button{
-        display:inherit;
-        justify-content: center;
-        align-items:center;
         color: white;
         background-color: #5367fc;
         border-color:white;
-        margin-left:22vw;
-        margin-top:5vh;
-
     }
 
     .log-button{
-        display:inherit;
-        justify-content: center;
-        align-items:center;
         color: white;
         background-color:#5367fc;
         border-color:white;
-        margin-left:17vw;
-        margin-top:5vh;
-
     }
-
 }
+
 .bot{
-    margin-top:8vh;
+    padding-top:8vh;
 }
 
 .expert{
-    display:flex;
-    justify-content: center;
-    align-items:center;
-    .expert-card{
+    .col{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-top:20vh;
+    }
+    .expert-card.card{
         display:inherit;
         width:1050px;
         height:300px;
+        .card-body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
     }
 }
 .expert-card{
     padding-top: 78px;
     
-}
-.expert{
-    padding-top:20vh;
-    padding-left: 12vw;
 }
 
 .expert-text{
@@ -125,15 +102,10 @@
     color: white;
     border-color:white;
     margin-top:25vh;
-    margin-left:29vw;
     margin-bottom:15vh;
     margin-top:25vh;
-
-}
-
-.stairs{
-   margin-left:27vw;
-   
+    width: 200px;
+    height: 50px;
 }
 
 .names{
@@ -142,12 +114,8 @@
 }
 
 .diamond-header{
-    margin-top: 4vh;
+    padding-top: 4vh;
     font-weight: bold;
-}
-
-.created{
-    margin-left:19vw;
 }
 
 .success{

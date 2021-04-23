@@ -29,7 +29,7 @@ const sendTrade = async (token, leagueName, order, ticker, quantity) => fetch(`$
 });
 
 const getLeagueName = async (id) => {
-    const response = await fetch(`${process.env.LAPI_URL}/league/find/${id}`, {
+    const response = await fetch(`${process.env.LAPI_URL}/league/findid/${id}`, {
         method: 'GET',
     }).catch((err) => {
         console.log(err);

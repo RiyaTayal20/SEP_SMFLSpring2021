@@ -4,6 +4,7 @@ const News = require("../models/newsModel.js");
 const CACHE_TIME = 60;
 
 const getNews = async (ticker) => {
+    console.log(process.env.API_KEY);
     try {
         const news = await News.findOne({tickerSymbol: ticker});
         const response = await fetch(`https://cloud.iexapis.com/stable/stock/${ticker}/news/last/50?token=${process.env.API_KEY}`);

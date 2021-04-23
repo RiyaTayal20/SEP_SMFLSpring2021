@@ -69,7 +69,7 @@ router.get('/find/names', leagueController.getLeagueNames);
  * @function
  * @name get/find/:id
  */
-router.get('/find/:id', leagueController.getLeagueByID);
+router.get('/findid/:id', leagueController.getLeagueByID);
 
 /**
  * Route handling query of specified league name

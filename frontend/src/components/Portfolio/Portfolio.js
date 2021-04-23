@@ -97,37 +97,39 @@ const Portfolio = () => {
                         You have a low balance. Please contact League Manager to get more money.
                     </Modal.Body>
                 </Modal>
-                {leagueList
-                    && (
-                        <div>
-                            <DropdownButton title={league || 'Choose League'} className="portfolio-dropdown" size="lg">
-                                {leagueList && leagueList.map((userLeague) => (
-                                    <Dropdown.Item onClick={(() => setLeague(userLeague.leagueName))}>
-                                        {userLeague.leagueName}
-                                    </Dropdown.Item>
-                                ))}
-                            </DropdownButton>
-                        </div>
-                    )}
-                {leagueObj
-                    && (
-                        <div>
-                            <DropdownButton title={viewUser || 'Choose Player'} className="portfolio-dropdown" size="lg">
-                                {leagueObj && leagueObj.playerList.map((user) => (
-                                    <Dropdown.Item onClick={(() => setViewUser(user))}>
-                                        {user}
-                                    </Dropdown.Item>
-                                ))}
-                            </DropdownButton>
-                        </div>
-                    )}
+                <div className="portfolio-dropdowns">
+                    {leagueList
+                        && (
+                            <div>
+                                <DropdownButton title={league || 'Choose League'} className="portfolio-dropdown" size="lg">
+                                    {leagueList && leagueList.map((userLeague) => (
+                                        <Dropdown.Item onClick={(() => setLeague(userLeague.leagueName))}>
+                                            {userLeague.leagueName}
+                                        </Dropdown.Item>
+                                    ))}
+                                </DropdownButton>
+                            </div>
+                        )}
+                    {leagueObj
+                        && (
+                            <div>
+                                <DropdownButton title={viewUser || 'Choose Player'} className="portfolio-dropdown" size="lg">
+                                    {leagueObj && leagueObj.playerList.map((user) => (
+                                        <Dropdown.Item onClick={(() => setViewUser(user))}>
+                                            {user}
+                                        </Dropdown.Item>
+                                    ))}
+                                </DropdownButton>
+                            </div>
+                        )}
+                </div>
                 {league
                     && (
                         <div className="header">
                             <h1>
                                 Portfolio for <b>{league}</b>
                             </h1>
-                            <PortfolioGraph portfolio={portfolio} />
+                            <PortfolioGraph league={leagueObj} portfolio={portfolio} />
                             <Positions portfolio={portfolio} />
                             <PortfolioHistory portfolio={portfolio} />
                         </div>

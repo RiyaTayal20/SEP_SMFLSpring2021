@@ -1,12 +1,10 @@
+@import '../Button.scss';
+
 .stock-container{
     display: flex;
     flex-direction: column;
     color: white;
     margin-top: 6vh;
-}
-
-h1 {
-    color: white;
 }
 
 .header > h1 {
@@ -62,6 +60,20 @@ h1 {
     .graph {
         height: 20vw;
     }
+}
+
+.full-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+    h1 {
+        padding-right: 30px;
+    }
+}
+
+.ai-button.btn.btn-primary {
+    @include btn
 }
 
 .lightbulb-button {

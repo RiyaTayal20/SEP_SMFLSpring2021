@@ -83,7 +83,7 @@ function Welcome() {
                     </Row>
                     <Row>
                         <div>
-                            <Button className="reg-button1" variant="outline-primary" size="lg" style={{ width: '200px', height: '50px' }} href="/user/register">Register</Button>{' '}
+                            <Button className="reg-button1" variant="outline-primary" size="lg" href="/user/register">Register</Button>
                         </div>
                     </Row>
                 </Col>

@@ -78,7 +78,7 @@ function CentralizedLeague() {
                                         >
                                             <td>{portfolio.owner}</td>
                                         </Link>
-                                        <td>{portfolio.currentNetWorth}</td>
+                                        <td>{portfolio.currentNetWorth.toFixed(2)}</td>
                                         <td>{`${portfolio.growth}%`}</td>
                                     </tr>
                                 ))}

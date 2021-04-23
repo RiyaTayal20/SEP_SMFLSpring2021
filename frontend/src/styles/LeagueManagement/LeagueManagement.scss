@@ -36,14 +36,17 @@
             background-color: var(--mint);
             border-color: var(--mint);
         }
+        td {
+            .btn.btn-primary {
+                @include btn;
+            }
+        }
     }
 }
 
 .modalView{
     .btn {
-        padding: 1vh 1vw;
-        background-color: var(--mint);
-        border-color: var(--mint);
+        @include btn;
     }
 }
 

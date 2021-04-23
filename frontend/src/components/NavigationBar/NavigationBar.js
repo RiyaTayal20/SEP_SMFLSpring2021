@@ -39,9 +39,6 @@ function NavigationBar() {
                             <ListGroup.Item className="leagues-item">
                                 <Card.Link href="/league/create" style={{ color: '#2F2F31' }}>Create League</Card.Link>
                             </ListGroup.Item>
-                            <ListGroup.Item className="leagues-item">
-                                <Card.Link href="#" style={{ color: '#2F2F31' }}>Transaction History</Card.Link>
-                            </ListGroup.Item>
                         </ListGroup>
                     </Accordion.Collapse>
                 </Card>
@@ -54,9 +51,6 @@ function NavigationBar() {
             </Card.Header>
             <Card.Header className="card-header" style={{ backgroundColor: 'white' }}>
                 <Card.Link href="/summary" style={{ color: '#2F2F31' }}>Summary</Card.Link>
-            </Card.Header>
-            <Card.Header className="card-header" style={{ backgroundColor: 'white' }}>
-                <Card.Link href="#" style={{ color: '#2F2F31' }}>Settings</Card.Link>
             </Card.Header>
         </Accordion>
     );

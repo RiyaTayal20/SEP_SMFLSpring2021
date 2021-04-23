@@ -2,8 +2,8 @@
 @import '../Button.scss';
 
 .registration-form-title{
-    padding-top: 30px;
-    color: white;
+    padding-top: 5vh;
+    color: var(--white);
     text-align: center;
     height: 0px;
     font-size: 35px;
@@ -12,12 +12,12 @@
 .registration-form{ 
     @extend %flex-center;
     border-style: solid;
-    border-color: white;
-    margin: 80px auto; 
-    padding: 2vh 2vw;
+    border-color: var(--white);
+    margin: 10vh 0px; 
+    padding: 8vh 5vw;
     .form-group {
         @extend %flex-center;
-        color: white;
+        color: var(--white);
         align-items: flex-start;
     }
 

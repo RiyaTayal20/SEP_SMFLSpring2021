@@ -3,18 +3,16 @@
 
 .portfolio-title{
     font-size: 40px;
-    margin-left: 15px;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding: 5vh 0.5vw;
 }
 
 .portfolio-container{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    color: white;
+    color: var(--white);
     .header {
-        padding-top: 30px;
+        padding-top: 5vh;
         text-align: center;
         h1 {
             font-size: 60px;
@@ -32,7 +30,6 @@
 }
 
 .portfolio-dropdown{
-    margin-left: 1%;
     .btn{
         @include dropdownbtn;
     }

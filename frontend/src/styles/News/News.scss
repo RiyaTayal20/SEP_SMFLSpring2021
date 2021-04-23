@@ -1,9 +1,9 @@
 @import '../Button.scss';
 
 .news-title{
-    color: white;
+    color: var(--white);
     font-size: 35px;
-    margin: 5vh 0vw 5vh 1vw;
+    margin: 5vh 0vw;
 }
 
 .news-container {
@@ -13,7 +13,6 @@
 }
 
 .news-dropdown {
-    margin-left: 1%;
     .btn{
         @include dropdownbtn;
     }

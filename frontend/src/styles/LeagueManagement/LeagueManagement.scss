@@ -2,7 +2,7 @@
 @import '../Button.scss';
 
 .no-leagues-title{
-    color: white;
+    color: var(--white);
     font-size: 35px;
     padding: 30px;
 }
@@ -11,40 +11,30 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    color: white;
+    color: var(--white);
+
     .manage-league-form-title{
         font-size: 35px;
         text-align: center;
-        margin-left: 15px;
-        padding-top: 5vh;
-        padding-bottom: 5vh;
+        padding: 5vh 0vw;
     }
     .league-manage-dropdown{
-        margin-left: 15px;
         padding-bottom: 7vh;
         text-align: center;
+
         .btn{
-            color: black;
-            background-color: white;
-            border-color: white;
-            &:hover, &:focus, &:active{
-                color: black;
-                background-color: white;
-                border-color: white;
-            }
-            &:not(:disabled):not(.disabled) {
-                background: white;
-                color: black;
-            }
+            @include dropdownbtn;
         }
     }
+
     .table-body{
         padding: 5vh;
         text-align: center;
+        a
         .btn {
             padding: 1vh 1vw;
-            background-color: #3FC380;
-            border-color: #3FC380;
+            background-color: var(--mint);
+            border-color: var(--mint);
         }
     }
 }
@@ -52,8 +42,8 @@
 .modalView{
     .btn {
         padding: 1vh 1vw;
-        background-color: #3FC380;
-        border-color: #3FC380;
+        background-color: var(--mint);
+        border-color: var(--mint);
     }
 }
 

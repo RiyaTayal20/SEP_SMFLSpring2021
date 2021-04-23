@@ -12,9 +12,8 @@
 
 .create-league-form-title {
     padding-top: 5%;
-    color: white;
+    color: var(--white);
     text-align: center;
-    height: 0px;
     font-size: 35px;
 }
 
@@ -26,7 +25,7 @@
     font-size: 18px;
     .form-group {
         @extend %flex-center;
-        color: white;
+        color: var(--white);
     }
     .text-register {
         &:hover {
@@ -58,5 +57,5 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-
+    margin-bottom: 3vh;
 }

@@ -49,8 +49,7 @@ function CentralizedLeague() {
     }, []);
 
     return (
-    // <Container className="custom-cont">
-        <div className="centra-league-page">
+        <div className="central-league-page">
             <h1 className="league-header">{league}</h1>
             <Row className="lead-graph">
                 <Col sm={6}>
@@ -186,9 +185,7 @@ function CentralizedLeague() {
                     )}
                 </Table>
             </Row>
-
         </div>
-    // </Container>
 
     );
 }

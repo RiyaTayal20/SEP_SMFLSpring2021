@@ -5,41 +5,26 @@
 }
 
 .league-header{
-    color: #5367fc;
+    color: var(--purple);
     text-align: center;
-    margin-bottom:4vh;
+    margin-bottom: 4vh;
 }
 
-.centra-league-page{
+.central-league-page{
     padding-top: 5vh;
-    h3{
-        color: #3fc380;
+    
+    h3 {
+        color: var(--mint);
     }
    
 }
 
 .lead-graph.row{
-    display:flex; 
-    flex-direction:row;
-    flex-wrap:nowrap;
+    display: flex; 
+    flex-direction: row;
+    flex-wrap: nowrap;
 }
     
 .graph-header{
-    margin-left:2.5vw;
+    margin-left: 2.5vw;
 }
-// .leader-row{
-//     margin-bottom:30vh;
-// }
-// .leaderboard-table{
-//     margin-top:4vh;
-//     margin-right: 20vw;
-//     margin-bottom:30vh;
-//     // overflow:  auto;
-// }
-
-// .transaction-table{
-//     margin-top: 5vh;
-//     margin-right: 20vw;
-//     margin-bottom:20vh;
-//     // overflow: auto;  
-// }

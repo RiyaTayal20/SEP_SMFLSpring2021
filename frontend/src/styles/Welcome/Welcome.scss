@@ -1,12 +1,12 @@
 @import '../root.scss';
 @import '../Button.scss';
 
-
 .one-cont.container{
     display: flex;
     flex-direction: row;
     justify-content: center;
     padding-bottom: 10vh;
+
     .big-logo {
         padding-top: 5vh;
     }
@@ -15,6 +15,7 @@
 .two-cont{
     display:flex;
     flex-direction:row;
+
     .education-col.row{
         display:inherit;
     }
@@ -24,11 +25,12 @@
     }
 }
 .Page2{
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top:10vh;
-    padding-bottom:4vh;
+    padding-top: 10vh;
+    padding-bottom: 4vh;
     .market.row{
         display: flex;
         flex-direction: row;
@@ -45,35 +47,37 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+
     .reg-button{
-        color: white;
-        background-color: #5367fc;
-        border-color:white;
+        color: var(--white);
+        background-color: var(--purple);
+        border-color:var(--white);
     }
 
     .log-button{
-        color: white;
-        background-color:#5367fc;
-        border-color:white;
+        color: var(--white);
+        background-color: var(--purple);
+        border-color: var(--white);
     }
 }
 
 .bot{
-    padding-top:8vh;
+    padding-top: 8vh;
 }
 
 .expert{
+
     .col{
         display:flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding-top:20vh;
+        padding-top: 20vh;
     }
     .expert-card.card{
         display:inherit;
-        width:1050px;
-        height:300px;
+        width: 1050px;
+        height: 300px;
         .card-body{
             display: flex;
             flex-direction: column;
@@ -95,22 +99,21 @@
 
 .expert-text1{
     text-align: center;
-    color: #2f2f31;
+    color: var(--dark-scale-grey);
 }
 
-
 .reg-button1.btn-outline-primary{
-    color: white;
-    border-color:white;
-    margin-top:25vh;
+    color: var(--white);
+    border-color: var(--white);
+    margin-top: 25vh;
     margin-bottom:15vh;
-    margin-top:25vh;
+    margin-top: 25vh;
     width: 200px;
     height: 50px;
 }
 
 .names{
-    color: white;
+    color: var(--white);
     padding-top: 5vh;
 }
 
@@ -125,6 +128,7 @@
     font-weight: bold;
     padding-bottom: 30px;
 }
+
 .word1{
     text-align: center;
     
@@ -134,6 +138,7 @@
     text-align: center;
    
 }
+
 .word3{
     text-align: center;
     
@@ -155,6 +160,7 @@
 .test-title{
     font-weight: bold;
 }
+
 .ed-title{
     font-weight: bold;
   

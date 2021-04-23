@@ -164,7 +164,7 @@ function Trade() {
                     <div className="form-content">
                         <Form.Group controlId="formLeagueName">
                             <Row>
-                                <Form.Label>League:</Form.Label>
+                                <Form.Label className="label">League:</Form.Label>
                                 <Col>
                                     <Form.Control
                                         as="select"
@@ -184,7 +184,7 @@ function Trade() {
                         </Form.Group>
                         <Form.Group controlId="formStockSymbol">
                             <Row>
-                                <Form.Label>Ticker:</Form.Label>
+                                <Form.Label className="label">Ticker:</Form.Label>
                                 <Col>
                                     <Form.Control
                                         type="text"
@@ -200,7 +200,7 @@ function Trade() {
                         </Form.Group>
                         <Form.Group controlId="formTransactionType">
                             <Row>
-                                <Form.Label>Type:</Form.Label>
+                                <Form.Label className="label">Type:</Form.Label>
                                 <Col>
                                     <Form.Control
                                         as="select"
@@ -219,7 +219,7 @@ function Trade() {
                         </Form.Group>
                         <Form.Group controlId="formQuanitity">
                             <Row>
-                                <Form.Label>Quantity:</Form.Label>
+                                <Form.Label className="label">Quantity:</Form.Label>
                                 <Col>
                                     <Form.Control
                                         type="number"
@@ -236,7 +236,7 @@ function Trade() {
                         </Form.Group>
                         <Form.Group controlId="formOrderType">
                             <Row>
-                                <Form.Label>Price:</Form.Label>
+                                <Form.Label className="label">Price:</Form.Label>
                                 <Col>
                                     <Form.Control
                                         as="select"
@@ -284,7 +284,7 @@ function Trade() {
                         )}
                         <Form.Group controlId="formDuration">
                             <Row>
-                                <Form.Label>Duration:</Form.Label>
+                                <Form.Label className="label">Duration:</Form.Label>
                                 <Col>
                                     <Form.Control
                                         as="select"
@@ -303,7 +303,9 @@ function Trade() {
                             </Row>
                         </Form.Group>
                     </div>
-                    <Button type="submit" size="lg">Submit</Button>
+                    <div className="trade-button-div">
+                        <Button type="submit" size="lg">Submit</Button>
+                    </div>
                 </Form>
             </div>
             <div className="account-details-information">
@@ -328,43 +330,5 @@ function Trade() {
         </Container>
     );
 }
-
-// Stock info - removed for demo 1
-/* <div className="stock-square">
-    <small>
-        <div className="displayStock">
-            <div className="stock-sym-box">
-                <div>Stock Name</div>
-                {equity
-                && (
-                    <div>{equity.tickerSymbol}</div>
-                )}
-            </div>
-            <div className="last-box-section">
-                <div>Last</div>
-
-            </div>
-            <div className="change-box-section">
-                <div>Change</div>
-
-            </div>
-            <div className="percent-change-section">
-                <div>% Change</div>
-
-            </div>
-            <div className="volume-section">
-                <div>Volume</div>
-
-            </div>
-            <div className="day-high-section">
-                <div>Day&apos;s High</div>
-
-            </div>
-            <div className="day-low-section">
-                <div>Day&apos;s Low</div>
-            </div>
-        </div>
-    </small>
-</div> */
 
 export default Trade;

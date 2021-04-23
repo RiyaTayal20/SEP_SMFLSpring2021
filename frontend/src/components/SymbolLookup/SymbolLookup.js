@@ -1,33 +1,40 @@
 import React, { useState } from 'react';
-import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
+import Container from 'react-bootstrap/Container';
 import '../../styles/SymbolLookup/SymbolLookup.scss';
 import { useHistory } from 'react-router-dom';
-import Icon from '../../assets/icons/magnifier-icon.png';
+import { Search } from 'react-bootstrap-icons';
 
 function SymbolLookup() {
     const history = useHistory();
     const [ticker, setTicker] = useState('');
+    const [showError, setShowError] = useState(false);
 
     const search = () => {
-        history.push('/stock', { tickerSymbol: ticker });
+        if (!ticker) {
+            setShowError(true);
+        } else {
+            history.push('/stock', { tickerSymbol: ticker });
+        }
     };
     return (
-        <div className="symbol-lookup-page">
-            <h1 className="symbol-text" style={{ color: '#5367FC', fontSize: '4rem', fontWeight: 'bold' }}>SYMBOL LOOKUP</h1>
-            <div className="search-container">
-                <Form className="search-component">
-                    <Form.Group className="search" controlId="Search" style={{ backgroundColor: 'Transparent' }}>
-                        <Form.Control type="search" placeholder="SEARCH" style={{ border: '0rem' }} onChange={(e) => setTicker(e.target.value)} />
-                    </Form.Group>
-                    <Button className="search-button" onClick={search} style={{ backgroundColor: 'Transparent', borderColor: 'Transparent' }}>
-                        <div className="image">
-                            <img src={Icon} alt="magnifier" className="magnifier" style={{ width: '30px', height: '30px' }} />
-                        </div>
+        <Container className="symbol-lookup-page">
+            <h1 className="symbol-text">SYMBOL LOOKUP</h1>
+            { showError && (
+                <Alert variant="danger" onClose={() => setShowError(false)} dismissible>Invalid Ticker!</Alert>
+            )}
+            <InputGroup className="symbol-search">
+                <FormControl placeholder="Enter ticker symbol" onChange={(e) => setTicker(e.target.value)} />
+                <InputGroup.Append>
+                    <Button className="search-button" onClick={search}>
+                        <Search />
                     </Button>
-                </Form>
-            </div>
-        </div>
+                </InputGroup.Append>
+            </InputGroup>
+        </Container>
     );
 }
 

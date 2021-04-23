@@ -4,6 +4,7 @@ import { Line } from 'react-chartjs-2';
 import '../../../styles/Portfolio/PortfolioGraph.scss';
 
 const PortfolioGraph = (props) => {
+    /* eslint-disable max-len */
     const { portfolio } = props;
     let dates = '';
     let prices = '';
@@ -17,15 +18,15 @@ const PortfolioGraph = (props) => {
             {portfolio && portfolio.currentNetWorth
                 && (
                     <div className="portfolio-header">
-                        <h3>
-                            <b>Account Value: </b>
-                            ${portfolio.currentNetWorth}&emsp;&emsp;
-                            <b>Buying Power: </b>
-                            ${portfolio.cashAvailable}&emsp;&emsp;
-                            <b>Total Return: </b>
-                            ${(portfolio.currentNetWorth - 500).toFixed(2)}
-                            ({portfolio.currentNetWorth / 500 > 1 ? `+${parseFloat((portfolio.currentNetWorth / 500 - 1) * 100).toFixed(2)}%` : `-${parseFloat((1 - portfolio.currentNetWorth / 500) * 100).toFixed(2)}` })
-                        </h3>
+                        <h1 className="portfolio-current">${portfolio.currentNetWorth}</h1> &nbsp;
+                        <p className="portfolio-gain"> Today&apos;s Gain: </p> &nbsp;
+                        {portfolio.closePercentChange > 0
+                            ? <p className="portfolio-gain" style={{ color: portfolio.closePercentChange > 0 ? 'green' : 'red' }}>${(portfolio.currentNetWorth * (portfolio.closePercentChange / 100)).toFixed(2)}&nbsp;(+{portfolio.closePercentChange}%)</p>
+                            : <p className="portfolio-gain" style={{ color: portfolio.closePercentChange > 0 ? 'green' : 'red' }}>${(portfolio.currentNetWorth * (portfolio.closePercentChange / 100)).toFixed(2)}&nbsp;({portfolio.closePercentChange}%)</p> }
+                        &nbsp; <p className="portfolio-gain">Total Gain: </p> &nbsp;
+                        {portfolio.currentNetWorth - 500 > 0
+                            ? <p className="portfolio-gain" style={{ color: portfolio.currentNetWorth - 500 > 0 ? 'green' : 'red' }}>${(portfolio.currentNetWorth - 500).toFixed(2)}&nbsp;(+{portfolio.currentNetWorth / 500 > 1 ? `+${parseFloat((portfolio.currentNetWorth / 500 - 1) * 100).toFixed(2)}%` : `-${parseFloat((1 - portfolio.currentNetWorth / 500) * 100).toFixed(2)}%` })</p>
+                            : <p className="portfolio-gain" style={{ color: portfolio.currentNetWorth - 500 > 0 ? 'green' : 'red' }}>${(portfolio.currentNetWorth - 500).toFixed(2)}&nbsp;({portfolio.currentNetWorth / 500 > 1 ? `+${parseFloat((portfolio.currentNetWorth / 500 - 1) * 100).toFixed(2)}%` : `-${parseFloat((1 - portfolio.currentNetWorth / 500) * 100).toFixed(2)}%` })</p> }
                     </div>
                 )}
             {portfolio && portfolio.netWorth
@@ -45,11 +46,11 @@ const PortfolioGraph = (props) => {
                                 },
                             ],
                         }}
-                        height={400}
+                        height={300}
                         width={600}
                         options={{
                             backgroundColor: 'white',
-                            maintainAspectRatio: false,
+                            maintainAspectRatio: true,
                             tooltips: {
                                 backgroundColor: 'blue',
                             },

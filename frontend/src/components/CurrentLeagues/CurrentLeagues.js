@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
@@ -46,15 +47,22 @@ function CurrentLeagues() {
                 <ListGroup className="league-list">
                     {leagues && leagues.map((league) => (
                         <ListGroup.Item>
-                            <p className="current-league-name">{league.leagueName}</p>
+                            <Link to={
+                                {
+                                    pathname: '/centralizedleague',
+                                    state: { league: league.leagueName },
+                                }
+                            }
+                            >
+                                <p className="current-league-name">{league.leagueName}</p>
+                            </Link>
                             {league.portfolioList
                                 && league.portfolioList.map((portfolio) => {
                                     console.log(portfolio);
                                     if (portfolio.owner === username) {
                                         console.log(portfolio.netWorth);
-                                        return (<p className="current-league-worth">${portfolio.currentNetWorth}({portfolio.currentNetWorth / 500 > 1 ? `+${parseFloat((portfolio.currentNetWorth / 500 - 1) * 100).toFixed(2)}%` : `-${parseFloat((1 - portfolio.currentNetWorth / 500) * 100).toFixed(2)}%` })</p>);
+                                        return (<p className="current-league-worth">${portfolio.currentNetWorth.toFixed(2)}({portfolio.currentNetWorth / league.settings.balance > 1 ? `+${parseFloat((portfolio.currentNetWorth / league.settings.balance - 1) * 100).toFixed(2)}%` : `-${parseFloat((1 - portfolio.currentNetWorth / league.settings.balance) * 100).toFixed(2)}%` })</p>);
                                     }
-                                    console.log('NOne');
                                     return null;
                                 })}
                         </ListGroup.Item>

@@ -1,149 +1,142 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // import Form from 'react-bootstrap/Form';';
 import '../../styles/Summary/Summary.scss';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 // import { useHistory } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-// import Container from 'react-bootstrap/Container';
-import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
-import { Line } from 'react-chartjs-2';
+import Container from 'react-bootstrap/Container';
+import SummaryMetrics from './Sections/SummaryMetrics';
+import SummaryGraph from './Sections/SummaryGraph';
 
 function Summary() {
-    // const PortfolioGraph = (props) => {
-    // const { portfolio } = props;
-    const dates = '';
+    /* eslint-disable max-len */
+    const username = sessionStorage.getItem('username');
+    const [league, setLeague] = useState(null);
+    const [summary, setSummary] = useState();
+    const [portfolio, setPortfolio] = useState();
+    const [leagueList, setLeagueList] = useState();
+    const [SPData, setSPData] = useState();
+    const dates = ['4/19', '4/12', '4/5', '3/29', '3/22'];
+    const [week, setWeek] = useState(dates[0]);
     const prices = '';
-    // if (portfolio && portfolio.netWorth) {
-    //     dates = Object.keys(portfolio.netWorth).map((i) =>
-    // portfolio.netWorth[i].date.slice(0, portfolio.netWorth[i].date.lastIndexOf('T')));
-    //     prices = Object.keys(portfolio.netWorth).map((j) => portfolio.netWorth[j].worth);
-    // }
-    // const username = sessionStorage.getItem('username');
-    // const [league, setLeague] = useState(null);
-    // const [leagueList, setLeagueList] = useState();
 
-    // const getLeagues = async () => {
-    // const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/user/${username}/league`, {
-    //         method: 'GET',
-    //         headers: {
-    //             Authorization: `Bearer ${localStorage.getItem('token')}`,
-    //             'Content-Type': 'application/json',
-    //         },
-    //     });
-    //     const data = await response.json()
-    //         .then((result) => setLeagueList(result));
-    //     return data;
-    // };
+    const getLeagues = async () => {
+        const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/user/${username}/league`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
+        });
+        const data = await response.json()
+            .then((result) => setLeagueList(result));
+        return data;
+    };
 
-    // useEffect(() => {
-    //     getLeagues();
-    // }, [league]);
+    const getPortfolio = async () => {
+        const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/league/portfolio/${league}`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
+        });
+        const data = await response.json();
+        setPortfolio(data);
+    };
+
+    const getSP = async () => {
+        const response = await fetch(`${process.env.REACT_APP_SAPI_URL}/equity/historical/SPY?timeframe=6m`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
+        });
+        const data = await response.json();
+        const SPprices = [];
+        const startDate = new Date(`${week}/21`);
+
+        let month;
+        let day;
+        let dateString = `${startDate.getMonth()}/${startDate.getDate()}/${startDate.getFullYear()}`;
+
+        for (let i = 0; i < 5; i += 1) {
+            month = startDate.getMonth() + 1;
+            if (month < 10) {
+                month = `0${month.toString()}`;
+            } else {
+                month = month.toString();
+            }
+            day = startDate.getDate();
+            if (day < 10) {
+                day = `0${day.toString()}`;
+            } else {
+                day = day.toString();
+            }
+
+            dateString = `${startDate.getFullYear()}-${month}-${day}`;
+
+            SPprices.push({
+                date: dateString,
+                close: data[dateString],
+            });
+
+            startDate.setTime(startDate.getTime() + (24 * 60 * 60 * 1000));
+        }
+
+        setSPData(SPprices);
+    };
+
+    const getSummary = async () => {
+        const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/league/summary/${league}?week=${week}/21`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
+        });
+        const data = await response.json();
+        setSummary(data);
+    };
+
+    useEffect(() => {
+        getLeagues();
+        if (league) {
+            getSummary();
+            getSP();
+            getPortfolio();
+        }
+    }, [league, week]);
 
     return (
-        <div className="summary-page">
-            <div className="league-dropdown-section">
-                <Col>
-                    <Row>
-                        <DropdownButton title="Choose League" size="lg">
-                            <Dropdown.Item>League</Dropdown.Item>
-                        </DropdownButton>
-                    </Row>
-                    <Row>
-                        <Card className="summ-display" style={{ width: '27rem', height: '23rem' }}>
-                            <ListGroup variant="flush">
-                                <ListGroup.Item className="card-list">
-                                    Based on the league&apos;s performance this week,
-                                    you are ABOVE AVERAGE
-                                </ListGroup.Item>
-                                <ListGroup.Item className="card-list">u did better than toby congrats</ListGroup.Item>
-                                <ListGroup.Item className="card-list">3rd place woo</ListGroup.Item>
-                                <ListGroup.Item className="card-list">you sold this market order thing</ListGroup.Item>
-                                <ListGroup.Item className="card-list">Tobi is the best, you lost</ListGroup.Item>
-                            </ListGroup>
-                        </Card>
-                    </Row>
-                </Col>
+        <Container className="summary-page">
+            <div className="dropdowns">
+                <DropdownButton title={league || 'Choose League'} className="league-dropdown" size="lg">
+                    {leagueList && leagueList.map((userLeague) => (
+                        <Dropdown.Item onClick={(() => setLeague(userLeague.leagueName))}>
+                            {userLeague.leagueName}
+                        </Dropdown.Item>
+                    ))}
+                </DropdownButton>
+                <DropdownButton title={week} className="week-dropdown" size="lg">
+                    {dates.map((date) => (
+                        <Dropdown.Item onClick={(() => setWeek(date))}>
+                            {date}
+                        </Dropdown.Item>
+                    ))}
+                </DropdownButton>
             </div>
-            <div className="display-summary-info">
-                <Col>
-                    <Row>
-                        <DropdownButton title="Select Week" className="week-dropdown" size="lg">
-                            <Dropdown.Item>Date</Dropdown.Item>
-                        </DropdownButton>
-                    </Row>
-                    <Row>
-                        <Line
-                            className="Graph"
-                            data={{
-                                labels: dates, // all x values
-                                datasets: [
-                                    {
-                                        label: 'Portfolio Value',
-                                        data: prices, // all y values
-                                        borderColor: 'rgba(98, 252, 3, 1)',
-                                        hoverBackgroundColor: 'blue',
-                                        fill: false,
-                                        borderWidth: 1,
-                                        lineTension: 0.1,
-                                    },
-                                ],
-                            }}
-                            height={400}
-                            width={530}
-                            options={{
-                                maintainAspectRatio: false,
-                                tooltips: {
-                                    backgroundColor: 'blue',
-                                },
-                                scales: {
-                                    yAxes: [{
-                                        gridLines: {
-                                            color: 'gray',
-                                            zeroLineColor: 'white',
-                                        },
-                                        scaleLabel: {
-                                            display: true,
-                                            fontSize: 15,
-                                            fontColor: 'white',
-                                            fontStyle: 'bold',
-                                            labelString: 'Value',
-                                        },
-                                        ticks: {
-                                            fontColor: 'white',
-                                        },
-                                    }],
-                                    xAxes: [{
-                                        gridLines: {
-                                            color: 'gray',
-                                            zeroLineColor: 'white',
-                                        },
-                                        scaleLabel: {
-                                            display: true,
-                                            fontSize: 15,
-                                            fontColor: 'white',
-                                            fontStyle: 'bold',
-                                            labelString: 'Date',
-                                        },
-                                        ticks: {
-                                            fontColor: 'white',
-                                        },
-                                    }],
-                                },
-                                legend: {
-                                    labels: {
-                                        fontSize: 12,
-                                        fontColor: 'white',
-                                    },
-                                },
-                            }}
-                        />
-                    </Row>
-                </Col>
-            </div>
-        </div>
+            {league && (
+                <div className="league-summary">
+                    <h1>Summary of Week <b>{week}:</b></h1>
+                    <div className="league-graph-metrics">
+                        <SummaryMetrics metrics={summary} />
+                        <SummaryGraph className="league-graph" dates={dates} portfolio={portfolio} prices={prices} SPData={SPData} />
+                    </div>
+                </div>
+            )}
+        </Container>
     );
 }
 

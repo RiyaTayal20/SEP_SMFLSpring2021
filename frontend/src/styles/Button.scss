@@ -7,3 +7,18 @@
         border-color: var(--hover-mint);
     }
 }
+
+@mixin dropdownbtn { 
+    color: black;
+    background-color: var(--mint);
+    border-color: var(--mint);
+    &:hover, &:focus, &:active{
+        color: black;
+        background-color: var(--hover-mint);
+        border-color: var(--hover-mint);
+    }
+    &:not(:disabled):not(.disabled) {
+        background: var(--mint);
+        color: var(--white);
+    }
+}

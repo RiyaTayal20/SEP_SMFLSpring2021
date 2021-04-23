@@ -19,3 +19,13 @@ exports.getStatistics = async (ticker) => {
         console.error(err);
     }
 };
+
+exports.getHistorical = async (ticker, tf) => {
+    try {
+        const statistics = await fetch(`${process.env.STOCK_URL}/equity/historical/${ticker}?timeframe=6m`)
+            .then((response) => response.json());
+        return statistics;
+    } catch (err) {
+        console.error(err);
+    }
+};

@@ -20,7 +20,7 @@
     border-style: solid;
     border-color: var(--white);
     margin: 10vh auto;
-    padding: 10vh 4vw 8vh 4vw;
+    padding: 10vh 5vw;
     .form-group {
         @extend %flex-center;
         color: var(--white);
@@ -39,7 +39,7 @@
 }
 
 .text-register{
-    padding: 2vh 0px 0px 0.5vw;
+    padding: 2vh 0vw 0vh 0.5vw;
     width: 20vw;
 }
 

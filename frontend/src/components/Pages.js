@@ -12,6 +12,7 @@ import PortfolioPage from './Portfolio/Portfolio';
 import NewsPage from './News/News';
 import SummaryPage from './Summary/Summary';
 import CentralizedLeaguePage from './CentralizedLeague/CentralizedLeague';
+import WelcomePage from './Welcome/Welcome';
 
 export {
     RegistrationPage,
@@ -28,4 +29,5 @@ export {
     NewsPage,
     SummaryPage,
     CentralizedLeaguePage,
+    WelcomePage,
 };

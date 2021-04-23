@@ -4,18 +4,19 @@
     background-color: var(--light-scale-grey);
 }
 
-h3 {
-    color: var(--mint);
-}
-
-.league-header {
+.league-header{
     color: var(--purple);
     text-align: center;
     margin-bottom: 4vh;
 }
 
-.central-league-page {
-    margin-top: 5vh;
+.central-league-page{
+    margin-left:10vw;
+    margin-top:5vh;
+
+    h3{
+        color: var(--mint);
+    }
    
 }
 

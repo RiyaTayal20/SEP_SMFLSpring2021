@@ -10,7 +10,7 @@
 
 .table {
     background-color: var(--light-scale-grey);
-    width:100%;
+    width: 100%;
 }
 
 .join-league-container{
@@ -24,7 +24,6 @@
     min-width: 110%;
     overflow: auto;
     margin-bottom: 100px;
-    padding-left: 6vw;
     width: 60vw;
     .btn {
         @include btn;

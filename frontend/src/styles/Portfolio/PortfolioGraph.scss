@@ -12,7 +12,17 @@
 
 .portfolio-header{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    flex-direction: row;
+    align-items: flex-end;
+
+    .portfolio-current {
+        font-weight: bold;
+    }
+
+    .portfolio-gain{
+        font-size: 25px;
+    }
 }
+
+
+

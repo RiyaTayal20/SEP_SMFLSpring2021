@@ -17,7 +17,7 @@ function CreateLeague() {
     const [commission, setCommission] = useState('');
     const [limit, setLimit] = useState('');
     const [visibility, setVisibility] = useState(true);
-    const [aiPlayers, setAiPlayers] = useState('');
+    const [aiPlayer, setAiPlayer] = useState('');
     const [maxPlayers, setMaxPlayers] = useState('');
     const [end, setEnd] = useState('');
     const [showError, setShowError] = useState(false);
@@ -38,7 +38,7 @@ function CreateLeague() {
             leagueKey,
             settings: {
                 balance,
-                aiPlayers,
+                aiPlayer,
                 maxPlayers,
                 endDate: end,
                 public: visibility,
@@ -235,7 +235,7 @@ function CreateLeague() {
                             <Row>
                                 <Form.Label column> # of AI bots: </Form.Label>
                                 <Col>
-                                    <Form.Control as="select" onChange={(e) => setAiPlayers(e.target.value)}>
+                                    <Form.Control as="select" onChange={(e) => setAiPlayer(e.target.value)}>
                                         <option value="0">Zero</option>
                                         <option value="1">One</option>
                                         <option value="2">Two</option>

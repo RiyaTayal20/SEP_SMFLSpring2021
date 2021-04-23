@@ -24,6 +24,9 @@ h1 {
 
 .current-price > span{
     display: inline-block;
+    h3 {
+        font-weight: 900;
+    }
 }
 
 .stats-table.table{
@@ -59,4 +62,16 @@ h1 {
     .graph {
         height: 20vw;
     }
+}
+
+.lightbulb-button {
+    Button {
+        width: 60px;
+        height: 70px;
+    }
+}
+
+.lightbulb-button > Button:hover {
+    color: black;
+    font-size: x-large;
 }

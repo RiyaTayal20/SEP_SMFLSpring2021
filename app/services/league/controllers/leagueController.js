@@ -5,6 +5,7 @@ const User = require('../models/userModel');
 const { Portfolio } = require('../models/portfolioModel');
 const { getMarketPrice, getStatistics, getHistorical } = require('../utils/stockUtils');
 const { getNews } = require('../utils/newsUtils');
+const bcrypt = require('bcryptjs');
 
 /**
  * Add a user to a specified league and create an associated portfolio
@@ -199,6 +200,49 @@ const calculateCostBasis = (ticker, portfolio) => {
 };
 
 /**
+ * Creates AI player, adds player to league and creates portfolio
+ * @function
+ * @param {Number} count The bot number that corresponds to algorithm
+ * @param {ObjectId} leagueID The _id of the league the bot is in
+ */
+const createAIplayer = async (count, leagueID) => {
+    // create bot as new user
+    let algorithm = "mean";
+    if (count == 2) algorithm = "momentum";
+    else if (count == 3) algorithm = "candlesticks";
+    const bot = new User({
+        username: `bot-${count}`,
+        email: `bot@bot.com`,
+        password: bcrypt.hashSync('xxxxxxx',8),
+        leagues: leagueID,
+        isBot: true,
+        algorithm: algorithm,
+    });
+    try {
+        const savedBot = await bot.save();
+        const league = await League.findById(leagueID);
+        // create portfolio for bot and add to league
+        await League.findByIdAndUpdate(
+            leagueID,
+            {
+                $addToSet: {
+                    playerList: `bot-${count}`,
+                    portfolioList: new Portfolio({
+                        owner: `bot-${count}`,
+                        league: league,
+                        cash: league.settings.balance,
+                        netWorth: league.settings.balance,
+                        currentNetWorth: league.settings.balance,
+                    }),
+                },
+            },
+        )
+    } catch (err) {
+        if (err) throw err;
+    }
+};
+
+/**
  * Create a league with the specified parameters in the request body
  * @async
  * @function
@@ -222,9 +266,16 @@ exports.createLeague = async (req, res) => {
         leagueKey: req.body.leagueKey,
         settings: req.body.settings,
     });
-
     try {
         const savedLeague = await league.save();
+        // creates ai bots
+        if (savedLeague.settings.aiPlayer > 0) {
+            let count = 1;
+            while(count <= savedLeague.settings.aiPlayer) {
+                createAIplayer(count, savedLeague._id);
+                count += 1;
+            }
+        }
         addPlayerToLeague(user, savedLeague._id).then(() => {
             res.send(savedLeague);
         });
@@ -331,6 +382,21 @@ exports.getLeagueNames = async (req, res) => {
     await League.find({}, 'leagueName', (err, result) => {
         if (err) throw err;
         res.send(result);
+    });
+};
+
+/**
+ * Retrieve a league name given id
+ * @async
+ * @function
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ */
+ exports.getLeagueByID = async (req, res) => {
+    await League.findOne({ _id: req.params.id }, 'leagueName', (err, result) => {
+        if (err) throw err;
+        if (!result) res.status(404).send('League(s) not found');
+        else res.send(result);
     });
 };
 

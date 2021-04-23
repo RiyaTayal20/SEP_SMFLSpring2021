@@ -1,0 +1,57 @@
+.ai-container {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    margin: 4vh 0vw 0vh 4vw;
+}
+
+.ai-header {
+    text-align: center;
+    font-size: 4vw;
+}
+
+.algorithms {
+    padding-right: 6vw;
+}
+
+.mean{
+    padding-top: 10px;
+    padding-bottom: 70px;
+    h1 {
+        padding-bottom: 20px;
+    }
+    h4 {
+        padding-top: 20px;
+        padding-left: 30px;
+        text-align: justify;
+    }
+}
+
+.momentum{
+    padding-bottom: 70px;
+    h1 {
+        padding-bottom: 20px;
+    }
+    h4 {
+        padding-top: 20px;
+        padding-left: 30px;
+        text-align: justify;
+    }
+}
+
+.candlesticks {
+    h4 {
+        padding-top: 20px;
+        padding-left: 30px;
+        text-align: justify;
+    }
+}
+
+.apexcharts-tooltip {
+    background-color: blue;
+    font-size: 15px;
+}
+
+.meanGraph, .momentumGraph, .candlestickGraph {
+    margin-bottom: 25px;
+}

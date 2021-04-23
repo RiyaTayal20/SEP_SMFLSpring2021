@@ -2,6 +2,8 @@ import { React, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { useHistory } from 'react-router-dom';
+// eslint-disable-next-line import/no-unresolved
+import { Lightbulb } from 'react-bootstrap-icons';
 import Container from 'react-bootstrap/Container';
 import StockStatistics from './Sections/StockStatistics';
 import StockGraph from './Sections/StockGraph';
@@ -110,6 +112,9 @@ function IndividualStockPage() {
             marketCap: data.marketCap,
         });
     };
+    const ai = () => {
+        history.push('/ai', { tickerSymbol: ticker });
+    };
     useEffect(() => {
         getCurrentPrice();
         getIntraday();
@@ -125,6 +130,11 @@ function IndividualStockPage() {
                     {difference > 0
                         ? <span><b><h5 style={{ color: difference > 0 ? 'green' : 'red' }}>+{difference}&nbsp;(+{percentChange}%)</h5></b></span>
                         : <span><b><h5 style={{ color: difference > 0 ? 'green' : 'red' }}>{difference}&nbsp;({percentChange}%)</h5></b></span> }
+                </div>
+                <div className="lightbulb-button">
+                    <Button onClick={ai} size="lg">
+                        <Lightbulb />
+                    </Button>
                 </div>
             </div>
             <div className="stats-container">

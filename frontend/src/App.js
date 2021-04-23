@@ -15,6 +15,7 @@ import {
     SymbolLookupPage,
     PortfolioPage,
     NewsPage,
+    AIPage,
     SummaryPage,
     CentralizedLeaguePage,
     WelcomePage,
@@ -69,6 +70,9 @@ function App() {
                             </Route>
                             <Route path="/news">
                                 <NewsPage />
+                            </Route>
+                            <Route path="/ai">
+                                <AIPage />
                             </Route>
                             <Route path="/summary">
                                 <SummaryPage />

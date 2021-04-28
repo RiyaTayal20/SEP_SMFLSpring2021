@@ -1,7 +1,9 @@
 :root {
     --mint: #3FC380;
+    --hover-mint: #2c8f5d;
     --dark-scale-grey: #2F2F31;
     --purple: #5367FC;
+    --white: white;
   }
   
   html, body {
@@ -24,10 +26,15 @@
   }
 
   .site-content {
+    margin-right: 250px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .no-margin {
+    margin-right: 0px;
   }
 
   %flex-center {

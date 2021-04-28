@@ -120,7 +120,7 @@ function AIPage() {
         },
     };
     const getCandlesticks = async () => {
-        const response = await fetch(`${process.env.REACT_APP_AAPI_URL}/ai/candlesticks/${ticker}`, {
+        const response = await fetch(`http://localhost:5002/ai/candlesticks/${ticker}`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -132,7 +132,7 @@ function AIPage() {
         setCandlesticks(data);
     };
     const getClose = async () => {
-        const response = await fetch(`${process.env.REACT_APP_AAPI_URL}/ai/close/${ticker}`, {
+        const response = await fetch(`http://localhost:5002/ai/close/${ticker}`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -144,7 +144,7 @@ function AIPage() {
         setClose(data);
     };
     const getMean = async () => {
-        const response = await fetch(`${process.env.REACT_APP_AAPI_URL}/ai/mean/${ticker}`, {
+        const response = await fetch(`http://localhost:5002/ai/mean/${ticker}`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -162,7 +162,7 @@ function AIPage() {
         });
     };
     const getMomentum = async () => {
-        const response = await fetch(`${process.env.REACT_APP_AAPI_URL}/ai/momentum/${ticker}`, {
+        const response = await fetch(`http://localhost:5002/ai/momentum/${ticker}`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,

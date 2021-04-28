@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, Link } from 'react-router-dom';
-// import Form from 'react-bootstrap/Form';
-// import Container from 'react-bootstrap/Container';
+import { useLocation, Link, useHistory } from 'react-router-dom';
 import '../../styles/CentralizedLeague/CentralizedLeague.scss';
-// import { Dropdown } from 'react-bootstrap';
-// import DropdownButton from 'react-bootstrap/DropdownButton';
 import Table from 'react-bootstrap/Table';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Line } from 'react-chartjs-2';
 
 function CentralizedLeague() {
+    const history = useHistory();
     const location = useLocation();
 
     const [league, setLeague] = useState('');
@@ -21,7 +18,9 @@ function CentralizedLeague() {
         const currDate = new Date(new Date().setDate(today.getDate() - i)).toDateString();
         dates.push(currDate);
     }
-    /* eslint-disable max-len, arrow-body-style */
+    /* eslint-disable max-len */
+    /* eslint-disable arrow-body-style, jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */
+
     const getLeagueData = async () => {
         const response = await fetch(`${process.env.REACT_APP_LAPI_URL}/league/overview/${league}`, {
             method: 'GET',
@@ -31,6 +30,12 @@ function CentralizedLeague() {
         });
         const data = await response.json();
         return data;
+    };
+
+    const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+
+    const lookupTicker = (ticker) => {
+        history.push('/stock', { tickerSymbol: ticker });
     };
 
     useEffect(async () => {
@@ -44,8 +49,7 @@ function CentralizedLeague() {
     }, []);
 
     return (
-    // <Container className="custom-cont">
-        <div className="centra-league-page">
+        <div className="central-league-page">
             <h1 className="league-header">{league}</h1>
             <Row className="lead-graph">
                 <Col sm={6}>
@@ -74,7 +78,7 @@ function CentralizedLeague() {
                                         >
                                             <td>{portfolio.owner}</td>
                                         </Link>
-                                        <td>{portfolio.currentNetWorth}</td>
+                                        <td>{portfolio.currentNetWorth.toFixed(2)}</td>
                                         <td>{`${portfolio.growth}%`}</td>
                                     </tr>
                                 ))}
@@ -89,30 +93,18 @@ function CentralizedLeague() {
                             <Line
                                 className="Graph"
                                 data={{
-                                    labels: dates, // all x values
+                                    labels: dates.reverse(), // all x values
                                     datasets: leagueData.portfolios.map((portfolio) => {
                                         return {
                                             label: portfolio.owner,
-                                            data: portfolio.netWorth,
-                                            borderColor: 'rgba(98, 252, 3, 1)',
+                                            data: portfolio.netWorth.slice(4, 35).map((day) => day.worth.toFixed(2)),
+                                            borderColor: `rgb(${randomBetween(0, 255)}, ${randomBetween(0, 255)}, ${randomBetween(0, 255)})`,
                                             hoverBackgroundColor: 'blue',
                                             fill: false,
                                             borderWidth: 1,
                                             lineTension: 0.1,
                                         };
                                     }),
-                                    // datasets: [
-                                    //     {
-                                    //         label: 'Portfolio Value',
-                                    //         data: prices, // all y values
-                                    //         borderColor: 'rgba(98, 252, 3, 1)',
-                                    //         hoverBackgroundColor: 'blue',
-                                    //         fill: false,
-                                    //         borderWidth: 1,
-                                    //         lineTension: 0.1,
-                                    //         title: 'League Graph',
-                                    //     },
-                                    // ],
                                 }}
                                 height={400}
                                 width={500}
@@ -183,7 +175,7 @@ function CentralizedLeague() {
                         <tbody>
                             {leagueData.transactions.map((transaction) => (
                                 <tr>
-                                    <td>{transaction.tickerSymbol}</td>
+                                    <td onClick={() => lookupTicker(transaction.tickerSymbol)}>{transaction.tickerSymbol.toUpperCase()}</td>
                                     <td>{transaction.orderType.slice(-3) === 'Buy' ? 'Buy' : 'Sell'}</td>
                                     <td>{transaction.quantity}</td>
                                     <td>{`${new Date(transaction.timePlaced)}`}</td>
@@ -193,9 +185,7 @@ function CentralizedLeague() {
                     )}
                 </Table>
             </Row>
-
         </div>
-    // </Container>
 
     );
 }

@@ -32,7 +32,7 @@ const SummaryGraph = (props) => {
                 const endDay = parseInt(dates[4].substring(8), 10);
 
                 const startDate = new Date(startYear, startMonth - 1, startDay);
-                const endDate = new Date(endYear, endMonth - 1, endDay);
+                const endDate = new Date(endYear, endMonth - 1, endDay + 1);
 
                 if (checkDate < startDate || checkDate > endDate.getTime()) {
                     return false;

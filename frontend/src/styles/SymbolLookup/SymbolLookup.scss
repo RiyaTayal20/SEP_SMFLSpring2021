@@ -12,7 +12,7 @@
     
 h1.symbol-text{
     padding-bottom: 25px;
-    color: #5367FC;
+    color: var(--purple);
     font-size: 4rem;
     font-weight: bold;
 }
@@ -23,4 +23,5 @@ h1.symbol-text{
 
 .search-button.btn.btn-primary{
     @include btn;
+    padding: 0rem 0.75rem;
 }

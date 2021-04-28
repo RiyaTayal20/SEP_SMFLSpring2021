@@ -28,7 +28,7 @@
     border-radius: 0.25rem;
 
     .tab{
-        background-color: white;
+        background-color: var(--white);
         object-fit: inherit;
         color: var(--dark-grey-scale);
     }
@@ -44,7 +44,7 @@
     padding: 2vh 2vw;
     width: 40vw;
     color: var(--dark-grey-scale);
-    background-color: white;
+    background-color: var(--white);
 }
 
 .history-text{
@@ -88,4 +88,18 @@
             margin: 2vh 0vw;
         }
     }
+}
+
+.carousel-caption {
+    position: absolute;
+    top: 324px;
+    text-align: inherit;
+    width: 280px;
+    bottom: 0px;
+}
+
+.carousel-caption2{
+    text-align: center;
+    color: blue;
+    background-color: wheat;
 }

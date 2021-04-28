@@ -1,192 +1,139 @@
 @import '../root.scss';
 @import '../Button.scss';
 
-
-.one-cont{
-    display:flex;
-    flex-direction: column;
+.one-cont.container{
+    display: flex;
+    flex-direction: row;
     justify-content: center;
-    //align-items:center;
+    padding-bottom: 7vh;
 
-    .big-logo{ 
-        display:inherit;
-         margin-top:2vh;
-        margin-left:22vw;
-
-    }
-
-}
-.site-content {
-    width: 100%;
-    margin-right: 0px !important;
-    margin-left: 0px !important;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.two-cont{
-    display:flex;
-    flex-direction:row;
-     margin:0 auto;
-    max-width: 1700px !important;
-    max-height: 1800px !important;
-    .education-col.row{
-        display:inherit;
-    }
-    .market-col.row{
-        display:inherit;
-       
+    .big-logo {
+        padding-top: 5vh;
     }
 }
-.Page2{
-    padding-top:10vh;
-    padding-left: 9vw;
-    padding-bottom:4vh;
-}
-.market-col{
-    margin-left:5vw;
-}
-.education-col{
-    margin-left:10vw;
 
-}
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    margin-right: 15px !important;
-    margin-left: 5px!important;
-}
 .all-buttons{
-    display:flex;
-    flex-direction:row;
-    .reg-button{
-        display:inherit;
-        justify-content: center;
-        align-items:center;
-        color: white;
-        background-color: #5367fc;
-        border-color:white;
-        margin-left:22vw;
-        margin-top:5vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 3vh;
 
+    .reg-button{
+        color: var(--white);
+        background-color: var(--purple);
+        border-color: var(--white);
     }
 
     .log-button{
-        display:inherit;
-        justify-content: center;
-        align-items:center;
-        color: white;
-        background-color:#5367fc;
-        border-color:white;
-        margin-left:17vw;
-        margin-top:5vh;
-
-    }
-
-}
-.bot{
-    margin-top:8vh;
-}
-
-.expert{
-    display:flex;
-    justify-content: center;
-    align-items:center;
-    .expert-card{
-        display:inherit;
-        width:1050px;
-        height:300px;
+        color: var(--white);
+        background-color: var(--purple);
+        border-color: var(--white);
     }
 }
-.expert-card{
-    padding-top: 78px;
+
+.Page2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 7vh 0vw;
     
-}
-.expert{
-    padding-top:20vh;
-    padding-left: 12vw;
-}
-
-.expert-text{
-    text-align: center;
-    color: #2f2f31;
-    font-weight: bold;
-    font-size: 60px;
-}
-
-.expert-text1{
-    text-align: center;
-    color: #2f2f31;
-}
-
-
-.reg-button1.btn-outline-primary{
-    color: white;
-    border-color:white;
-    margin-top:25vh;
-    margin-left:29vw;
-    margin-bottom:15vh;
-    margin-top:25vh;
-
-}
-
-.stairs{
-   margin-left:27vw;
-   
-}
-
-.names{
-    color: white;
-    padding-top: 5vh;
-}
-
-.diamond-header{
-    margin-top: 4vh;
-    font-weight: bold;
-}
-
-.created{
-    margin-left:19vw;
+    .market{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
 }
 
 .success{
-    padding-right: 10px;
-    padding-left:80px;
-    font-weight: bold;
-    padding-bottom: 30px;
-}
-.word1{
     text-align: center;
-    
+    font-weight: bolder;
+    padding-bottom: 3vh;
+}
+
+.market{
+    display: flex; 
+    flex-direction: row;
+    padding-top: 3vh;
+}
+
+.page-sections{
+    text-align: center;
+    margin: 2vh 3vw;
+}
+
+.real-title, .test-title, .ed-title{
+    font-weight: bold;
+}
+
+.bot-title{
+    margin-bottom: 5vh;
+}
+
+.word{
+    text-align: center;
 }
 
 .word2{
     text-align: center;
-   
+    margin-top: 2.5vh;
 }
-.word3{
+
+.expert{
+    .col{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-top: 15vh;
+    }
+
+    .expert-card.card{
+        display:inherit;
+        width: 1050px;
+        height: 300px;
+        .card-body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+}
+
+.expert-card{
+    padding-top: 9vh;
+}
+
+.expert-text{
     text-align: center;
-    
+    color: var(--dark-scale-grey);
+    font-weight: bold;
+    font-size: 55px;
 }
-.word4{
+
+.expert-text1{
     text-align: center;
-    
+    color: var(--dark-scale-grey);
 }
 
-.bot-title{
-    font-weight: bold;
-    padding-bottom:13vh;
+.reg-button1.btn-outline-primary{
+    color: var(--white);
+    border-color: var(--white);
+    margin: 20vh 0vw 15vh 0vw;
+    width: 200px;
+    height: 50px;
 }
 
-.real-title{
+.names{
+    color: var(--white);
+    padding-top: 4vh;
+    padding-left: 2vw;
+}
+
+.diamond-header{
+    padding-top: 4vh;
     font-weight: bold;
 }
 
-.test-title{
-    font-weight: bold;
-}
-.ed-title{
-    font-weight: bold;
-  
+.created{
+    margin-left: 5vw;
 }

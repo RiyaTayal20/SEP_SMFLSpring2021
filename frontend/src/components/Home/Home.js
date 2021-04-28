@@ -8,6 +8,12 @@ import Carousel from 'react-bootstrap/Carousel';
 import { Redirect } from 'react-router-dom';
 import Icon from '../../assets/icons/user-profile.png';
 import graphIcon from '../../assets/icons/graph-icon.png';
+import TutorialSlide1 from '../../assets/icons/CreateLeaguePage.png';
+import TutorialSlide2 from '../../assets/icons/JoinLeaguePage.png';
+import TutorialSlide3 from '../../assets/icons/PrivateJLModal.png';
+import TutorialSlide4 from '../../assets/icons/JoinLeagueFilters.png';
+import TutorialSlide5 from '../../assets/icons/FilterJLModal.png';
+import TutorialSlide6 from '../../assets/icons/TradePage.png';
 
 function Home() {
     const [tutorial, showTutorial] = useState(true);
@@ -25,7 +31,7 @@ function Home() {
         <div className="home-page">
             {tutorial
                 && (
-                    <Modal show={tutorial} onHide={handleClose} centered>
+                    <Modal show={tutorial} onHide={handleClose} size="lg" centered>
                         {/* eslint-disable max-len */}
                         <Modal.Header closeButton>
                             <Modal.Title>Tutorial</Modal.Title>
@@ -33,38 +39,58 @@ function Home() {
                         <Modal.Body>
                             <Carousel>
                                 <Carousel.Item>
-                                    <img
-                                        className="d-block w-100"
-                                        src="placeholder"
-                                        alt="First slide"
-                                    />
-                                    <Carousel.Caption>
-                                        <h3>First slide label</h3>
-                                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                                    <Carousel.Caption style={{ left: '1%' }}>
+                                        <div className="carousel-caption2">
+                                            <h3 className="carousel-caption-title">Create League Page</h3>
+                                            <p className="carousel-caption-description">On this page you can create a new league. To navigate to this page refer to the location circled in red.</p>
+                                        </div>
+                                    </Carousel.Caption>
+                                    <img src={TutorialSlide1} alt="First slide" />
+                                </Carousel.Item>
+                                <Carousel.Item>
+                                    <img src={TutorialSlide2} alt="Second slide" />
+                                    <Carousel.Caption style={{ left: '1%' }}>
+                                        <div className="carousel-caption2">
+                                            <h3 className="carousel-caption-title">Join League Page</h3>
+                                            <p className="carousel-caption-description">On this page you can create a new league. To navigate to this page refer to the location circled in red.</p>
+                                        </div>
                                     </Carousel.Caption>
                                 </Carousel.Item>
                                 <Carousel.Item>
-                                    <img
-                                        className="d-block w-100"
-                                        src="holder.js/800x400?text=Second slide&bg=282c34"
-                                        alt="Second slide"
-                                    />
-
-                                    <Carousel.Caption>
-                                        <h3>Second slide label</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                    <img src={TutorialSlide3} alt="Third slide" />
+                                    <Carousel.Caption style={{ left: '1%' }}>
+                                        <div className="carousel-caption2">
+                                            <h3 className="carousel-caption-title">Join Private League</h3>
+                                            <p className="carousel-caption-description">When joining a private league, you must enter a private key that is given out by the League Manager.</p>
+                                        </div>
                                     </Carousel.Caption>
                                 </Carousel.Item>
                                 <Carousel.Item>
-                                    <img
-                                        className="d-block w-100"
-                                        src="holder.js/800x400?text=Third slide&bg=20232a"
-                                        alt="Third slide"
-                                    />
-
-                                    <Carousel.Caption>
-                                        <h3>Third slide label</h3>
-                                        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+                                    <img src={TutorialSlide4} alt="Fourth slide" />
+                                    <Carousel.Caption style={{ left: '1%' }}>
+                                        <div className="carousel-caption2">
+                                            <h3 className="carousel-caption-title">Sorting League Table</h3>
+                                            <p className="carousel-caption-description">Click the filtering button in the columns to sort the table in ascending or descending order.</p>
+                                        </div>
+                                    </Carousel.Caption>
+                                </Carousel.Item>
+                                <Carousel.Item>
+                                    <img src={TutorialSlide5} alt="Fifth slide" />
+                                    <Carousel.Caption style={{ left: '1%' }}>
+                                        <div className="carousel-caption2">
+                                            <h3 className="carousel-caption-title">Filtering League Table</h3>
+                                            <p className="carousel-caption-description">Enter as much or as little information as you need to filter through the many join league options</p>
+                                        </div>
+                                    </Carousel.Caption>
+                                </Carousel.Item>
+                                <Carousel.Item>
+                                    <img src={TutorialSlide6} alt="Sixth slide" />
+                                    <Carousel.Caption style={{ left: '1%' }}>
+                                        <div className="carousel-caption2">
+                                            <h3 className="carousel-caption-title">Trade Page</h3>
+                                            <p className="carousel-caption-description">On this page you can make trades. To navigate to this page refer to the location circled in red.</p>
+                                            <p className="carousel-caption-description"> DISCLAIMER: In a real market, orders are not fulfilled immediately.</p>
+                                        </div>
                                     </Carousel.Caption>
                                 </Carousel.Item>
                             </Carousel>

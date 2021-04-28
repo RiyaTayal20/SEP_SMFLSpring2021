@@ -20,6 +20,10 @@
         }
     }
 
+    h1 {
+        color: white;
+    }
+
     .btn{
         @include dropdownbtn;
     }
@@ -27,6 +31,7 @@
     .league-graph-metrics {
         display: flex;
         flex-direction: row;
+        align-items: center;
     }
 }
 
@@ -36,6 +41,10 @@
         flex-direction: column;
         align-items: center;
         color: black;
+    }
+
+    h3 {
+        font-size: 20px;
     }
 }
 

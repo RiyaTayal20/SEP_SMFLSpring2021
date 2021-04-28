@@ -1,24 +1,24 @@
 @mixin btn {
     size: 10px;
-    background-color: #3FC380;
-    border-color:#3FC380;
+    background-color: var(--mint);
+    border-color: var(--mint);
     &:hover, &:focus {
-        background-color: #2c8f5d;
-        border-color:#2c8f5d;
+        background-color: var(--hover-mint);
+        border-color: var(--hover-mint);
     }
 }
 
 @mixin dropdownbtn { 
     color: black;
-    background-color: #3FC380;
-    border-color: #3FC380;
+    background-color: var(--mint);
+    border-color: var(--mint);
     &:hover, &:focus, &:active{
         color: black;
-        background-color: #2c8f5d;
-        border-color: #2c8f5d;
+        background-color: var(--hover-mint);
+        border-color: var(--hover-mint);
     }
     &:not(:disabled):not(.disabled) {
-        background: #3FC380;
-        color: white;
+        background: var(--mint);
+        color: var(--white);
     }
 }

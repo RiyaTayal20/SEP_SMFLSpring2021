@@ -123,18 +123,18 @@ function IndividualStockPage() {
     return (
         <Container className="stock-container">
             <div className="header">
-                <h1>{statistics.equityName} ({ticker})</h1>
+                <div className="full-title">
+                    <h1>{statistics.equityName} ({ticker.toUpperCase()})</h1>
+                    <Button className="ai-button" onClick={ai} size="lg">
+                        <Lightbulb />
+                    </Button>
+                </div>
                 <div className="current-price">
                     <span><h2><b>${currentPrice}</b></h2></span>
                     &nbsp;&nbsp;&nbsp;
                     {difference > 0
                         ? <span><b><h5 style={{ color: difference > 0 ? 'green' : 'red' }}>+{difference}&nbsp;(+{percentChange}%)</h5></b></span>
                         : <span><b><h5 style={{ color: difference > 0 ? 'green' : 'red' }}>{difference}&nbsp;({percentChange}%)</h5></b></span> }
-                </div>
-                <div className="lightbulb-button">
-                    <Button onClick={ai} size="lg">
-                        <Lightbulb />
-                    </Button>
                 </div>
             </div>
             <div className="stats-container">

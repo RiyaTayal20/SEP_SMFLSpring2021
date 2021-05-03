@@ -75,9 +75,6 @@
     ],
     "moduleNameMapper": {
       "\\.(css|less|scss|sass|png)$": "identity-obj-proxy"
-    },
-    "setupFilesAfterEnv": [
-      "<rootDir>src/setupTests.js"
-    ]
+    }
   }
 }

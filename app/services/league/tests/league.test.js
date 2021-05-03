@@ -579,6 +579,15 @@ describe('Get endpoints', () => {
         expect(res.body).toHaveProperty('netWorth');
     });
 
+    it('should get all the tooltips', async () => {
+        const res = await request(app)
+            .get(`/league/tooltips/`)
+            .set('Content-Type', 'application/json')
+            .set('Authorization', `Bearer ${token1}`);
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toHaveProperty('previousclose');
+    });
+
     afterAll(async () => {
         await mongoose.connection.db.dropCollection('leagues');
         await mongoose.connection.db.dropCollection('users');

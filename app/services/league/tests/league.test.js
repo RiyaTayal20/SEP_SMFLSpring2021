@@ -579,6 +579,7 @@ describe('Get endpoints', () => {
         expect(res.body).toHaveProperty('netWorth');
     });
 
+
     it('should get all the tooltips', async () => {
         const res = await request(app)
             .get(`/league/tooltips/`)
@@ -586,6 +587,28 @@ describe('Get endpoints', () => {
             .set('Authorization', `Bearer ${token1}`);
         expect(res.statusCode).toEqual(200);
         expect(res.body).toHaveProperty('previousclose');
+    });
+
+    it('should get the portfolio of another specified user', async () => {
+        const queryLeague = 'Public Test League';
+        const queryUser = 'user1';
+        const res = await request(app)
+            .get(`/league/specifiedportfolio/${queryLeague}/${queryUser}`)
+            .set('Content-Type', 'application/json')
+            .set('Authorization', `Bearer ${token1}`);
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toHaveProperty('currentNetWorth');
+        expect(res.body).toHaveProperty('cashAvailable');
+    });
+
+    it('should get news related to a user portfolio', async () => {
+        const queryLeague = 'Public Test League';
+        const res = await request(app)
+            .get(`/league/news/${queryLeague}`)
+            .set('Content-Type', 'application/json')
+            .set('Authorization', `Bearer ${token1}`);
+        expect(res.statusCode).toEqual(200);
+
     });
 
     afterAll(async () => {

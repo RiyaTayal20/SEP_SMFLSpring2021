@@ -579,6 +579,16 @@ describe('Get endpoints', () => {
         expect(res.body).toHaveProperty('netWorth');
     });
 
+
+    it('should get all the tooltips', async () => {
+        const res = await request(app)
+            .get(`/league/tooltips/`)
+            .set('Content-Type', 'application/json')
+            .set('Authorization', `Bearer ${token1}`);
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toHaveProperty('previousclose');
+    });
+
     it('should get the portfolio of another specified user', async () => {
         const queryLeague = 'Public Test League';
         const queryUser = 'user1';
@@ -598,6 +608,7 @@ describe('Get endpoints', () => {
             .set('Content-Type', 'application/json')
             .set('Authorization', `Bearer ${token1}`);
         expect(res.statusCode).toEqual(200);
+
     });
 
     afterAll(async () => {

@@ -10,9 +10,9 @@ describe('<SymbolLookup />', () => {
     });
 
     it('should render the Search container', () => {
-        expect(wrapper.find('.search-container').exists()).toEqual(true);
+        expect(wrapper.find('.symbol-lookup-page').exists()).toEqual(true);
     });
     it('should render the Search form component', () => {
-        expect(wrapper.find('.search-component').exists()).toEqual(true);
+        expect(wrapper.find('.symbol-search').exists()).toEqual(true);
     });
 });

@@ -85,10 +85,24 @@ describe('<App />', () => {
         });
     });
 
-    describe('Individual Stock Page Route', () => {
+    describe('League Management Page Route', () => {
         let route;
         beforeEach(() => {
             route = wrapper.find('Switch').at(0).children().at(5);
+        });
+        it('should render the League Management Page', () => {
+            expect(route.exists('LeagueManagement')).toEqual(true);
+        });
+
+        it('should pass the correct path into League Management Page ', () => {
+            expect(route.prop('path')).toEqual('/league/manage');
+        });
+    });
+
+    describe('Individual Stock Page Route', () => {
+        let route;
+        beforeEach(() => {
+            route = wrapper.find('Switch').at(0).children().at(6);
         });
         it('should render the Individual Stock Page', () => {
             expect(route.exists('IndividualStockPage')).toEqual(true);
@@ -102,7 +116,7 @@ describe('<App />', () => {
     describe('Trade Page Route', () => {
         let route;
         beforeEach(() => {
-            route = wrapper.find('Switch').at(0).children().at(6);
+            route = wrapper.find('Switch').at(0).children().at(7);
         });
         it('should render the Trade Page', () => {
             expect(route.exists('Trade')).toEqual(true);
@@ -116,7 +130,7 @@ describe('<App />', () => {
     describe('Current Leagues Page Route', () => {
         let route;
         beforeEach(() => {
-            route = wrapper.find('Switch').at(0).children().at(7);
+            route = wrapper.find('Switch').at(0).children().at(8);
         });
         it('should render the Current Leagues Page', () => {
             expect(route.exists('CurrentLeagues')).toEqual(true);
@@ -130,7 +144,7 @@ describe('<App />', () => {
     describe('Portfolio Page Route', () => {
         let route;
         beforeEach(() => {
-            route = wrapper.find('Switch').at(0).children().at(8)
+            route = wrapper.find('Switch').at(0).children().at(9)
         });
         it('should render the Portfolio Page', () => {
             expect(route.exists('Portfolio')).toEqual(true);
@@ -144,7 +158,7 @@ describe('<App />', () => {
     describe('Symbol Lookup Page Route', () => {
         let route;
         beforeEach(() => {
-            route = wrapper.find('Switch').at(0).children().at(9)
+            route = wrapper.find('Switch').at(0).children().at(10)
         });
         it('should render the Symbol Lookup Page', () => {
             expect(route.exists('SymbolLookup')).toEqual(true);
@@ -152,6 +166,62 @@ describe('<App />', () => {
 
         it('should pass the correct path into Symbol Lookup Page ', () => {
             expect(route.prop('path')).toEqual('/lookup');
+        });
+    });
+
+    describe('News Page route', () => {
+        let route;
+        beforeEach(() => {
+            route = wrapper.find('Switch').at(0).children().at(11)
+        });
+        it('should render the News Page Page', () => {
+            expect(route.exists('News')).toEqual(true);
+        });
+
+        it('should pass the correct path into News Page ', () => {
+            expect(route.prop('path')).toEqual('/news');
+        });
+    });
+
+    describe('AI Page Route', () => {
+        let route;
+        beforeEach(() => {
+            route = wrapper.find('Switch').at(0).children().at(12)
+        });
+        it('should render the AI Page', () => {
+            expect(route.exists('AIPage')).toEqual(true);
+        });
+
+        it('should pass the correct path into AI Page ', () => {
+            expect(route.prop('path')).toEqual('/ai');
+        });
+    });
+
+    describe('Summary Page Route', () => {
+        let route;
+        beforeEach(() => {
+            route = wrapper.find('Switch').at(0).children().at(13)
+        });
+        it('should render the Summary Page', () => {
+            expect(route.exists('Summary')).toEqual(true);
+        });
+
+        it('should pass the correct path into Summary Page ', () => {
+            expect(route.prop('path')).toEqual('/summary');
+        });
+    });
+
+    describe('Centralized League Page Route', () => {
+        let route;
+        beforeEach(() => {
+            route = wrapper.find('Switch').at(0).children().at(14)
+        });
+        it('should render the Centralized League Page', () => {
+            expect(route.exists('CentralizedLeague')).toEqual(true);
+        });
+
+        it('should pass the correct path into Centralized League Page ', () => {
+            expect(route.prop('path')).toEqual('/centralizedleague');
         });
     });
 });
